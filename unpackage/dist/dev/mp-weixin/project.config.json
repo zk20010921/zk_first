@@ -6,6 +6,7 @@
   },
   "setting": {
     "urlCheck": false,
+    "es6": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -14,7 +15,7 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.25.2",
-  "appid": "touristappid",
+  "appid": "wx1116c6e3de0ea7dc",
   "projectname": "莱宠222",
   "condition": {},
   "editorSetting": {

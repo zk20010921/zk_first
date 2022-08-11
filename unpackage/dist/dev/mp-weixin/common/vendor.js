@@ -1,6 +1,6 @@
-(global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],[
-/* 0 */,
-/* 1 */
+(global["webpackJsonp"] = global["webpackJsonp"] || []).push([["common/vendor"],{
+
+/***/ 1:
 /*!************************************************************!*\
   !*** ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js ***!
   \************************************************************/
@@ -2499,7 +2499,996 @@ uni$1;exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../webpack/buildin/global.js */ 2)))
 
 /***/ }),
+
+/***/ 11:
+/*!**********************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
+  \**********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
+/* globals __VUE_SSR_CONTEXT__ */
+
+// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
+// This module is a runtime utility for cleaner component module output and will
+// be included in the final webpack user bundle.
+
+function normalizeComponent (
+  scriptExports,
+  render,
+  staticRenderFns,
+  functionalTemplate,
+  injectStyles,
+  scopeId,
+  moduleIdentifier, /* server only */
+  shadowMode, /* vue-cli only */
+  components, // fixed by xxxxxx auto components
+  renderjs // fixed by xxxxxx renderjs
+) {
+  // Vue.extend constructor export interop
+  var options = typeof scriptExports === 'function'
+    ? scriptExports.options
+    : scriptExports
+
+  // fixed by xxxxxx auto components
+  if (components) {
+    if (!options.components) {
+      options.components = {}
+    }
+    var hasOwn = Object.prototype.hasOwnProperty
+    for (var name in components) {
+      if (hasOwn.call(components, name) && !hasOwn.call(options.components, name)) {
+        options.components[name] = components[name]
+      }
+    }
+  }
+  // fixed by xxxxxx renderjs
+  if (renderjs) {
+    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
+      this[renderjs.__module] = this
+    });
+    (options.mixins || (options.mixins = [])).push(renderjs)
+  }
+
+  // render functions
+  if (render) {
+    options.render = render
+    options.staticRenderFns = staticRenderFns
+    options._compiled = true
+  }
+
+  // functional template
+  if (functionalTemplate) {
+    options.functional = true
+  }
+
+  // scopedId
+  if (scopeId) {
+    options._scopeId = 'data-v-' + scopeId
+  }
+
+  var hook
+  if (moduleIdentifier) { // server build
+    hook = function (context) {
+      // 2.3 injection
+      context =
+        context || // cached call
+        (this.$vnode && this.$vnode.ssrContext) || // stateful
+        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
+      // 2.2 with runInNewContext: true
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__
+      }
+      // inject component styles
+      if (injectStyles) {
+        injectStyles.call(this, context)
+      }
+      // register component module identifier for async chunk inferrence
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier)
+      }
+    }
+    // used by ssr in case component is cached and beforeCreate
+    // never gets called
+    options._ssrRegister = hook
+  } else if (injectStyles) {
+    hook = shadowMode
+      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
+      : injectStyles
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // for template-only hot-reload because in that case the render fn doesn't
+      // go through the normalizer
+      options._injectStyles = hook
+      // register for functioal component in vue file
+      var originalRender = options.render
+      options.render = function renderWithStyleInjection (h, context) {
+        hook.call(context)
+        return originalRender(h, context)
+      }
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate
+      options.beforeCreate = existing
+        ? [].concat(existing, hook)
+        : [hook]
+    }
+  }
+
+  return {
+    exports: scriptExports,
+    options: options
+  }
+}
+
+
+/***/ }),
+
+/***/ 12:
+/*!**************************************!*\
+  !*** D:/uni-app/laichong/request.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var Fly = __webpack_require__(/*! flyio/dist/npm/wx */ 13);
+var fly = new Fly();
+
+
+fly.config.baseURL = 'https://4de16698-d9f4-443a-b416-ef1037cce952.bspapp.com/http';
+// fly.config.baseURL = 'https://00914201-ee95-473b-8d9e-8b8958bc6c8c.bspapp.com/http';
+//拦截器
+//请求
+
+
+
+fly.interceptors.request.use(
+function (config) {
+  //以后会加token
+  var token = uni.getStorageSync('token');
+  config.headers.token = token;
+
+
+
+
+
+
+  return config;
+},
+function (err) {
+  return Promise.reject(err);
+});
+
+//响应
+fly.interceptors.response.use(
+function (res) {
+  return res.data;
+},
+function (err) {
+  return Promise.reject(err);
+});var _default =
+
+
+fly;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
+
+/***/ 13:
+/*!*******************************************!*\
+  !*** ./node_modules/flyio/dist/npm/wx.js ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(true)
+		module.exports = factory();
+	else { var i, a; }
+})(this, function() {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// identity function for calling harmony imports with the correct context
+/******/ 	__webpack_require__.i = function(value) { return value; };
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, {
+/******/ 				configurable: false,
+/******/ 				enumerable: true,
+/******/ 				get: getter
+/******/ 			});
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ })
+/************************************************************************/
+/******/ ([
+/* 0 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+module.exports = {
+    type: function type(ob) {
+        return Object.prototype.toString.call(ob).slice(8, -1).toLowerCase();
+    },
+    isObject: function isObject(ob, real) {
+        if (real) {
+            return this.type(ob) === "object";
+        } else {
+            return ob && (typeof ob === 'undefined' ? 'undefined' : _typeof(ob)) === 'object';
+        }
+    },
+    isFormData: function isFormData(val) {
+        return typeof FormData !== 'undefined' && val instanceof FormData;
+    },
+    trim: function trim(str) {
+        return str.replace(/(^\s*)|(\s*$)/g, '');
+    },
+    encode: function encode(val) {
+        return encodeURIComponent(val).replace(/%40/gi, '@').replace(/%3A/gi, ':').replace(/%24/g, '$').replace(/%2C/gi, ',').replace(/%20/g, '+').replace(/%5B/gi, '[').replace(/%5D/gi, ']');
+    },
+    formatParams: function formatParams(data) {
+        var str = "";
+        var first = true;
+        var that = this;
+        if (!this.isObject(data)) {
+            return data;
+        }
+
+        function _encode(sub, path) {
+            var encode = that.encode;
+            var type = that.type(sub);
+            if (type == "array") {
+                sub.forEach(function (e, i) {
+                    if (!that.isObject(e)) i = "";
+                    _encode(e, path + ('%5B' + i + '%5D'));
+                });
+            } else if (type == "object") {
+                for (var key in sub) {
+                    if (path) {
+                        _encode(sub[key], path + "%5B" + encode(key) + "%5D");
+                    } else {
+                        _encode(sub[key], encode(key));
+                    }
+                }
+            } else {
+                if (!first) {
+                    str += "&";
+                }
+                first = false;
+                str += path + "=" + encode(sub);
+            }
+        }
+
+        _encode(data, "");
+        return str;
+    },
+
+    // Do not overwrite existing attributes
+    merge: function merge(a, b) {
+        for (var key in b) {
+            if (!a.hasOwnProperty(key)) {
+                a[key] = b[key];
+            } else if (this.isObject(b[key], 1) && this.isObject(a[key], 1)) {
+                this.merge(a[key], b[key]);
+            }
+        }
+        return a;
+    }
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+function KEEP(_,cb){cb();}
+"use strict";
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+/*
+ * author: wendu
+ * email: 824783146@qq.com
+ **/
+
+var util = __webpack_require__(0);
+var isBrowser = typeof document !== "undefined";
+
+//EngineWrapper can help  generating  a  http engine quickly through a adapter
+function EngineWrapper(adapter) {
+    var AjaxEngine = function () {
+        function AjaxEngine() {
+            _classCallCheck(this, AjaxEngine);
+
+            this.requestHeaders = {};
+            this.readyState = 0;
+            this.timeout = 0; // 0 stands for no timeout
+            this.responseURL = "";
+            this.responseHeaders = {};
+        }
+
+        _createClass(AjaxEngine, [{
+            key: "_call",
+            value: function _call(name) {
+                this[name] && this[name].apply(this, [].splice.call(arguments, 1));
+            }
+        }, {
+            key: "_changeReadyState",
+            value: function _changeReadyState(state) {
+                this.readyState = state;
+                this._call("onreadystatechange");
+            }
+        }, {
+            key: "open",
+            value: function open(method, url) {
+                this.method = method;
+                if (!url) {
+                    url = location.href;
+                } else {
+                    url = util.trim(url);
+                    if (url.indexOf("http") !== 0) {
+                        // Normalize the request url
+                        if (isBrowser) {
+                            var t = document.createElement("a");
+                            t.href = url;
+                            url = t.href;
+                        }
+                    }
+                }
+                this.responseURL = url;
+                this._changeReadyState(1);
+            }
+        }, {
+            key: "send",
+            value: function send(arg) {
+                var _this = this;
+
+                arg = arg || null;
+                var self = this;
+                if (adapter) {
+                    var request = {
+                        method: self.method,
+                        url: self.responseURL,
+                        headers: self.requestHeaders || {},
+                        body: arg
+                    };
+                    util.merge(request, self._options || {});
+                    if (request.method === "GET") {
+                        request.body = null;
+                    }
+                    self._changeReadyState(3);
+                    var timer = void 0;
+                    self.timeout = self.timeout || 0;
+                    if (self.timeout > 0) {
+                        timer = setTimeout(function () {
+                            if (self.readyState === 3) {
+                                _this._call("onloadend");
+                                self._changeReadyState(0);
+                                self._call("ontimeout");
+                            }
+                        }, self.timeout);
+                    }
+                    request.timeout = self.timeout;
+                    adapter(request, function (response) {
+
+                        function getAndDelete(key) {
+                            var t = response[key];
+                            delete response[key];
+                            return t;
+                        }
+
+                        // If the request has already timeout, return
+                        if (self.readyState !== 3) return;
+                        clearTimeout(timer);
+
+                        // Make sure the type of status is integer
+                        self.status = getAndDelete("statusCode") - 0;
+
+                        var responseText = getAndDelete("responseText");
+                        var statusMessage = getAndDelete("statusMessage");
+
+                        // Network error, set the status code 0
+                        if (!self.status) {
+                            self.statusText = responseText;
+                            self._call("onerror", { msg: statusMessage });
+                        } else {
+                            // Parsing the response headers to array in a object,  because
+                            // there may be multiple values with the same header name
+                            var responseHeaders = getAndDelete("headers");
+                            var headers = {};
+                            for (var field in responseHeaders) {
+                                var value = responseHeaders[field];
+                                var key = field.toLowerCase();
+                                // Is array
+                                if ((typeof value === "undefined" ? "undefined" : _typeof(value)) === "object") {
+                                    headers[key] = value;
+                                } else {
+                                    headers[key] = headers[key] || [];
+                                    headers[key].push(value);
+                                }
+                            }
+                            var cookies = headers["set-cookie"];
+                            if (isBrowser && cookies) {
+                                cookies.forEach(function (e) {
+                                    // Remove the http-Only property of the  cookie
+                                    // so that JavaScript can operate it.
+                                    document.cookie = e.replace(/;\s*httpOnly/ig, "");
+                                });
+                            }
+                            self.responseHeaders = headers;
+                            // Set the fields of engine from response
+                            self.statusText = statusMessage || "";
+                            self.response = self.responseText = responseText;
+                            self._response = response;
+                            self._changeReadyState(4);
+                            self._call("onload");
+                        }
+                        self._call("onloadend");
+                    });
+                } else {
+                    console.error("Ajax require adapter");
+                }
+            }
+        }, {
+            key: "setRequestHeader",
+            value: function setRequestHeader(key, value) {
+                this.requestHeaders[util.trim(key)] = value;
+            }
+        }, {
+            key: "getResponseHeader",
+            value: function getResponseHeader(key) {
+                return (this.responseHeaders[key.toLowerCase()] || "").toString() || null;
+            }
+        }, {
+            key: "getAllResponseHeaders",
+            value: function getAllResponseHeaders() {
+                var str = "";
+                for (var key in this.responseHeaders) {
+                    str += key + ":" + this.getResponseHeader(key) + "\r\n";
+                }
+                return str || null;
+            }
+        }, {
+            key: "abort",
+            value: function abort(msg) {
+                this._changeReadyState(0);
+                this._call("onerror", { msg: msg });
+                this._call("onloadend");
+            }
+        }], [{
+            key: "setAdapter",
+            value: function setAdapter(requestAdapter) {
+                adapter = requestAdapter;
+            }
+        }]);
+
+        return AjaxEngine;
+    }();
+
+    return AjaxEngine;
+}
+
+// learn more about keep-loader: https://github.com/wendux/keep-loader
+;
+module.exports = EngineWrapper;
+
+/***/ }),
 /* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+function KEEP(_,cb){cb();}
+"use strict";
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var utils = __webpack_require__(0);
+var isBrowser = typeof document !== "undefined";
+
+var Fly = function () {
+    function Fly(engine) {
+        _classCallCheck(this, Fly);
+
+        this.engine = engine || XMLHttpRequest;
+
+        this.default = this; //For typeScript
+
+        /**
+         * Add  lock/unlock API for interceptor.
+         *
+         * Once an request/response interceptor is locked, the incoming request/response
+         * will be added to a queue before they enter the interceptor, they will not be
+         * continued  until the interceptor is unlocked.
+         *
+         * @param [interceptor] either is interceptors.request or interceptors.response
+         */
+        function wrap(interceptor) {
+            var resolve = void 0;
+            var reject = void 0;
+
+            function _clear() {
+                interceptor.p = resolve = reject = null;
+            }
+
+            utils.merge(interceptor, {
+                lock: function lock() {
+                    if (!resolve) {
+                        interceptor.p = new Promise(function (_resolve, _reject) {
+                            resolve = _resolve;
+                            reject = _reject;
+                        });
+                    }
+                },
+                unlock: function unlock() {
+                    if (resolve) {
+                        resolve();
+                        _clear();
+                    }
+                },
+                clear: function clear() {
+                    if (reject) {
+                        reject("cancel");
+                        _clear();
+                    }
+                }
+            });
+        }
+
+        var interceptors = this.interceptors = {
+            response: {
+                use: function use(handler, onerror) {
+                    this.handler = handler;
+                    this.onerror = onerror;
+                }
+            },
+            request: {
+                use: function use(handler) {
+                    this.handler = handler;
+                }
+            }
+        };
+
+        var irq = interceptors.request;
+        var irp = interceptors.response;
+        wrap(irp);
+        wrap(irq);
+
+        this.config = {
+            method: "GET",
+            baseURL: "",
+            headers: {},
+            timeout: 0,
+            params: {}, // Default Url params
+            parseJson: true, // Convert response data to JSON object automatically.
+            withCredentials: false
+        };
+    }
+
+    _createClass(Fly, [{
+        key: "request",
+        value: function request(url, data, options) {
+            var _this = this;
+
+            var engine = new this.engine();
+            var contentType = "Content-Type";
+            var contentTypeLowerCase = contentType.toLowerCase();
+            var interceptors = this.interceptors;
+            var requestInterceptor = interceptors.request;
+            var responseInterceptor = interceptors.response;
+            var requestInterceptorHandler = requestInterceptor.handler;
+            var promise = new Promise(function (resolve, reject) {
+                if (utils.isObject(url)) {
+                    options = url;
+                    url = options.url;
+                }
+                options = options || {};
+                options.headers = options.headers || {};
+
+                function isPromise(p) {
+                    // some  polyfill implementation of Promise may be not standard,
+                    // so, we test by duck-typing
+                    return p && p.then && p.catch;
+                }
+
+                /**
+                 * If the request/response interceptor has been locked，
+                 * the new request/response will enter a queue. otherwise, it will be performed directly.
+                 * @param [promise] if the promise exist, means the interceptor is  locked.
+                 * @param [callback]
+                 */
+                function enqueueIfLocked(promise, callback) {
+                    if (promise) {
+                        promise.then(function () {
+                            callback();
+                        });
+                    } else {
+                        callback();
+                    }
+                }
+
+                // make the http request
+                function makeRequest(options) {
+                    data = options.body;
+                    // Normalize the request url
+                    url = utils.trim(options.url);
+                    var baseUrl = utils.trim(options.baseURL || "");
+                    if (!url && isBrowser && !baseUrl) url = location.href;
+                    if (url.indexOf("http") !== 0) {
+                        var isAbsolute = url[0] === "/";
+                        if (!baseUrl && isBrowser) {
+                            var arr = location.pathname.split("/");
+                            arr.pop();
+                            baseUrl = location.protocol + "//" + location.host + (isAbsolute ? "" : arr.join("/"));
+                        }
+                        if (baseUrl[baseUrl.length - 1] !== "/") {
+                            baseUrl += "/";
+                        }
+                        url = baseUrl + (isAbsolute ? url.substr(1) : url);
+                        if (isBrowser) {
+
+                            // Normalize the url which contains the ".." or ".", such as
+                            // "http://xx.com/aa/bb/../../xx" to "http://xx.com/xx" .
+                            var t = document.createElement("a");
+                            t.href = url;
+                            url = t.href;
+                        }
+                    }
+
+                    var responseType = utils.trim(options.responseType || "");
+                    var needQuery = ["GET", "HEAD", "DELETE", "OPTION"].indexOf(options.method) !== -1;
+                    var dataType = utils.type(data);
+                    var params = options.params || {};
+
+                    // merge url params when the method is "GET" (data is object)
+                    if (needQuery && dataType === "object") {
+                        params = utils.merge(data, params);
+                    }
+                    // encode params to String
+                    params = utils.formatParams(params);
+
+                    // save url params
+                    var _params = [];
+                    if (params) {
+                        _params.push(params);
+                    }
+                    // Add data to url params when the method is "GET" (data is String)
+                    if (needQuery && data && dataType === "string") {
+                        _params.push(data);
+                    }
+
+                    // make the final url
+                    if (_params.length > 0) {
+                        url += (url.indexOf("?") === -1 ? "?" : "&") + _params.join("&");
+                    }
+
+                    engine.open(options.method, url);
+
+                    // try catch for ie >=9
+                    try {
+                        engine.withCredentials = !!options.withCredentials;
+                        engine.timeout = options.timeout || 0;
+                        if (responseType !== "stream") {
+                            engine.responseType = responseType;
+                        }
+                    } catch (e) {}
+
+                    var customContentType = options.headers[contentType] || options.headers[contentTypeLowerCase];
+
+                    // default content type
+                    var _contentType = "application/x-www-form-urlencoded";
+                    // If the request data is json object, transforming it  to json string,
+                    // and set request content-type to "json". In browser,  the data will
+                    // be sent as RequestBody instead of FormData
+                    if (utils.trim((customContentType || "").toLowerCase()) === _contentType) {
+                        data = utils.formatParams(data);
+                    } else if (!utils.isFormData(data) && ["object", "array"].indexOf(utils.type(data)) !== -1) {
+                        _contentType = 'application/json;charset=utf-8';
+                        data = JSON.stringify(data);
+                    }
+                    //If user doesn't set content-type, set default.
+                    if (!(customContentType || needQuery)) {
+                        options.headers[contentType] = _contentType;
+                    }
+
+                    for (var k in options.headers) {
+                        if (k === contentType && utils.isFormData(data)) {
+                            // Delete the content-type, Let the browser set it
+                            delete options.headers[k];
+                        } else {
+                            try {
+                                // In browser environment, some header fields are readonly,
+                                // write will cause the exception .
+                                engine.setRequestHeader(k, options.headers[k]);
+                            } catch (e) {}
+                        }
+                    }
+
+                    function onresult(handler, data, type) {
+                        enqueueIfLocked(responseInterceptor.p, function () {
+                            if (handler) {
+                                //如果失败，添加请求信息
+                                if (type) {
+                                    data.request = options;
+                                }
+                                var ret = handler.call(responseInterceptor, data, Promise);
+                                data = ret === undefined ? data : ret;
+                            }
+                            if (!isPromise(data)) {
+                                data = Promise[type === 0 ? "resolve" : "reject"](data);
+                            }
+                            data.then(function (d) {
+                                resolve(d);
+                            }).catch(function (e) {
+                                reject(e);
+                            });
+                        });
+                    }
+
+                    function onerror(e) {
+                        e.engine = engine;
+                        onresult(responseInterceptor.onerror, e, -1);
+                    }
+
+                    function Err(msg, status) {
+                        this.message = msg;
+                        this.status = status;
+                    }
+
+                    engine.onload = function () {
+                        try {
+                            // The xhr of IE9 has not response field
+                            var response = engine.response || engine.responseText;
+                            if (response && options.parseJson && (engine.getResponseHeader(contentType) || "").indexOf("json") !== -1
+                            // Some third engine implementation may transform the response text to json object automatically,
+                            // so we should test the type of response before transforming it
+                            && !utils.isObject(response)) {
+                                response = JSON.parse(response);
+                            }
+
+                            var headers = engine.responseHeaders;
+                            // In browser
+                            if (!headers) {
+                                headers = {};
+                                var items = (engine.getAllResponseHeaders() || "").split("\r\n");
+                                items.pop();
+                                items.forEach(function (e) {
+                                    if (!e) return;
+                                    var key = e.split(":")[0];
+                                    headers[key] = engine.getResponseHeader(key);
+                                });
+                            }
+                            var status = engine.status;
+                            var statusText = engine.statusText;
+                            var _data = { data: response, headers: headers, status: status, statusText: statusText };
+                            // The _response filed of engine is set in  adapter which be called in engine-wrapper.js
+                            utils.merge(_data, engine._response);
+                            if (status >= 200 && status < 300 || status === 304) {
+                                _data.engine = engine;
+                                _data.request = options;
+                                onresult(responseInterceptor.handler, _data, 0);
+                            } else {
+                                var e = new Err(statusText, status);
+                                e.response = _data;
+                                onerror(e);
+                            }
+                        } catch (e) {
+                            onerror(new Err(e.msg, engine.status));
+                        }
+                    };
+
+                    engine.onerror = function (e) {
+                        onerror(new Err(e.msg || "Network Error", 0));
+                    };
+
+                    engine.ontimeout = function () {
+                        onerror(new Err("timeout [ " + engine.timeout + "ms ]", 1));
+                    };
+                    engine._options = options;
+                    setTimeout(function () {
+                        engine.send(needQuery ? null : data);
+                    }, 0);
+                }
+
+                enqueueIfLocked(requestInterceptor.p, function () {
+                    utils.merge(options, JSON.parse(JSON.stringify(_this.config)));
+                    var headers = options.headers;
+                    headers[contentType] = headers[contentType] || headers[contentTypeLowerCase] || "";
+                    delete headers[contentTypeLowerCase];
+                    options.body = data || options.body;
+                    url = utils.trim(url || "");
+                    options.method = options.method.toUpperCase();
+                    options.url = url;
+                    var ret = options;
+                    if (requestInterceptorHandler) {
+                        ret = requestInterceptorHandler.call(requestInterceptor, options, Promise) || options;
+                    }
+                    if (!isPromise(ret)) {
+                        ret = Promise.resolve(ret);
+                    }
+                    ret.then(function (d) {
+                        //if options continue
+                        if (d === options) {
+                            makeRequest(d);
+                        } else {
+                            resolve(d);
+                        }
+                    }, function (err) {
+                        reject(err);
+                    });
+                });
+            });
+            promise.engine = engine;
+            return promise;
+        }
+    }, {
+        key: "all",
+        value: function all(promises) {
+            return Promise.all(promises);
+        }
+    }, {
+        key: "spread",
+        value: function spread(callback) {
+            return function (arr) {
+                return callback.apply(null, arr);
+            };
+        }
+    }]);
+
+    return Fly;
+}();
+
+//For typeScript
+
+
+Fly.default = Fly;
+
+["get", "post", "put", "patch", "head", "delete"].forEach(function (e) {
+    Fly.prototype[e] = function (url, data, option) {
+        return this.request(url, data, utils.merge({ method: e }, option));
+    };
+});
+["lock", "unlock", "clear"].forEach(function (e) {
+    Fly.prototype[e] = function () {
+        this.interceptors.request[e]();
+    };
+});
+// Learn more about keep-loader: https://github.com/wendux/keep-loader
+;
+module.exports = Fly;
+
+/***/ }),
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//微信小程序适配器
+module.exports = function (request, responseCallback) {
+    var con = {
+        method: request.method,
+        url: request.url,
+        dataType: request.dataType || undefined,
+        header: request.headers,
+        data: request.body || {},
+        responseType: request.responseType || 'text',
+        success: function success(res) {
+            responseCallback({
+                statusCode: res.statusCode,
+                responseText: res.data,
+                headers: res.header,
+                statusMessage: res.errMsg
+            });
+        },
+        fail: function fail(res) {
+            responseCallback({
+                statusCode: res.statusCode || 0,
+                statusMessage: res.errMsg
+            });
+        }
+    };
+    wx.request(con);
+};
+
+/***/ }),
+/* 8 */,
+/* 9 */,
+/* 10 */,
+/* 11 */,
+/* 12 */,
+/* 13 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+//微信小程序入口
+var _Fly = __webpack_require__(2);
+var EngineWrapper = __webpack_require__(1);
+var adapter = __webpack_require__(7);
+var wxEngine = EngineWrapper(adapter);
+module.exports = function (engine) {
+    return new _Fly(engine || wxEngine);
+};
+
+/***/ })
+/******/ ]);
+});
+
+/***/ }),
+
+/***/ 2:
 /*!***********************************!*\
   !*** (webpack)/buildin/global.js ***!
   \***********************************/
@@ -2529,7 +3518,8 @@ module.exports = g;
 
 
 /***/ }),
-/* 3 */
+
+/***/ 3:
 /*!*************************************************************!*\
   !*** ./node_modules/@dcloudio/uni-i18n/dist/uni-i18n.es.js ***!
   \*************************************************************/
@@ -2992,7 +3982,8 @@ function resolveLocaleChain(locale) {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"], __webpack_require__(/*! ./../../../webpack/buildin/global.js */ 2)))
 
 /***/ }),
-/* 4 */
+
+/***/ 4:
 /*!******************************************************************************************!*\
   !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/mp-vue/dist/mp.runtime.esm.js ***!
   \******************************************************************************************/
@@ -9041,7 +10032,8 @@ internalMixin(Vue);
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../../../webpack/buildin/global.js */ 2)))
 
 /***/ }),
-/* 5 */
+
+/***/ 5:
 /*!**************************************!*\
   !*** D:/uni-app/laichong/pages.json ***!
   \**************************************/
@@ -9051,138 +10043,1183 @@ internalMixin(Vue);
 
 
 /***/ }),
-/* 6 */,
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */,
-/* 11 */
-/*!**********************************************************************************************************!*\
-  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/runtime/componentNormalizer.js ***!
-  \**********************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+/***/ 51:
+/*!*******************************************************************************!*\
+  !*** D:/uni-app/laichong/uni_modules/uni-icons/components/uni-icons/icons.js ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return normalizeComponent; });
-/* globals __VUE_SSR_CONTEXT__ */
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _default = {
+  "id": "2852637",
+  "name": "uniui图标库",
+  "font_family": "uniicons",
+  "css_prefix_text": "uniui-",
+  "description": "",
+  "glyphs": [
+  {
+    "icon_id": "25027049",
+    "name": "yanse",
+    "font_class": "color",
+    "unicode": "e6cf",
+    "unicode_decimal": 59087 },
 
-// IMPORTANT: Do NOT use ES2015 features in this file (except for modules).
-// This module is a runtime utility for cleaner component module output and will
-// be included in the final webpack user bundle.
+  {
+    "icon_id": "25027048",
+    "name": "wallet",
+    "font_class": "wallet",
+    "unicode": "e6b1",
+    "unicode_decimal": 59057 },
 
-function normalizeComponent (
-  scriptExports,
-  render,
-  staticRenderFns,
-  functionalTemplate,
-  injectStyles,
-  scopeId,
-  moduleIdentifier, /* server only */
-  shadowMode, /* vue-cli only */
-  components, // fixed by xxxxxx auto components
-  renderjs // fixed by xxxxxx renderjs
-) {
-  // Vue.extend constructor export interop
-  var options = typeof scriptExports === 'function'
-    ? scriptExports.options
-    : scriptExports
+  {
+    "icon_id": "25015720",
+    "name": "settings-filled",
+    "font_class": "settings-filled",
+    "unicode": "e6ce",
+    "unicode_decimal": 59086 },
 
-  // fixed by xxxxxx auto components
-  if (components) {
-    if (!options.components) {
-      options.components = {}
-    }
-    var hasOwn = Object.prototype.hasOwnProperty
-    for (var name in components) {
-      if (hasOwn.call(components, name) && !hasOwn.call(options.components, name)) {
-        options.components[name] = components[name]
-      }
-    }
-  }
-  // fixed by xxxxxx renderjs
-  if (renderjs) {
-    (renderjs.beforeCreate || (renderjs.beforeCreate = [])).unshift(function() {
-      this[renderjs.__module] = this
-    });
-    (options.mixins || (options.mixins = [])).push(renderjs)
-  }
+  {
+    "icon_id": "25015434",
+    "name": "shimingrenzheng-filled",
+    "font_class": "auth-filled",
+    "unicode": "e6cc",
+    "unicode_decimal": 59084 },
 
-  // render functions
-  if (render) {
-    options.render = render
-    options.staticRenderFns = staticRenderFns
-    options._compiled = true
-  }
+  {
+    "icon_id": "24934246",
+    "name": "shop-filled",
+    "font_class": "shop-filled",
+    "unicode": "e6cd",
+    "unicode_decimal": 59085 },
 
-  // functional template
-  if (functionalTemplate) {
-    options.functional = true
-  }
+  {
+    "icon_id": "24934159",
+    "name": "staff-filled-01",
+    "font_class": "staff-filled",
+    "unicode": "e6cb",
+    "unicode_decimal": 59083 },
 
-  // scopedId
-  if (scopeId) {
-    options._scopeId = 'data-v-' + scopeId
-  }
+  {
+    "icon_id": "24932461",
+    "name": "VIP-filled",
+    "font_class": "vip-filled",
+    "unicode": "e6c6",
+    "unicode_decimal": 59078 },
 
-  var hook
-  if (moduleIdentifier) { // server build
-    hook = function (context) {
-      // 2.3 injection
-      context =
-        context || // cached call
-        (this.$vnode && this.$vnode.ssrContext) || // stateful
-        (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext) // functional
-      // 2.2 with runInNewContext: true
-      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-        context = __VUE_SSR_CONTEXT__
-      }
-      // inject component styles
-      if (injectStyles) {
-        injectStyles.call(this, context)
-      }
-      // register component module identifier for async chunk inferrence
-      if (context && context._registeredComponents) {
-        context._registeredComponents.add(moduleIdentifier)
-      }
-    }
-    // used by ssr in case component is cached and beforeCreate
-    // never gets called
-    options._ssrRegister = hook
-  } else if (injectStyles) {
-    hook = shadowMode
-      ? function () { injectStyles.call(this, this.$root.$options.shadowRoot) }
-      : injectStyles
-  }
+  {
+    "icon_id": "24932462",
+    "name": "plus_circle_fill",
+    "font_class": "plus-filled",
+    "unicode": "e6c7",
+    "unicode_decimal": 59079 },
 
-  if (hook) {
-    if (options.functional) {
-      // for template-only hot-reload because in that case the render fn doesn't
-      // go through the normalizer
-      options._injectStyles = hook
-      // register for functioal component in vue file
-      var originalRender = options.render
-      options.render = function renderWithStyleInjection (h, context) {
-        hook.call(context)
-        return originalRender(h, context)
-      }
-    } else {
-      // inject component registration as beforeCreate hook
-      var existing = options.beforeCreate
-      options.beforeCreate = existing
-        ? [].concat(existing, hook)
-        : [hook]
-    }
-  }
+  {
+    "icon_id": "24932463",
+    "name": "folder_add-filled",
+    "font_class": "folder-add-filled",
+    "unicode": "e6c8",
+    "unicode_decimal": 59080 },
 
-  return {
-    exports: scriptExports,
-    options: options
-  }
-}
+  {
+    "icon_id": "24932464",
+    "name": "yanse-filled",
+    "font_class": "color-filled",
+    "unicode": "e6c9",
+    "unicode_decimal": 59081 },
 
+  {
+    "icon_id": "24932465",
+    "name": "tune-filled",
+    "font_class": "tune-filled",
+    "unicode": "e6ca",
+    "unicode_decimal": 59082 },
+
+  {
+    "icon_id": "24932455",
+    "name": "a-rilidaka-filled",
+    "font_class": "calendar-filled",
+    "unicode": "e6c0",
+    "unicode_decimal": 59072 },
+
+  {
+    "icon_id": "24932456",
+    "name": "notification-filled",
+    "font_class": "notification-filled",
+    "unicode": "e6c1",
+    "unicode_decimal": 59073 },
+
+  {
+    "icon_id": "24932457",
+    "name": "wallet-filled",
+    "font_class": "wallet-filled",
+    "unicode": "e6c2",
+    "unicode_decimal": 59074 },
+
+  {
+    "icon_id": "24932458",
+    "name": "paihangbang-filled",
+    "font_class": "medal-filled",
+    "unicode": "e6c3",
+    "unicode_decimal": 59075 },
+
+  {
+    "icon_id": "24932459",
+    "name": "gift-filled",
+    "font_class": "gift-filled",
+    "unicode": "e6c4",
+    "unicode_decimal": 59076 },
+
+  {
+    "icon_id": "24932460",
+    "name": "fire-filled",
+    "font_class": "fire-filled",
+    "unicode": "e6c5",
+    "unicode_decimal": 59077 },
+
+  {
+    "icon_id": "24928001",
+    "name": "refreshempty",
+    "font_class": "refreshempty",
+    "unicode": "e6bf",
+    "unicode_decimal": 59071 },
+
+  {
+    "icon_id": "24926853",
+    "name": "location-ellipse",
+    "font_class": "location-filled",
+    "unicode": "e6af",
+    "unicode_decimal": 59055 },
+
+  {
+    "icon_id": "24926735",
+    "name": "person-filled",
+    "font_class": "person-filled",
+    "unicode": "e69d",
+    "unicode_decimal": 59037 },
+
+  {
+    "icon_id": "24926703",
+    "name": "personadd-filled",
+    "font_class": "personadd-filled",
+    "unicode": "e698",
+    "unicode_decimal": 59032 },
+
+  {
+    "icon_id": "24923351",
+    "name": "back",
+    "font_class": "back",
+    "unicode": "e6b9",
+    "unicode_decimal": 59065 },
+
+  {
+    "icon_id": "24923352",
+    "name": "forward",
+    "font_class": "forward",
+    "unicode": "e6ba",
+    "unicode_decimal": 59066 },
+
+  {
+    "icon_id": "24923353",
+    "name": "arrowthinright",
+    "font_class": "arrow-right",
+    "unicode": "e6bb",
+    "unicode_decimal": 59067 },
+
+  {
+    "icon_id": "24923353",
+    "name": "arrowthinright",
+    "font_class": "arrowthinright",
+    "unicode": "e6bb",
+    "unicode_decimal": 59067 },
+
+  {
+    "icon_id": "24923354",
+    "name": "arrowthinleft",
+    "font_class": "arrow-left",
+    "unicode": "e6bc",
+    "unicode_decimal": 59068 },
+
+  {
+    "icon_id": "24923354",
+    "name": "arrowthinleft",
+    "font_class": "arrowthinleft",
+    "unicode": "e6bc",
+    "unicode_decimal": 59068 },
+
+  {
+    "icon_id": "24923355",
+    "name": "arrowthinup",
+    "font_class": "arrow-up",
+    "unicode": "e6bd",
+    "unicode_decimal": 59069 },
+
+  {
+    "icon_id": "24923355",
+    "name": "arrowthinup",
+    "font_class": "arrowthinup",
+    "unicode": "e6bd",
+    "unicode_decimal": 59069 },
+
+  {
+    "icon_id": "24923356",
+    "name": "arrowthindown",
+    "font_class": "arrow-down",
+    "unicode": "e6be",
+    "unicode_decimal": 59070 },
+  {
+    "icon_id": "24923356",
+    "name": "arrowthindown",
+    "font_class": "arrowthindown",
+    "unicode": "e6be",
+    "unicode_decimal": 59070 },
+
+  {
+    "icon_id": "24923349",
+    "name": "arrowdown",
+    "font_class": "bottom",
+    "unicode": "e6b8",
+    "unicode_decimal": 59064 },
+  {
+    "icon_id": "24923349",
+    "name": "arrowdown",
+    "font_class": "arrowdown",
+    "unicode": "e6b8",
+    "unicode_decimal": 59064 },
+
+  {
+    "icon_id": "24923346",
+    "name": "arrowright",
+    "font_class": "right",
+    "unicode": "e6b5",
+    "unicode_decimal": 59061 },
+
+  {
+    "icon_id": "24923346",
+    "name": "arrowright",
+    "font_class": "arrowright",
+    "unicode": "e6b5",
+    "unicode_decimal": 59061 },
+
+  {
+    "icon_id": "24923347",
+    "name": "arrowup",
+    "font_class": "top",
+    "unicode": "e6b6",
+    "unicode_decimal": 59062 },
+
+  {
+    "icon_id": "24923347",
+    "name": "arrowup",
+    "font_class": "arrowup",
+    "unicode": "e6b6",
+    "unicode_decimal": 59062 },
+
+  {
+    "icon_id": "24923348",
+    "name": "arrowleft",
+    "font_class": "left",
+    "unicode": "e6b7",
+    "unicode_decimal": 59063 },
+
+  {
+    "icon_id": "24923348",
+    "name": "arrowleft",
+    "font_class": "arrowleft",
+    "unicode": "e6b7",
+    "unicode_decimal": 59063 },
+
+  {
+    "icon_id": "24923334",
+    "name": "eye",
+    "font_class": "eye",
+    "unicode": "e651",
+    "unicode_decimal": 58961 },
+
+  {
+    "icon_id": "24923335",
+    "name": "eye-filled",
+    "font_class": "eye-filled",
+    "unicode": "e66a",
+    "unicode_decimal": 58986 },
+
+  {
+    "icon_id": "24923336",
+    "name": "eye-slash",
+    "font_class": "eye-slash",
+    "unicode": "e6b3",
+    "unicode_decimal": 59059 },
+
+  {
+    "icon_id": "24923337",
+    "name": "eye-slash-filled",
+    "font_class": "eye-slash-filled",
+    "unicode": "e6b4",
+    "unicode_decimal": 59060 },
+
+  {
+    "icon_id": "24923305",
+    "name": "info-filled",
+    "font_class": "info-filled",
+    "unicode": "e649",
+    "unicode_decimal": 58953 },
+
+  {
+    "icon_id": "24923299",
+    "name": "reload-01",
+    "font_class": "reload",
+    "unicode": "e6b2",
+    "unicode_decimal": 59058 },
+
+  {
+    "icon_id": "24923195",
+    "name": "mic_slash_fill",
+    "font_class": "micoff-filled",
+    "unicode": "e6b0",
+    "unicode_decimal": 59056 },
+
+  {
+    "icon_id": "24923165",
+    "name": "map-pin-ellipse",
+    "font_class": "map-pin-ellipse",
+    "unicode": "e6ac",
+    "unicode_decimal": 59052 },
+
+  {
+    "icon_id": "24923166",
+    "name": "map-pin",
+    "font_class": "map-pin",
+    "unicode": "e6ad",
+    "unicode_decimal": 59053 },
+
+  {
+    "icon_id": "24923167",
+    "name": "location",
+    "font_class": "location",
+    "unicode": "e6ae",
+    "unicode_decimal": 59054 },
+
+  {
+    "icon_id": "24923064",
+    "name": "starhalf",
+    "font_class": "starhalf",
+    "unicode": "e683",
+    "unicode_decimal": 59011 },
+
+  {
+    "icon_id": "24923065",
+    "name": "star",
+    "font_class": "star",
+    "unicode": "e688",
+    "unicode_decimal": 59016 },
+
+  {
+    "icon_id": "24923066",
+    "name": "star-filled",
+    "font_class": "star-filled",
+    "unicode": "e68f",
+    "unicode_decimal": 59023 },
+
+  {
+    "icon_id": "24899646",
+    "name": "a-rilidaka",
+    "font_class": "calendar",
+    "unicode": "e6a0",
+    "unicode_decimal": 59040 },
+
+  {
+    "icon_id": "24899647",
+    "name": "fire",
+    "font_class": "fire",
+    "unicode": "e6a1",
+    "unicode_decimal": 59041 },
+
+  {
+    "icon_id": "24899648",
+    "name": "paihangbang",
+    "font_class": "medal",
+    "unicode": "e6a2",
+    "unicode_decimal": 59042 },
+
+  {
+    "icon_id": "24899649",
+    "name": "font",
+    "font_class": "font",
+    "unicode": "e6a3",
+    "unicode_decimal": 59043 },
+
+  {
+    "icon_id": "24899650",
+    "name": "gift",
+    "font_class": "gift",
+    "unicode": "e6a4",
+    "unicode_decimal": 59044 },
+
+  {
+    "icon_id": "24899651",
+    "name": "link",
+    "font_class": "link",
+    "unicode": "e6a5",
+    "unicode_decimal": 59045 },
+
+  {
+    "icon_id": "24899652",
+    "name": "notification",
+    "font_class": "notification",
+    "unicode": "e6a6",
+    "unicode_decimal": 59046 },
+
+  {
+    "icon_id": "24899653",
+    "name": "staff",
+    "font_class": "staff",
+    "unicode": "e6a7",
+    "unicode_decimal": 59047 },
+
+  {
+    "icon_id": "24899654",
+    "name": "VIP",
+    "font_class": "vip",
+    "unicode": "e6a8",
+    "unicode_decimal": 59048 },
+
+  {
+    "icon_id": "24899655",
+    "name": "folder_add",
+    "font_class": "folder-add",
+    "unicode": "e6a9",
+    "unicode_decimal": 59049 },
+
+  {
+    "icon_id": "24899656",
+    "name": "tune",
+    "font_class": "tune",
+    "unicode": "e6aa",
+    "unicode_decimal": 59050 },
+
+  {
+    "icon_id": "24899657",
+    "name": "shimingrenzheng",
+    "font_class": "auth",
+    "unicode": "e6ab",
+    "unicode_decimal": 59051 },
+
+  {
+    "icon_id": "24899565",
+    "name": "person",
+    "font_class": "person",
+    "unicode": "e699",
+    "unicode_decimal": 59033 },
+
+  {
+    "icon_id": "24899566",
+    "name": "email-filled",
+    "font_class": "email-filled",
+    "unicode": "e69a",
+    "unicode_decimal": 59034 },
+
+  {
+    "icon_id": "24899567",
+    "name": "phone-filled",
+    "font_class": "phone-filled",
+    "unicode": "e69b",
+    "unicode_decimal": 59035 },
+
+  {
+    "icon_id": "24899568",
+    "name": "phone",
+    "font_class": "phone",
+    "unicode": "e69c",
+    "unicode_decimal": 59036 },
+
+  {
+    "icon_id": "24899570",
+    "name": "email",
+    "font_class": "email",
+    "unicode": "e69e",
+    "unicode_decimal": 59038 },
+
+  {
+    "icon_id": "24899571",
+    "name": "personadd",
+    "font_class": "personadd",
+    "unicode": "e69f",
+    "unicode_decimal": 59039 },
+
+  {
+    "icon_id": "24899558",
+    "name": "chatboxes-filled",
+    "font_class": "chatboxes-filled",
+    "unicode": "e692",
+    "unicode_decimal": 59026 },
+
+  {
+    "icon_id": "24899559",
+    "name": "contact",
+    "font_class": "contact",
+    "unicode": "e693",
+    "unicode_decimal": 59027 },
+
+  {
+    "icon_id": "24899560",
+    "name": "chatbubble-filled",
+    "font_class": "chatbubble-filled",
+    "unicode": "e694",
+    "unicode_decimal": 59028 },
+
+  {
+    "icon_id": "24899561",
+    "name": "contact-filled",
+    "font_class": "contact-filled",
+    "unicode": "e695",
+    "unicode_decimal": 59029 },
+
+  {
+    "icon_id": "24899562",
+    "name": "chatboxes",
+    "font_class": "chatboxes",
+    "unicode": "e696",
+    "unicode_decimal": 59030 },
+
+  {
+    "icon_id": "24899563",
+    "name": "chatbubble",
+    "font_class": "chatbubble",
+    "unicode": "e697",
+    "unicode_decimal": 59031 },
+
+  {
+    "icon_id": "24881290",
+    "name": "upload-filled",
+    "font_class": "upload-filled",
+    "unicode": "e68e",
+    "unicode_decimal": 59022 },
+
+  {
+    "icon_id": "24881292",
+    "name": "upload",
+    "font_class": "upload",
+    "unicode": "e690",
+    "unicode_decimal": 59024 },
+
+  {
+    "icon_id": "24881293",
+    "name": "weixin",
+    "font_class": "weixin",
+    "unicode": "e691",
+    "unicode_decimal": 59025 },
+
+  {
+    "icon_id": "24881274",
+    "name": "compose",
+    "font_class": "compose",
+    "unicode": "e67f",
+    "unicode_decimal": 59007 },
+
+  {
+    "icon_id": "24881275",
+    "name": "qq",
+    "font_class": "qq",
+    "unicode": "e680",
+    "unicode_decimal": 59008 },
+
+  {
+    "icon_id": "24881276",
+    "name": "download-filled",
+    "font_class": "download-filled",
+    "unicode": "e681",
+    "unicode_decimal": 59009 },
+
+  {
+    "icon_id": "24881277",
+    "name": "pengyouquan",
+    "font_class": "pyq",
+    "unicode": "e682",
+    "unicode_decimal": 59010 },
+
+  {
+    "icon_id": "24881279",
+    "name": "sound",
+    "font_class": "sound",
+    "unicode": "e684",
+    "unicode_decimal": 59012 },
+
+  {
+    "icon_id": "24881280",
+    "name": "trash-filled",
+    "font_class": "trash-filled",
+    "unicode": "e685",
+    "unicode_decimal": 59013 },
+
+  {
+    "icon_id": "24881281",
+    "name": "sound-filled",
+    "font_class": "sound-filled",
+    "unicode": "e686",
+    "unicode_decimal": 59014 },
+
+  {
+    "icon_id": "24881282",
+    "name": "trash",
+    "font_class": "trash",
+    "unicode": "e687",
+    "unicode_decimal": 59015 },
+
+  {
+    "icon_id": "24881284",
+    "name": "videocam-filled",
+    "font_class": "videocam-filled",
+    "unicode": "e689",
+    "unicode_decimal": 59017 },
+
+  {
+    "icon_id": "24881285",
+    "name": "spinner-cycle",
+    "font_class": "spinner-cycle",
+    "unicode": "e68a",
+    "unicode_decimal": 59018 },
+
+  {
+    "icon_id": "24881286",
+    "name": "weibo",
+    "font_class": "weibo",
+    "unicode": "e68b",
+    "unicode_decimal": 59019 },
+
+  {
+    "icon_id": "24881288",
+    "name": "videocam",
+    "font_class": "videocam",
+    "unicode": "e68c",
+    "unicode_decimal": 59020 },
+
+  {
+    "icon_id": "24881289",
+    "name": "download",
+    "font_class": "download",
+    "unicode": "e68d",
+    "unicode_decimal": 59021 },
+
+  {
+    "icon_id": "24879601",
+    "name": "help",
+    "font_class": "help",
+    "unicode": "e679",
+    "unicode_decimal": 59001 },
+
+  {
+    "icon_id": "24879602",
+    "name": "navigate-filled",
+    "font_class": "navigate-filled",
+    "unicode": "e67a",
+    "unicode_decimal": 59002 },
+
+  {
+    "icon_id": "24879603",
+    "name": "plusempty",
+    "font_class": "plusempty",
+    "unicode": "e67b",
+    "unicode_decimal": 59003 },
+
+  {
+    "icon_id": "24879604",
+    "name": "smallcircle",
+    "font_class": "smallcircle",
+    "unicode": "e67c",
+    "unicode_decimal": 59004 },
+
+  {
+    "icon_id": "24879605",
+    "name": "minus-filled",
+    "font_class": "minus-filled",
+    "unicode": "e67d",
+    "unicode_decimal": 59005 },
+
+  {
+    "icon_id": "24879606",
+    "name": "micoff",
+    "font_class": "micoff",
+    "unicode": "e67e",
+    "unicode_decimal": 59006 },
+
+  {
+    "icon_id": "24879588",
+    "name": "closeempty",
+    "font_class": "closeempty",
+    "unicode": "e66c",
+    "unicode_decimal": 58988 },
+
+  {
+    "icon_id": "24879589",
+    "name": "clear",
+    "font_class": "clear",
+    "unicode": "e66d",
+    "unicode_decimal": 58989 },
+
+  {
+    "icon_id": "24879590",
+    "name": "navigate",
+    "font_class": "navigate",
+    "unicode": "e66e",
+    "unicode_decimal": 58990 },
+
+  {
+    "icon_id": "24879591",
+    "name": "minus",
+    "font_class": "minus",
+    "unicode": "e66f",
+    "unicode_decimal": 58991 },
+
+  {
+    "icon_id": "24879592",
+    "name": "image",
+    "font_class": "image",
+    "unicode": "e670",
+    "unicode_decimal": 58992 },
+
+  {
+    "icon_id": "24879593",
+    "name": "mic",
+    "font_class": "mic",
+    "unicode": "e671",
+    "unicode_decimal": 58993 },
+
+  {
+    "icon_id": "24879594",
+    "name": "paperplane",
+    "font_class": "paperplane",
+    "unicode": "e672",
+    "unicode_decimal": 58994 },
+
+  {
+    "icon_id": "24879595",
+    "name": "close",
+    "font_class": "close",
+    "unicode": "e673",
+    "unicode_decimal": 58995 },
+
+  {
+    "icon_id": "24879596",
+    "name": "help-filled",
+    "font_class": "help-filled",
+    "unicode": "e674",
+    "unicode_decimal": 58996 },
+
+  {
+    "icon_id": "24879597",
+    "name": "plus-filled",
+    "font_class": "paperplane-filled",
+    "unicode": "e675",
+    "unicode_decimal": 58997 },
+
+  {
+    "icon_id": "24879598",
+    "name": "plus",
+    "font_class": "plus",
+    "unicode": "e676",
+    "unicode_decimal": 58998 },
+
+  {
+    "icon_id": "24879599",
+    "name": "mic-filled",
+    "font_class": "mic-filled",
+    "unicode": "e677",
+    "unicode_decimal": 58999 },
+
+  {
+    "icon_id": "24879600",
+    "name": "image-filled",
+    "font_class": "image-filled",
+    "unicode": "e678",
+    "unicode_decimal": 59000 },
+
+  {
+    "icon_id": "24855900",
+    "name": "locked-filled",
+    "font_class": "locked-filled",
+    "unicode": "e668",
+    "unicode_decimal": 58984 },
+
+  {
+    "icon_id": "24855901",
+    "name": "info",
+    "font_class": "info",
+    "unicode": "e669",
+    "unicode_decimal": 58985 },
+
+  {
+    "icon_id": "24855903",
+    "name": "locked",
+    "font_class": "locked",
+    "unicode": "e66b",
+    "unicode_decimal": 58987 },
+
+  {
+    "icon_id": "24855884",
+    "name": "camera-filled",
+    "font_class": "camera-filled",
+    "unicode": "e658",
+    "unicode_decimal": 58968 },
+
+  {
+    "icon_id": "24855885",
+    "name": "chat-filled",
+    "font_class": "chat-filled",
+    "unicode": "e659",
+    "unicode_decimal": 58969 },
+
+  {
+    "icon_id": "24855886",
+    "name": "camera",
+    "font_class": "camera",
+    "unicode": "e65a",
+    "unicode_decimal": 58970 },
+
+  {
+    "icon_id": "24855887",
+    "name": "circle",
+    "font_class": "circle",
+    "unicode": "e65b",
+    "unicode_decimal": 58971 },
+
+  {
+    "icon_id": "24855888",
+    "name": "checkmarkempty",
+    "font_class": "checkmarkempty",
+    "unicode": "e65c",
+    "unicode_decimal": 58972 },
+
+  {
+    "icon_id": "24855889",
+    "name": "chat",
+    "font_class": "chat",
+    "unicode": "e65d",
+    "unicode_decimal": 58973 },
+
+  {
+    "icon_id": "24855890",
+    "name": "circle-filled",
+    "font_class": "circle-filled",
+    "unicode": "e65e",
+    "unicode_decimal": 58974 },
+
+  {
+    "icon_id": "24855891",
+    "name": "flag",
+    "font_class": "flag",
+    "unicode": "e65f",
+    "unicode_decimal": 58975 },
+
+  {
+    "icon_id": "24855892",
+    "name": "flag-filled",
+    "font_class": "flag-filled",
+    "unicode": "e660",
+    "unicode_decimal": 58976 },
+
+  {
+    "icon_id": "24855893",
+    "name": "gear-filled",
+    "font_class": "gear-filled",
+    "unicode": "e661",
+    "unicode_decimal": 58977 },
+
+  {
+    "icon_id": "24855894",
+    "name": "home",
+    "font_class": "home",
+    "unicode": "e662",
+    "unicode_decimal": 58978 },
+
+  {
+    "icon_id": "24855895",
+    "name": "home-filled",
+    "font_class": "home-filled",
+    "unicode": "e663",
+    "unicode_decimal": 58979 },
+
+  {
+    "icon_id": "24855896",
+    "name": "gear",
+    "font_class": "gear",
+    "unicode": "e664",
+    "unicode_decimal": 58980 },
+
+  {
+    "icon_id": "24855897",
+    "name": "smallcircle-filled",
+    "font_class": "smallcircle-filled",
+    "unicode": "e665",
+    "unicode_decimal": 58981 },
+
+  {
+    "icon_id": "24855898",
+    "name": "map-filled",
+    "font_class": "map-filled",
+    "unicode": "e666",
+    "unicode_decimal": 58982 },
+
+  {
+    "icon_id": "24855899",
+    "name": "map",
+    "font_class": "map",
+    "unicode": "e667",
+    "unicode_decimal": 58983 },
+
+  {
+    "icon_id": "24855825",
+    "name": "refresh-filled",
+    "font_class": "refresh-filled",
+    "unicode": "e656",
+    "unicode_decimal": 58966 },
+
+  {
+    "icon_id": "24855826",
+    "name": "refresh",
+    "font_class": "refresh",
+    "unicode": "e657",
+    "unicode_decimal": 58967 },
+
+  {
+    "icon_id": "24855808",
+    "name": "cloud-upload",
+    "font_class": "cloud-upload",
+    "unicode": "e645",
+    "unicode_decimal": 58949 },
+
+  {
+    "icon_id": "24855809",
+    "name": "cloud-download-filled",
+    "font_class": "cloud-download-filled",
+    "unicode": "e646",
+    "unicode_decimal": 58950 },
+
+  {
+    "icon_id": "24855810",
+    "name": "cloud-download",
+    "font_class": "cloud-download",
+    "unicode": "e647",
+    "unicode_decimal": 58951 },
+
+  {
+    "icon_id": "24855811",
+    "name": "cloud-upload-filled",
+    "font_class": "cloud-upload-filled",
+    "unicode": "e648",
+    "unicode_decimal": 58952 },
+
+  {
+    "icon_id": "24855813",
+    "name": "redo",
+    "font_class": "redo",
+    "unicode": "e64a",
+    "unicode_decimal": 58954 },
+
+  {
+    "icon_id": "24855814",
+    "name": "images-filled",
+    "font_class": "images-filled",
+    "unicode": "e64b",
+    "unicode_decimal": 58955 },
+
+  {
+    "icon_id": "24855815",
+    "name": "undo-filled",
+    "font_class": "undo-filled",
+    "unicode": "e64c",
+    "unicode_decimal": 58956 },
+
+  {
+    "icon_id": "24855816",
+    "name": "more",
+    "font_class": "more",
+    "unicode": "e64d",
+    "unicode_decimal": 58957 },
+
+  {
+    "icon_id": "24855817",
+    "name": "more-filled",
+    "font_class": "more-filled",
+    "unicode": "e64e",
+    "unicode_decimal": 58958 },
+
+  {
+    "icon_id": "24855818",
+    "name": "undo",
+    "font_class": "undo",
+    "unicode": "e64f",
+    "unicode_decimal": 58959 },
+
+  {
+    "icon_id": "24855819",
+    "name": "images",
+    "font_class": "images",
+    "unicode": "e650",
+    "unicode_decimal": 58960 },
+
+  {
+    "icon_id": "24855821",
+    "name": "paperclip",
+    "font_class": "paperclip",
+    "unicode": "e652",
+    "unicode_decimal": 58962 },
+
+  {
+    "icon_id": "24855822",
+    "name": "settings",
+    "font_class": "settings",
+    "unicode": "e653",
+    "unicode_decimal": 58963 },
+
+  {
+    "icon_id": "24855823",
+    "name": "search",
+    "font_class": "search",
+    "unicode": "e654",
+    "unicode_decimal": 58964 },
+
+  {
+    "icon_id": "24855824",
+    "name": "redo-filled",
+    "font_class": "redo-filled",
+    "unicode": "e655",
+    "unicode_decimal": 58965 },
+
+  {
+    "icon_id": "24841702",
+    "name": "list",
+    "font_class": "list",
+    "unicode": "e644",
+    "unicode_decimal": 58948 },
+
+  {
+    "icon_id": "24841489",
+    "name": "mail-open-filled",
+    "font_class": "mail-open-filled",
+    "unicode": "e63a",
+    "unicode_decimal": 58938 },
+
+  {
+    "icon_id": "24841491",
+    "name": "hand-thumbsdown-filled",
+    "font_class": "hand-down-filled",
+    "unicode": "e63c",
+    "unicode_decimal": 58940 },
+
+  {
+    "icon_id": "24841492",
+    "name": "hand-thumbsdown",
+    "font_class": "hand-down",
+    "unicode": "e63d",
+    "unicode_decimal": 58941 },
+
+  {
+    "icon_id": "24841493",
+    "name": "hand-thumbsup-filled",
+    "font_class": "hand-up-filled",
+    "unicode": "e63e",
+    "unicode_decimal": 58942 },
+
+  {
+    "icon_id": "24841494",
+    "name": "hand-thumbsup",
+    "font_class": "hand-up",
+    "unicode": "e63f",
+    "unicode_decimal": 58943 },
+
+  {
+    "icon_id": "24841496",
+    "name": "heart-filled",
+    "font_class": "heart-filled",
+    "unicode": "e641",
+    "unicode_decimal": 58945 },
+
+  {
+    "icon_id": "24841498",
+    "name": "mail-open",
+    "font_class": "mail-open",
+    "unicode": "e643",
+    "unicode_decimal": 58947 },
+
+  {
+    "icon_id": "24841488",
+    "name": "heart",
+    "font_class": "heart",
+    "unicode": "e639",
+    "unicode_decimal": 58937 },
+
+  {
+    "icon_id": "24839963",
+    "name": "loop",
+    "font_class": "loop",
+    "unicode": "e633",
+    "unicode_decimal": 58931 },
+
+  {
+    "icon_id": "24839866",
+    "name": "pulldown",
+    "font_class": "pulldown",
+    "unicode": "e632",
+    "unicode_decimal": 58930 },
+
+  {
+    "icon_id": "24813798",
+    "name": "scan",
+    "font_class": "scan",
+    "unicode": "e62a",
+    "unicode_decimal": 58922 },
+
+  {
+    "icon_id": "24813786",
+    "name": "bars",
+    "font_class": "bars",
+    "unicode": "e627",
+    "unicode_decimal": 58919 },
+
+  {
+    "icon_id": "24813788",
+    "name": "cart-filled",
+    "font_class": "cart-filled",
+    "unicode": "e629",
+    "unicode_decimal": 58921 },
+
+  {
+    "icon_id": "24813790",
+    "name": "checkbox",
+    "font_class": "checkbox",
+    "unicode": "e62b",
+    "unicode_decimal": 58923 },
+
+  {
+    "icon_id": "24813791",
+    "name": "checkbox-filled",
+    "font_class": "checkbox-filled",
+    "unicode": "e62c",
+    "unicode_decimal": 58924 },
+
+  {
+    "icon_id": "24813794",
+    "name": "shop",
+    "font_class": "shop",
+    "unicode": "e62f",
+    "unicode_decimal": 58927 },
+
+  {
+    "icon_id": "24813795",
+    "name": "headphones",
+    "font_class": "headphones",
+    "unicode": "e630",
+    "unicode_decimal": 58928 },
+
+  {
+    "icon_id": "24813796",
+    "name": "cart",
+    "font_class": "cart",
+    "unicode": "e631",
+    "unicode_decimal": 58929 }] };exports.default = _default;
 
 /***/ })
-]]);
+
+}]);
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map
