@@ -16,7 +16,7 @@
   "window": {
     "navigationBarTextStyle": "black",
     "navigationBarTitleText": "莱宠",
-    "navigationBarBackgroundColor": "#FDD51A",
+    "navigationBarBackgroundColor": "#ffffff",
     "backgroundColor": "#F8F8F8"
   },
   "tabBar": {

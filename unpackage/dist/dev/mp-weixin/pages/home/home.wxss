@@ -107,6 +107,7 @@ image {
 .cnxh {
   width: 95%;
   margin: 0 auto;
+  padding-bottom: 80rpx;
 }
 .cnxh .cnxh_list {
   width: 100%;
@@ -146,6 +147,16 @@ image {
 .cnxh .cnxh_list .cnxh_price .cnxh_right {
   font-size: 22rpx;
   padding-right: 15rpx;
+  color: #a6a6a6;
+}
+.bottom {
+  display: none;
+}
+.bottom2 {
+  display: block;
+  text-align: center;
+  padding-bottom: 20rpx;
+  font-size: 26rpx;
   color: #a6a6a6;
 }
 

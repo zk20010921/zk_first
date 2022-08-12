@@ -155,7 +155,11 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;} //
+//
+//
+//
+//
 //
 //
 //
@@ -239,29 +243,34 @@ var _default =
       catalist: [], //按钮分类列表
       bdlist: [], //榜单列表
       headerActive: false,
-      cailist: [] //猜你喜欢列表
+      cailist: [], //猜你喜欢列表
+      num: 0,
+      show: false //底部字体的显示
     };
   },
   onLoad: function onLoad() {
     //轮播图
-    this.getswiper();
+    this.getSwiper();
     //按钮
-    this.getcatalist();
+    this.getCataList();
     //推荐榜单
-    this.getbangdan();
+    this.getBangDan();
     //猜你喜欢
-    this.getcai();
+    this.getCai();
+  },
+  //滚动监听事件
+  onPageScroll: function onPageScroll(e) {
+    this.headerActive = e.scrollTop >= 40;
+  },
+  //下拉触底
+  onReachBottom: function onReachBottom() {
+    this.num += 10;
+    this.getCai();
+    // this.cailist = [...this.cailist,...res.data]
   },
   methods: {
-    //搜索
-    search: function search(res) {
-      uni.showToast({
-        title: '搜索：' + res.value,
-        icon: 'none' });
-
-    },
     //轮播图
-    getswiper: function getswiper() {var _this = this;
+    getSwiper: function getSwiper() {var _this = this;
       this.$http.post('/api/get_banner').
       then(function (res) {
         console.log(res);
@@ -272,8 +281,10 @@ var _default =
       });
     },
     //分类
-    getcatalist: function getcatalist() {var _this2 = this;
-      this.$http.post('/api/get_cate').
+    getCataList: function getCataList() {var _this2 = this;
+      this.$http.post('/api/get_cate',
+      { position: 'index' }).
+
       then(function (res) {
         console.log(res);
         _this2.catalist = res.data;
@@ -283,10 +294,10 @@ var _default =
       });
     },
     //获取精选
-    getbangdan: function getbangdan() {var _this3 = this;
+    getBangDan: function getBangDan() {var _this3 = this;
       this.$http.post('/api/get_competitive', {
         skip: 0,
-        limit: 10 }).
+        limit: 1000 }).
 
       then(function (res) {
         console.log(res);
@@ -296,25 +307,23 @@ var _default =
         console.log(err);
       });
     },
-    getcai: function getcai() {var _this4 = this;
+    //猜你喜欢
+    getCai: function getCai() {var _this4 = this;
       this.$http.post('/api/get_like', {
-        skip: 0,
+        skip: this.num,
         limit: 10 }).
 
       then(function (res) {
         console.log(res);
-        _this4.cailist = res.data;
+        _this4.cailist = [].concat(_toConsumableArray(_this4.cailist), _toConsumableArray(res.data));
+        if (res.data.length == 0 || res.data.length < 10) {
+          _this4.show = true;
+        }
       }).
       catch(function (err) {
         console.log(err);
       });
-    } },
-
-  //滚动监听事件
-  onPageScroll: function onPageScroll(e) {
-    this.headerActive = e.scrollTop >= 40;
-  } };exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+    } } };exports.default = _default;
 
 /***/ }),
 

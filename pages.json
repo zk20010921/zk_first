@@ -1,4 +1,10 @@
 {
+	
+	"easycom": {
+		"^u-(.*)": "@/components/u-$1/u-$1.vue"
+	},
+		
+	
 	"pages": [{
 		"path": "pages/home/home",
 		"style": {
@@ -45,7 +51,7 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "莱宠",
-		"navigationBarBackgroundColor": "#FDD51A",
+		"navigationBarBackgroundColor": "#ffffff",
 		"backgroundColor": "#F8F8F8",
 		"app-plus": {
 			"background": "#efeff4"

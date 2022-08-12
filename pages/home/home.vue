@@ -71,6 +71,10 @@
 				</view>
 			</view>
 		</view>
+		
+		<view class="bottom" :class="show ? 'bottom2':''">
+			<text>已经到底了</text>
+		</view>
 	</view>
 </template>
 
@@ -82,29 +86,34 @@
 				catalist: [], //按钮分类列表
 				bdlist: [], //榜单列表
 				headerActive: false,
-				cailist: [] //猜你喜欢列表
+				cailist: [], //猜你喜欢列表
+				num:0,
+				show:false,//底部字体的显示
 			}
 		},
 		onLoad() {
 			//轮播图
-			this.getswiper()
+			this.getSwiper()
 			//按钮
-			this.getcatalist()
+			this.getCataList()
 			//推荐榜单
-			this.getbangdan()
+			this.getBangDan()
 			//猜你喜欢
-			this.getcai()
+			this.getCai()
+		},
+		//滚动监听事件
+		onPageScroll(e) {
+			this.headerActive = e.scrollTop >= 40;
+		},
+		//下拉触底
+		onReachBottom(){		
+			this.num+=10
+			this.getCai()
+			// this.cailist = [...this.cailist,...res.data]
 		},
 		methods: {
-			//搜索
-			search(res) {
-				uni.showToast({
-					title: '搜索：' + res.value,
-					icon: 'none'
-				})
-			},
 			//轮播图
-			getswiper() {
+			getSwiper() {
 				this.$http.post('/api/get_banner')
 					.then((res) => {
 						console.log(res);
@@ -115,8 +124,10 @@
 					})
 			},
 			//分类
-			getcatalist() {
-				this.$http.post('/api/get_cate')
+			getCataList() {
+				this.$http.post('/api/get_cate',
+				{position:'index'}
+				)
 					.then((res) => {
 						console.log(res)
 						this.catalist = res.data
@@ -126,10 +137,10 @@
 					})
 			},
 			//获取精选
-			getbangdan() {
+			getBangDan() {
 				this.$http.post('/api/get_competitive', {
 						skip: 0,
-						limit: 10
+						limit: 1000
 					})
 					.then((res) => {
 						console.log(res);
@@ -139,24 +150,24 @@
 						console.log(err);
 					})
 			},
-			getcai() {
+			//猜你喜欢
+			getCai() {
 				this.$http.post('/api/get_like', {
-						skip: 0,
+						skip: this.num,
 						limit: 10,
 					})
 					.then((res) => {
 						console.log(res);
-						this.cailist = res.data
+						this.cailist = [...this.cailist,...res.data]
+						if(res.data.length == 0 || res.data.length <10){
+							this.show = true
+						}
 					})
 					.catch((err) => {
 						console.log(err);
 					})
 			}
 		},
-		//滚动监听事件
-		onPageScroll(e) {
-			this.headerActive = e.scrollTop >= 40;
-		}
 	}
 </script>
 
@@ -286,6 +297,7 @@
 	.cnxh {
 		width: 95%;
 		margin: 0 auto;
+		padding-bottom: 80rpx;
 
 		.cnxh_list {
 			width: 100%;
@@ -306,28 +318,41 @@
 				padding-left: 10rpx;
 				padding-right: 10rpx;
 			}
-			
-			.cnxh_price{
+
+			.cnxh_price {
 				display: flex;
 				justify-content: space-between;
 				padding: 0 5rpx;
 				background-color: #ffffff;
 				padding-top: 20rpx;
 				padding-bottom: 35rpx;
-				.cnxh_left text:nth-child(1){
+
+				.cnxh_left text:nth-child(1) {
 					font-size: 24rpx;
 					color: red;
 				}
-				.cnxh_left text:nth-child(2){
+
+				.cnxh_left text:nth-child(2) {
 					font-size: 28rpx;
 					color: red;
 				}
-				.cnxh_right{
+
+				.cnxh_right {
 					font-size: 22rpx;
 					padding-right: 15rpx;
 					color: #a6a6a6;
 				}
 			}
 		}
+	}
+	.bottom{
+		display: none;
+	}
+	.bottom2{
+		display: block;
+		text-align: center;
+		padding-bottom: 20rpx;
+		font-size: 26rpx;
+		color: #a6a6a6;
 	}
 </style>
