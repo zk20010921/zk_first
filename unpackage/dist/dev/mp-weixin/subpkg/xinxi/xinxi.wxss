@@ -1,0 +1,126 @@
+@charset "UTF-8";
+/* 水平间距 */
+/* 水平间距 */
+.bgwhite {
+  background: #fff;
+}
+.page-user {
+  width: 100%;
+  height: 100%;
+}
+.page-user .info_main {
+  width: 100%;
+  height: 151rpx;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  padding: 0 30rpx;
+}
+.page-user .info_main view {
+  font-size: 30rpx;
+  color: #999999;
+}
+.page-user .info_main image {
+  float: right;
+  width: 94rpx;
+  height: 94rpx;
+  border-radius: 50%;
+}
+.page-user .info_main:after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  content: '';
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  background-color: #eeeeee;
+}
+.page-user .info_cont {
+  width: 100%;
+  height: 101rpx;
+  position: relative;
+  overflow: hidden;
+  padding: 0 30rpx;
+}
+.page-user .info_cont view {
+  font-size: 30rpx;
+  line-height: 101rpx;
+  color: #999999;
+  float: left;
+}
+.page-user .info_cont .txt {
+  display: block;
+  width: auto;
+  height: 101rpx;
+  float: right;
+  text-align: right;
+  margin-right: 10rpx;
+  font-size: 30rpx;
+  width: 500rpx;
+}
+.page-user .info_cont .uni-input,
+.page-user .info_cont input {
+  display: block;
+  width: auto;
+  height: 101rpx;
+  float: right;
+  text-align: right;
+  margin-right: 10rpx;
+  font-size: 30rpx;
+  width: 500rpx;
+}
+.page-user .info_cont text {
+  font-size: 14rpx;
+  color: #bfbfbf;
+  float: right;
+  line-height: 101rpx;
+}
+.page-user .info_cont .iconfont {
+  font-size: 28rpx;
+}
+.page-user .uni-input-placeholder {
+  color: #999;
+}
+.page-user .info_cont:after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  content: '';
+  -webkit-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  background-color: #eeeeee;
+}
+.confirm-btn {
+  width: 80%;
+  height: 80rpx;
+  background: #fdd100;
+  border-radius: 60rpx;
+  margin: 40rpx auto;
+  text-align: center;
+  color: #fff;
+  line-height: 80rpx;
+  font-size: 30rpx;
+}
+.sex {
+  background-color: #ffffff;
+  width: 100%;
+  text-align: center;
+}
+.sex uni-data-checkbox {
+  margin: 50rpx;
+}
+.shengri {
+  width: 100%;
+  background-color: #ffffff;
+}
+.checklist-group {
+  display: flex;
+  justify-content: center;
+}
+

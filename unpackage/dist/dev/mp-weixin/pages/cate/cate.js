@@ -154,6 +154,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   data: function data() {
@@ -161,10 +163,17 @@ var _default =
       leftarr: [], //左侧导航栏列表
       index1: 0,
       scrollTop: 0,
-      hightArr: [] //高度数组
+      hightArr: [], //高度数组
+      scrTop: 0, //顶部距离
+      _id: 0 //详情id
     };
   },
-  onLoad: function onLoad() {},
+  onLoad: function onLoad(e) {
+
+  },
+  onShow: function onShow() {
+    this.getIndex();
+  },
   mounted: function mounted() {var _this = this;
 
     this.getCateList();
@@ -193,7 +202,6 @@ var _default =
         query.select("#aaa".concat(index)).boundingClientRect(function (data) {
           console.log("节点离页面顶部的距离为", data.top);
           _this3.hightArr.push(data.top);
-          console.log(_this3);
         }).exec();
       });
       setTimeout(function () {
@@ -202,13 +210,33 @@ var _default =
       }, 250);
 
     },
+    //左侧高度变色
     scrollCm: function scrollCm(e) {
+      uni.setStorageSync('index', this.index1);
       var top = e.detail.scrollTop;
       for (var i = 0; i < this.hightArr.length; i++) {
         if (top > this.hightArr[i] && top < this.hightArr[i + 1]) {
           this.index1 = i;
         }
       }
+    },
+    //点击左侧导航栏
+    Tap: function Tap(index) {
+      this.index1 = index;
+      console.log(this.hightArr[index]);
+      this.scrTop = this.hightArr[index];
+    },
+    //获取本地的index
+    getIndex: function getIndex() {
+      this.index1 = uni.getStorageSync('index');
+      this.scrTop = this.hightArr[this.index1];
+    },
+    xiang: function xiang(e) {
+      console.log(e);
+      this._id = e;
+      uni.navigateTo({
+        url: "/subpkg/goods_detail/goods_detail?_id=".concat(this._id) });
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

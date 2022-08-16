@@ -18,7 +18,7 @@
   align-items: center;
   padding-left: 20rpx;
   z-index: 1;
-  height: 100rpx;
+  height: 150rpx;
   width: 100%;
   padding-top: 50rpx;
 }
@@ -112,11 +112,11 @@ image {
 .cnxh .cnxh_list {
   width: 100%;
   margin: 1vh 1vw;
-  padding-bottom: 150rpx;
+  padding-bottom: 155rpx;
   font-size: 26rpx;
 }
 .cnxh .cnxh_list .tx {
-  height: 64rpx;
+  height: 79rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -124,6 +124,7 @@ image {
   -webkit-box-orient: vertical;
   background-color: #ffffff;
   margin-top: -10rpx;
+  padding-top: 9rpx;
   padding-bottom: 6rpx;
   padding-left: 10rpx;
   padding-right: 10rpx;

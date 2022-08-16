@@ -1,0 +1,148 @@
+@charset "UTF-8";
+/* 水平间距 */
+/* 水平间距 */
+uni-button[type='default'] {
+  background: #eee;
+}
+page,
+page {
+  font-size: 28rpx;
+  background: #fff;
+  min-height: 100%;
+}
+.warp {
+  background: #fff;
+  background: #fff;
+}
+.warp .login-title {
+  position: relative;
+  z-index: 9;
+  height: 380rpx;
+}
+.warp .login-title .navback {
+  padding: 5px;
+  position: absolute;
+  left: 20rpx;
+  top: 70rpx;
+  border-radius: 50%;
+}
+.warp .login-title .logo {
+  padding-top: 160rpx;
+  width: 100%;
+  text-align: center;
+}
+.warp .login-title .logo image {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 20rpx;
+}
+.warp .form-wapper {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 80rpx 40rpx 20rpx;
+  border-radius: 10rpx;
+  background: #fff;
+}
+.warp .form-wapper .input-wapper {
+  display: flex;
+  flex-direction: row;
+  width: 94%;
+  height: 120rpx;
+  margin-left: 3%;
+  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+}
+.warp .form-wapper .input-wapper .lside {
+  width: 54rpx;
+  text-align: left;
+}
+.warp .form-wapper .input-wapper .rside {
+  flex: 1;
+}
+.warp .form-wapper .input-wapper .iconfont {
+  font-size: 40rpx;
+}
+.warp .form-wapper .input-wapper input {
+  height: 120rpx;
+}
+.warp .form-wapper .input-wapper .input-placeholder {
+  color: #c2c2c2;
+}
+.warp .form-wapper .input-wapper button {
+  opacity: .8;
+  background: #fdd100;
+  color: #fff;
+}
+.warp .form-wapper .input-wapper .get-code-btn {
+  border: 0;
+  background: #fff;
+  font-size: 24rpx;
+  text-align: right;
+  padding-left: 0;
+  padding-right: 0;
+}
+.warp .form-wapper .input-wapper .get-code-btn:after {
+  border: 0;
+}
+.warp .form-wapper .paw {
+  line-height: 80rpx;
+  width: 94%;
+  height: 80rpx;
+  margin: 0 3%;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  color: #FDD51A;
+  font-size: 26rpx;
+}
+.warp .login-btn {
+  display: block;
+  line-height: 90rpx;
+  text-align: center;
+  width: 600rpx;
+  height: 90rpx;
+  font-size: 32rpx;
+  color: #fff;
+  background-blend-mode: normal, normal;
+  border-radius: 45px;
+  background-color: #FDD51A;
+}
+.warp .reg-paw {
+  margin: 20rpx 0;
+  text-align: center;
+}
+.warp .reg-paw text {
+  font-size: 28rpx;
+  display: inline-block;
+  width: 40%;
+  color: #c5c5c5;
+  position: relative;
+  padding: 20rpx 0;
+}
+.warp .quick {
+  text-align: center;
+  padding-bottom: 80rpx;
+}
+.warp .quick .quick-title {
+  margin: 140rpx 0 50rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.warp .quick .quick-title .txt {
+  font-size: 24rpx;
+  color: #999;
+  padding: 0 20rpx;
+}
+.warp .quick .quick-title .line {
+  display: block;
+  width: 120rpx;
+  position: relative;
+}
+.warp .quick image {
+  width: 72rpx;
+  height: 72rpx;
+  margin: 0 35rpx;
+}
+

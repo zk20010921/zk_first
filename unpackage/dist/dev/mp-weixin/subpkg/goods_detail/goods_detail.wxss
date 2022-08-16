@@ -1,0 +1,145 @@
+@charset "UTF-8";
+/* 水平间距 */
+/* 水平间距 */
+.app {
+  background-color: #F5F5F5;
+}
+.top_text {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  font-size: 34rpx;
+  color: #818181;
+  font-weight: 550;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  height: 120rpx;
+  line-height: 90rpx;
+  background-color: #ffffff;
+}
+.show {
+  color: #000000;
+  border-bottom: 6rpx solid rgba(253, 214, 30, 0.8);
+  margin-bottom: 30rpx;
+}
+.beijing {
+  background-color: #ffffff;
+}
+.banner {
+  height: 60vh;
+}
+.swiper-item image {
+  width: 100vw;
+  height: 60vh;
+}
+.top_icon {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 1000;
+  left: 15rpx;
+  top: 15rpx;
+  width: 50rpx;
+  height: 50rpx;
+}
+.top_icon uni-icons {
+  background-color: rgba(94, 94, 94, 0.6);
+  border-radius: 50%;
+  padding: 5rpx;
+}
+.top_icon2 {
+  display: flex;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 1;
+  right: 15rpx;
+  top: 15rpx;
+  width: 50rpx;
+  height: 50rpx;
+}
+.top_icon2 uni-icons {
+  background-color: rgba(94, 94, 94, 0.6);
+  border-radius: 50%;
+  padding: 5rpx;
+}
+.shangpinxx {
+  width: 100%;
+  background-color: #ffffff;
+  padding: 20rpx 20rpx;
+}
+.shangpinxx .spxx {
+  padding-bottom: 50rpx;
+}
+.shangpinxx .spxx text:nth-child(1) {
+  color: #f86007;
+  font-size: 24rpx;
+}
+.shangpinxx .spxx text:nth-child(2) {
+  padding-right: 26rpx;
+  color: #f86007;
+  font-size: 36rpx;
+}
+.shangpinxx .spxx text:nth-child(3) {
+  color: #acacac;
+  font-size: 24rpx;
+  text-decoration: line-through;
+}
+.shangpinxx .spname {
+  font-size: 30rpx;
+  padding-bottom: 28rpx;
+}
+.shangpinxx .by_xl {
+  font-size: 24rpx;
+  color: #747474;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5rpx;
+}
+.pingjia {
+  width: 100%;
+  background-color: #ffffff;
+  padding-bottom: 25rpx;
+}
+.pingjia .pj_top {
+  display: flex;
+  justify-content: space-between;
+  padding: 40rpx 20rpx;
+  margin-top: 25rpx;
+}
+.pingjia .pj_top text:nth-child(1) {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+.pingjia .pj_top text:nth-child(2) {
+  font-size: 24rpx;
+  color: #747474;
+}
+.pingjia .pingjia2 {
+  padding: 10rpx 20rpx;
+}
+.pingjia .users .toux {
+  width: 60rpx;
+  height: 60rpx;
+  padding: 0 20rpx;
+}
+.pingjia .users .pingjia_tupian {
+  display: flex;
+}
+.pingjia .users .pingjia_tupian .pj_image {
+  width: 160rpx;
+  padding: 10rpx 20rpx;
+}
+.pingjia .users .pingjia_tupian .pj_image image {
+  width: 160rpx;
+  height: 170rpx;
+}
+.tuwen {
+  margin-top: 25rpx;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 20rpx 20rpx;
+  font-weight: 600;
+  font-size: 30rpx;
+}
+

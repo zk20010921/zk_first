@@ -16,7 +16,7 @@
 			<swiper circular="true" :indicator-dots="true" indicator-color="#959595" indicator-active-color="#ffffff"
 				:autoplay="true" :interval="3000" :duration="1000">
 				<swiper-item v-for="(item,index) in swiperlist" :key="index">
-					<navigator class="swiper-item" :url="'/subpkg/goods_detail/goods_detail?_id={{item._id}}'">
+					<navigator class="swiper-item">
 						<image :src="item.img" mode="scaleToFill"></image>
 					</navigator>
 				</swiper-item>
@@ -25,7 +25,7 @@
 		<!-- 按钮--分类 -->
 		<view class="cate">
 			<view class="catelist" v-for="(item,index) in catalist" :key="index">
-				<navigator class="cateurl" url="/pages/cate/cate" open-type="switchTab">
+				<navigator class="cateurl" @click="setIndex(index)" url="/pages/cate/cate" open-type="switchTab">
 					<image :src="item.img"></image>
 					<text>{{item.name}}</text>
 				</navigator>
@@ -37,7 +37,7 @@
 			<view class="bd">
 				<scroll-view style="width: 100%;nowrap;display: flex;height: 300rpx;" scroll-x="true"
 					enable-flex="true">
-					<view class="bd_list" v-for="(item,index) in bdlist" :key="index">
+					<view class="bd_list" @click="xiang(item._id)" v-for="(item,index) in bdlist" :key="index">
 						<view class="bd_image">
 							<image style="height: 225rpx;width: 225rpx;" :src="item.img" mode=""></image>
 						</view>
@@ -53,8 +53,8 @@
 		<view class="cnxh">
 			<text class="one">猜你喜欢</text>
 			<view style="display: flex;flex-wrap: wrap;padding-top: 40rpx;">
-				<view class="cnxh_list" style="width: 45.5vw;height: 30vh;" v-for="(item,index) in cailist"
-					:key="index">
+				<view class="cnxh_list" style="width: 45.5vw;height: 35vh;" v-for="(item,index) in cailist" :key="index"
+					@click="xiang(item._id)">
 					<image :src="item.img" mode=""></image>
 					<view class="cnxh_text">
 						<text class="tx">{{item.name}}</text>
@@ -71,7 +71,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 		<view class="bottom" :class="show ? 'bottom2':''">
 			<text>已经到底了</text>
 		</view>
@@ -87,8 +87,10 @@
 				bdlist: [], //榜单列表
 				headerActive: false,
 				cailist: [], //猜你喜欢列表
-				num:0,
-				show:false,//底部字体的显示
+				num: 0,
+				show: false, //底部字体的显示
+				_id: 0, //详情id
+				index: 0
 			}
 		},
 		onLoad() {
@@ -106,12 +108,19 @@
 			this.headerActive = e.scrollTop >= 40;
 		},
 		//下拉触底
-		onReachBottom(){		
-			this.num+=10
+		onReachBottom() {
+			this.num += 10
 			this.getCai()
 			// this.cailist = [...this.cailist,...res.data]
 		},
 		methods: {
+			//跳转详情页
+			xiang(e) {
+				this._id = e
+				uni.navigateTo({
+					url: `/subpkg/goods_detail/goods_detail?_id=${this._id}`
+				})
+			},
 			//轮播图
 			getSwiper() {
 				this.$http.post('/api/get_banner')
@@ -125,9 +134,9 @@
 			},
 			//分类
 			getCataList() {
-				this.$http.post('/api/get_cate',
-				{position:'index'}
-				)
+				this.$http.post('/api/get_cate', {
+						position: 'index'
+					})
 					.then((res) => {
 						console.log(res)
 						this.catalist = res.data
@@ -158,14 +167,19 @@
 					})
 					.then((res) => {
 						console.log(res);
-						this.cailist = [...this.cailist,...res.data]
-						if(res.data.length == 0 || res.data.length <10){
+						this.cailist = [...this.cailist, ...res.data]
+						if (res.data.length == 0 || res.data.length < 10) {
 							this.show = true
 						}
 					})
 					.catch((err) => {
 						console.log(err);
 					})
+			},
+			setIndex(index) {
+				this.index = index
+				console.log(this.index);
+				uni.setStorageSync('index', index)
 			}
 		},
 	}
@@ -192,7 +206,7 @@
 		align-items: center;
 		padding-left: 20rpx;
 		z-index: 1;
-		height: 100rpx;
+		height: 150rpx;
 		width: 100%;
 		padding-top: 50rpx;
 
@@ -302,11 +316,11 @@
 		.cnxh_list {
 			width: 100%;
 			margin: 1vh 1vw;
-			padding-bottom: 150rpx;
+			padding-bottom: 155rpx;
 			font-size: 26rpx;
 
 			.tx {
-				height: 64rpx;
+				height: 79rpx;
 				overflow: hidden;
 				text-overflow: ellipsis;
 				display: -webkit-box;
@@ -314,6 +328,7 @@
 				-webkit-box-orient: vertical;
 				background-color: #ffffff;
 				margin-top: -10rpx;
+				padding-top: 9rpx;
 				padding-bottom: 6rpx;
 				padding-left: 10rpx;
 				padding-right: 10rpx;
@@ -345,10 +360,12 @@
 			}
 		}
 	}
-	.bottom{
+
+	.bottom {
 		display: none;
 	}
-	.bottom2{
+
+	.bottom2 {
 		display: block;
 		text-align: center;
 		padding-bottom: 20rpx;

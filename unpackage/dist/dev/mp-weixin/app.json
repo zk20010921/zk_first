@@ -9,7 +9,10 @@
     {
       "root": "subpkg",
       "pages": [
-        "goods_detail/goods_detail"
+        "goods_detail/goods_detail",
+        "reg/reg",
+        "login/login",
+        "xinxi/xinxi"
       ]
     }
   ],

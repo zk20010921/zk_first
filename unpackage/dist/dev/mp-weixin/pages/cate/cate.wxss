@@ -35,7 +35,7 @@
   padding-bottom: 250rpx;
 }
 .right_big .right_list2 {
-  padding: 20rpx 13.5rpx;
+  padding: 40rpx 13.5rpx;
   font-size: 26rpx;
 }
 .right_big .right_list2 image {
