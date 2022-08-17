@@ -2,9 +2,9 @@
 	<view class="app" id="aaa">
 		<view class="top_text" v-show="headerActive">
 			<view v-for="(item,index) in option3" :key="index">
-			<view @click="textTap(index)">
-				<text>{{item.text}}</text>
-			</view>
+				<view @click="textTap(index)">
+					<text :class="indexs == index ? 'show' : ''">{{item.text}}</text>
+				</view>
 			</view>
 		</view>
 		<!-- 顶部轮播图 -->
@@ -62,13 +62,85 @@
 		<!-- 图文详情 -->
 		<view class="tuwen" id="aaa3">
 			<view style="margin-bottom: 40rpx;">
-			<text>图文详情</text>
+				<text>图文详情</text>
 			</view>
 			<rich-text class="tupian" :nodes="Xiang.desc"></rich-text>
+		</view>
+		<!--  提交订单栏 -->
+		<view class="navigation">
+			<view class="left">
+				<view class="item">
+					<u-icon name="server-fill" :size="20" :color="$u.color['contentColor']"></u-icon>
+					<view class="text u-line-1">客服</view>
+				</view>
+				<view class="item car" @click="fav">
+					<u-icon :name="favs ? 'star-fill' : 'star'" :size="20" :color="favs ? 'yellow' : ''"></u-icon>
+					<view class="text u-line-1">收藏</view>
+				</view>
+				<view class="item">
+					<u-icon name="home" :size="20" :color="$u.color['contentColor']"></u-icon>
+					<view class="text u-line-1">店铺</view>
+				</view>
+			</view>
+			<view class="right">
+				<view class="cart btn u-line-1">加入购物车</view>
+				<view class="buy btn u-line-1" @click="show = true">立即购买</view>
+			</view>
+		</view>
+		<!-- 购买弹出层 -->
+		<view>
+			<u-popup v-model="show" mode="bottom" closeable="true" close-icon-size="20">
+				<scroll-view scroll-y="true">
+					<view class="big">
+						<view class="top">
+							<view class="imas">
+								<image src="../../static/images/shop/goods_banner1.jpg" mode=""></image>
+							</view>
+							<view class="texts">
+								<text style="color: red;">￥{{kuArr.price}}</text>
+								<text>库存:{{kuArr.stock}}</text>
+								<view style="color: #ababab;display: flex;">
+									<text>已选:</text>
+									<view>
+										<text v-for="(item,index) in kuArr.text" :key="index">{{item}}</text>
+									</view>
+								</view>
+
+							</view>
+						</view>
+						<view class="zhong">
+							<view class="zhong2" v-for="(item,index) in Xiang.attr" :key="index">
+								<view class="title">
+									<text class="">{{item.text}}</text>
+								</view>
+								<view class="selects">
+									<view v-for="(item1,index1) in item.values" :key="index1"
+										@click="Tap(index,index1)">
+										<text :class="item1.check == index1 ? 'xuanzhong' : ''">{{item1.text}}</text>
+									</view>
+								</view>
+							</view>
+						</view>
+						<view class="bottom">
+							<view class="title">
+								<text>数量</text>
+							</view>
+							<view class="right">
+								<u-number-box @plus="addNum" @minus="redNum" v-model="value" :max="stock" min="1"
+									size='26' :input-width="30" :input-height="15"></u-number-box>
+							</view>
+						</view>
+						<view class="bottom2" @click="addCard">
+							<text>确定</text>
+						</view>
+					</view>
+				</scroll-view>
+			</u-popup>
 		</view>
 	</view>
 </template>
 <script>
+	import  Vue from 'vue'
 	export default {
 		data() {
 			return {
@@ -76,33 +148,60 @@
 				headerActive: false,
 				//字体选中样式show
 				textShow: false,
-				option3: [
-				      {text:'商品',value:0},
-				      { text: '评论', value: 1},
-				      { text: '详情', value: 2},
-				    ],
-				hightArr:[],
-				index1:0,
-				_id:0,//详情id值
-				Xiang:[],//详情数据
+				option3: [{
+						text: '商品',
+						value: 0
+					},
+					{
+						text: '评论',
+						value: 1
+					},
+					{
+						text: '详情',
+						value: 2
+					},
+				],
+				tapSelect: false, //顶部导航栏是否选中
+				hightArr: [],
+				indexs: 0,
+				_id: 0, //详情id值
+				Xiang: [], //详情数据
+				show: false, //购买弹出层是否展示
+				num: 1, //数量
+				jy: true, //加减禁用状态
+				attr: [], //购买物品详情
+				favs: false, //是否收藏
+				uid: 0, //uid
+				is_fav: 0, //是否收藏
+				index1: 0, //规格索引
+				check: 0,
+				kuArr: null, //价格库存数组
+				value: 1,
+				stock: 0, //库存
+				shopNum: 1, //购买数量
 			};
 		},
 		onLoad(e) {
 			// console.log(e);
 			this._id = e._id
 			// console.log(this._id);
-			this.getXiang()
+			uni.hideTabBar()
+			this.getUid() //获取uid
+			this.attr.forEach(el => {
+				el.check = 0
+			})
+			this.getKu()
 		},
 		mounted() {
-				this.gaoDu()
-				this.gaoDu2()
-				this.gaoDu3()
+			this.gaoDu()
+			this.gaoDu2()
+			this.gaoDu3()
 		},
 		methods: {
 			//监控页面滚动,控制头部变色
 			onPageScroll(e) {
 				this.headerActive = e.scrollTop >= 40;
-				console.log(this.headerActive);
+				// console.log(this.headerActive);
 			},
 			//返回上一页
 			returns() {
@@ -117,9 +216,10 @@
 			//点击字体
 			textTap(e) {
 				console.log(e);
-				this.index1 = e
+				this.indexs = e
+				this.tapSelect = true
 				uni.pageScrollTo({
-					scrollTop:this.hightArr[this.index1]
+					scrollTop: this.hightArr[this.indexs]
 				})
 			},
 			//检测盒子的高度
@@ -127,46 +227,144 @@
 				//第一个
 				const query = uni.createSelectorQuery().in(this);
 				query.select('#aaa').boundingClientRect(data => {
-				  console.log("得到布局位置信息" + JSON.stringify(data));
-				  console.log("节点离页面顶部的距离为" + data.top);
-				  this.hightArr.push(data.top)
-				  console.log(this.hightArr);
+					// console.log("得到布局位置信息" + JSON.stringify(data));
+					// console.log("节点离页面顶部的距离为" + data.top);
+					this.hightArr.push(data.top)
+					// console.log(this.hightArr);
 				}).exec();
 			},
 			gaoDu2() {
-				//第一个
+				//第二个
 				const query = uni.createSelectorQuery().in(this);
 				query.select('#aaa2').boundingClientRect(data => {
-				  console.log("得到布局位置信息" + JSON.stringify(data));
-				  console.log("节点离页面顶部的距离为" + data.top);
-				  this.hightArr.push(data.top - 40)
-				  console.log(this.hightArr);
+					// console.log("得到布局位置信息" + JSON.stringify(data));
+					// console.log("节点离页面顶部的距离为" + data.top);
+					this.hightArr.push(data.top - 40)
+					// console.log(this.hightArr);
 				}).exec();
 			},
 			gaoDu3() {
-				//第一个
+				//第三个
 				const query = uni.createSelectorQuery().in(this);
 				query.select('#aaa3').boundingClientRect(data => {
-				  console.log("得到布局位置信息" + JSON.stringify(data));
-				  console.log("节点离页面顶部的距离为" + data.top);
-				  this.hightArr.push(data.top - 40)
-				  console.log(this.hightArr);
+					// console.log("得到布局位置信息" + JSON.stringify(data));
+					// console.log("节点离页面顶部的距离为" + data.top);
+					this.hightArr.push(data.top - 40)
+					// console.log(this.hightArr);
 				}).exec();
 			},
 			//获取详情
-			getXiang(){
-				this.$http.post('/api/get_goods_detail',
-				{goods_id:this._id}
-				)
-				.then((res)=>{
-					console.log(res);
-					this.Xiang = res.data[0]
-					console.log(this.Xiang)
-					this.Xiang.desc = this.Xiang.desc.replaceAll('<img','<img style="width:100%;"')
+			getXiang() {
+				// console.log(this.uid);
+				this.$http.post('/api/get_goods_detail', {
+						goods_id: this._id,
+						uid: this.uid
+					})
+					.then((res) => {
+						console.log(res);
+						// this.is_fav = res.data[0].competitive//收藏
+						this.attr = res.data[0].attr
+						console.log(this.attr);
+						this.Xiang = res.data[0]
+						// console.log(this.Xiang)
+						this.Xiang.desc = this.Xiang.desc.replaceAll('<img', '<img style="width:100%;"')
+						this.xun()
+					})
+					.catch((err) => {
+						console.log(err);
+					})
+			},
+			//跳转购物车页面
+			toCart() {
+				uni.switchTab({
+					url: '/pages/cart/cart',
+				});
+			},
+			//循环购买列表数组
+			xun() {
+				this.Xiang.attr.forEach((item, index) => {
+					item.check = index
+					console.log(this.Xiang.attr);
 				})
-				.catch((err)=>{
-					console.log(err);
+			},
+			Tap(index, index1) {
+				console.log(index);
+				console.log(index1);
+				this.attr[index].check = index1;z
+				Vue.set(this.attr,index,this.attr[index])
+				// this.check = index1
+				console.log(this.attr[index].check);
+				this.getKu()
+				// console.log(this.attr);
+				this.value = 1
+			},
+
+			//获取uid
+			getUid() {
+				this.uid = uni.getStorageSync('uid')
+				this.getXiang()
+			},
+			//收藏
+			// fav(){
+			// 	this.$http.post('/api/toggle_fav',
+			// 	{goods_id:this._id,uid:this.uid,is_fav:this.is_fav,name:this.Xiang.name,price:this.Xiang.price,img:this.Xiang.img}
+			// 	)
+			// 	.then((res)=>{
+			// 		console.log(res);
+			// 		this.favs = !this.favs
+			// 	})
+			// 	.catch((err)=>{
+			// 		console.log(err);
+			// 	})
+			// },
+			//获取库存/价格
+			getKu() {
+				let choose_attr = this.attr.map(el => {
+					return el.values[el.check].text
 				})
+				console.log(choose_attr);
+				this.$http.post('/api/get_sku', {
+					goods_id: this._id,
+					sku: choose_attr
+				}).then(res => {
+					console.log(res)
+					this.kuArr = res.data
+					this.stock = res.data.stock
+				})
+			},
+			//减少购买数量
+			addNum(e) {
+				this.shopNum = e.value
+			},
+			//增加购买数量
+			redNum(e) {
+				this.shopNum = e.value
+			},
+			//添加购物车
+			addCard() {
+				// console.log(this.uid);
+				// console.log(this.Xiang.name);
+				// console.log(this.kuArr.price);
+				// console.log(this.Xiang.img);
+				// console.log(this._id);
+				// console.log(this.shopNum);
+				// console.log(this.attr);
+				this.$http.post('/api/add_cart', {
+						uid: this.uid,
+						name: this.Xiang.name,
+						price: this.kuArr.price,
+						img: this.Xiang.img,
+						goods_id: this._id,
+						num: this.shopNum,
+						attr: this.attr,
+						type: 'buy'
+					})
+					.then((res) => {
+						console.log(res);
+					})
+					.catch((err) => {
+						console.log(err);
+					})
 			}
 		}
 	};
@@ -342,5 +540,173 @@
 		padding: 20rpx 20rpx;
 		font-weight: 600;
 		font-size: 30rpx;
+		padding-bottom: 85rpx;
+	}
+
+	.navigation {
+		display: flex;
+		margin-top: 100rpx;
+		border: solid 2rpx #f2f2f2;
+		background-color: #ffffff;
+		padding: 16rpx 0;
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+
+		.left {
+			display: flex;
+			font-size: 20rpx;
+
+			.item {
+				margin: 0 30rpx;
+
+				&.car {
+					text-align: center;
+					position: relative;
+
+					.car-num {
+						position: absolute;
+						top: -10rpx;
+						right: -10rpx;
+					}
+				}
+			}
+		}
+
+		.right {
+			display: flex;
+			font-size: 28rpx;
+			align-items: center;
+
+			.btn {
+				line-height: 66rpx;
+				padding: 0 30rpx;
+				border-radius: 36rpx;
+				color: #ffffff;
+			}
+
+			.cart {
+				background-color: #ed3f14;
+				margin-right: 30rpx;
+			}
+
+			.buy {
+				background-color: #ff7900;
+			}
+		}
+	}
+
+	.big {
+		width: 100%;
+		height: 50vh;
+		background-color: #ffffff;
+
+		.top {
+			display: flex;
+		}
+
+		.imas {
+			margin-top: 15rpx;
+			margin-left: 15rpx;
+
+			image {
+				width: 18vh;
+				height: 25vw;
+			}
+		}
+
+		.texts {
+			display: flex;
+			flex-direction: column;
+			margin-top: 85rpx;
+			margin-left: 15rpx;
+		}
+
+		.texts text:nth-child(1) {
+			font-size: 28rpx;
+		}
+
+		.texts text:nth-child(2) {
+			color: #ababab;
+			font-size: 28rpx;
+		}
+
+		.texts text:nth-child(3) {
+			color: #ababab;
+			font-size: 28rpx;
+		}
+
+		.zhong .zhong2:nth-child(1) {
+			margin-bottom: 60rpx;
+		}
+
+		.zhong .zhong2:nth-child(2) {
+			margin-bottom: 60rpx;
+		}
+
+		.zhong {
+			margin-top: 40rpx;
+			margin-left: 20rpx;
+
+			.selects {
+				display: flex;
+			}
+
+			.title {
+				color: #737373;
+				font-size: 26rpx;
+				padding-bottom: 20rpx;
+			}
+
+			.selects text {
+				background-color: #ececec;
+				padding: 8rpx 30rpx;
+				margin: 0 15rpx;
+				border-radius: 50rpx;
+				font-size: 28rpx;
+			}
+		}
+
+		.bottom {
+			margin-top: 40rpx;
+			margin-left: 20rpx;
+			display: flex;
+			justify-content: space-between;
+			padding-right: 20rpx;
+			padding-bottom: 150rpx;
+
+			.title {
+				color: #737373;
+				font-size: 26rpx;
+				padding-bottom: 20rpx;
+			}
+
+			.right text:nth-child(2) {
+				background-color: #ececec;
+				padding: 5rpx 20rpx;
+				margin: 0 8rpx;
+			}
+		}
+	}
+
+	.bottom2 {
+		width: 100%;
+		background-color: rgb(253, 209, 0);
+		height: 8vh;
+		position: fixed;
+		bottom: 0;
+		text-align: center;
+		line-height: 8vh;
+		font-size: 32rpx;
+		font-weight: 600;
+	}
+
+	.jinyong {
+		color: #ececec;
+	}
+
+	.xuanzhong {
+		background-color: #ffd7d7 !important;
+		color: #ed3f14 !important;
 	}
 </style>

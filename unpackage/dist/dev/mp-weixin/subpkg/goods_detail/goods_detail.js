@@ -99,6 +99,15 @@ try {
   components = {
     uniIcons: function() {
       return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 259))
+    },
+    uIcon: function() {
+      return __webpack_require__.e(/*! import() | components/u-icon/u-icon */ "components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! @/components/u-icon/u-icon.vue */ 267))
+    },
+    uPopup: function() {
+      return __webpack_require__.e(/*! import() | components/u-popup/u-popup */ "components/u-popup/u-popup").then(__webpack_require__.bind(null, /*! @/components/u-popup/u-popup.vue */ 274))
+    },
+    uNumberBox: function() {
+      return __webpack_require__.e(/*! import() | components/u-number-box/u-number-box */ "components/u-number-box/u-number-box").then(__webpack_require__.bind(null, /*! @/components/u-number-box/u-number-box.vue */ 319))
     }
   }
 } catch (e) {
@@ -122,6 +131,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  if (!_vm._isMounted) {
+    _vm.e0 = function($event) {
+      _vm.show = true
+    }
+  }
 }
 var recyclableRender = false
 var staticRenderFns = []
@@ -155,171 +169,369 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var _default =
-{
-  data: function data() {
-    return {
-      //头部导航栏show
-      headerActive: false,
-      //字体选中样式show
-      textShow: false,
-      option3: [
-      { text: '商品', value: 0 },
-      { text: '评论', value: 1 },
-      { text: '详情', value: 2 }],
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
 
-      hightArr: [],
-      index1: 0,
-      _id: 0, //详情id值
-      Xiang: [] //详情数据
-    };
-  },
-  onLoad: function onLoad(e) {
-    // console.log(e);
-    this._id = e._id;
-    // console.log(this._id);
-    this.getXiang();
-  },
-  mounted: function mounted() {
-    this.gaoDu();
-    this.gaoDu2();
-    this.gaoDu3();
-  },
-  methods: {
-    //监控页面滚动,控制头部变色
-    onPageScroll: function onPageScroll(e) {
-      this.headerActive = e.scrollTop >= 40;
-      console.log(this.headerActive);
-    },
-    //返回上一页
-    returns: function returns() {
-      uni.navigateBack();
-    },
-    //进入购物车页面
-    toShoping: function toShoping() {
-      uni.switchTab({
-        url: '/pages/cart/cart' });
 
-    },
-    //点击字体
-    textTap: function textTap(e) {
-      console.log(e);
-      this.index1 = e;
-      uni.pageScrollTo({
-        scrollTop: this.hightArr[this.index1] });
 
-    },
-    //检测盒子的高度
-    gaoDu: function gaoDu() {var _this = this;
-      //第一个
-      var query = uni.createSelectorQuery().in(this);
-      query.select('#aaa').boundingClientRect(function (data) {
-        console.log("得到布局位置信息" + JSON.stringify(data));
-        console.log("节点离页面顶部的距离为" + data.top);
-        _this.hightArr.push(data.top);
-        console.log(_this.hightArr);
-      }).exec();
-    },
-    gaoDu2: function gaoDu2() {var _this2 = this;
-      //第一个
-      var query = uni.createSelectorQuery().in(this);
-      query.select('#aaa2').boundingClientRect(function (data) {
-        console.log("得到布局位置信息" + JSON.stringify(data));
-        console.log("节点离页面顶部的距离为" + data.top);
-        _this2.hightArr.push(data.top - 40);
-        console.log(_this2.hightArr);
-      }).exec();
-    },
-    gaoDu3: function gaoDu3() {var _this3 = this;
-      //第一个
-      var query = uni.createSelectorQuery().in(this);
-      query.select('#aaa3').boundingClientRect(function (data) {
-        console.log("得到布局位置信息" + JSON.stringify(data));
-        console.log("节点离页面顶部的距离为" + data.top);
-        _this3.hightArr.push(data.top - 40);
-        console.log(_this3.hightArr);
-      }).exec();
-    },
-    //获取详情
-    getXiang: function getXiang() {var _this4 = this;
-      this.$http.post('/api/get_goods_detail',
-      { goods_id: this._id }).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 4));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };} //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = { data: function data() {return { //头部导航栏show
+      headerActive: false, //字体选中样式show
+      textShow: false, option3: [{ text: '商品', value: 0 }, { text: '评论', value: 1 }, { text: '详情', value: 2 }], tapSelect: false, //顶部导航栏是否选中
+      hightArr: [], indexs: 0, _id: 0, //详情id值
+      Xiang: [], //详情数据
+      show: false, //购买弹出层是否展示
+      num: 1, //数量
+      jy: true, //加减禁用状态
+      attr: [], //购买物品详情
+      favs: false, //是否收藏
+      uid: 0, //uid
+      is_fav: 0, //是否收藏
+      index1: 0, //规格索引
+      check: 0, kuArr: null, //价格库存数组
+      value: 1, stock: 0, //库存
+      shopNum: 1 //购买数量
+    };}, onLoad: function onLoad(e) {// console.log(e);
+    this._id = e._id; // console.log(this._id);
+    uni.hideTabBar();this.getUid(); //获取uid
+    this.attr.forEach(function (el) {el.check = 0;});this.getKu();}, mounted: function mounted() {this.gaoDu();this.gaoDu2();this.gaoDu3();}, methods: { //监控页面滚动,控制头部变色
+    onPageScroll: function onPageScroll(e) {this.headerActive = e.scrollTop >= 40; // console.log(this.headerActive);
+    }, //返回上一页
+    returns: function returns() {uni.navigateBack();}, //进入购物车页面
+    toShoping: function toShoping() {uni.switchTab({ url: '/pages/cart/cart' });}, //点击字体
+    textTap: function textTap(e) {console.log(e);this.indexs = e;this.tapSelect = true;uni.pageScrollTo({ scrollTop: this.hightArr[this.indexs] });}, //检测盒子的高度
+    gaoDu: function gaoDu() {var _this = this; //第一个
+      var query = uni.createSelectorQuery().in(this);query.select('#aaa').boundingClientRect(function (data) {// console.log("得到布局位置信息" + JSON.stringify(data));
+        // console.log("节点离页面顶部的距离为" + data.top);
+        _this.hightArr.push(data.top); // console.log(this.hightArr);
+      }).exec();}, gaoDu2: function gaoDu2() {var _this2 = this; //第二个
+      var query = uni.createSelectorQuery().in(this);query.select('#aaa2').boundingClientRect(function (data) {// console.log("得到布局位置信息" + JSON.stringify(data));
+        // console.log("节点离页面顶部的距离为" + data.top);
+        _this2.hightArr.push(data.top - 40); // console.log(this.hightArr);
+      }).exec();}, gaoDu3: function gaoDu3() {var _this3 = this; //第三个
+      var query = uni.createSelectorQuery().in(this);query.select('#aaa3').boundingClientRect(function (data) {// console.log("得到布局位置信息" + JSON.stringify(data));
+        // console.log("节点离页面顶部的距离为" + data.top);
+        _this3.hightArr.push(data.top - 40); // console.log(this.hightArr);
+      }).exec();}, //获取详情
+    getXiang: function getXiang() {var _this4 = this; // console.log(this.uid);
+      this.$http.post('/api/get_goods_detail', { goods_id: this._id, uid: this.uid }).then(function (res) {console.log(res); // this.is_fav = res.data[0].competitive//收藏
+        _this4.attr = res.data[0].attr;console.log(_this4.attr);_this4.Xiang = res.data[0]; // console.log(this.Xiang)
+        _this4.Xiang.desc = _this4.Xiang.desc.replaceAll('<img', '<img style="width:100%;"');_this4.xun();}).catch(function (err) {console.log(err);});}, //跳转购物车页面
+    toCart: function toCart() {uni.switchTab({ url: '/pages/cart/cart' });}, //循环购买列表数组
+    xun: function xun() {var _this5 = this;this.Xiang.attr.forEach(function (item, index) {item.check = index;console.log(_this5.Xiang.attr);});}, Tap: function Tap(index, index1) {console.log(index);console.log(index1);this.attr[index].check = index1;z;_vue.default.set(this.attr, index, this.attr[index]); // this.check = index1
+      console.log(this.attr[index].check);this.getKu(); // console.log(this.attr);
+      this.value = 1;}, //获取uid
+    getUid: function getUid() {this.uid = uni.getStorageSync('uid');this.getXiang();}, //收藏
+    // fav(){
+    // 	this.$http.post('/api/toggle_fav',
+    // 	{goods_id:this._id,uid:this.uid,is_fav:this.is_fav,name:this.Xiang.name,price:this.Xiang.price,img:this.Xiang.img}
+    // 	)
+    // 	.then((res)=>{
+    // 		console.log(res);
+    // 		this.favs = !this.favs
+    // 	})
+    // 	.catch((err)=>{
+    // 		console.log(err);
+    // 	})
+    // },
+    //获取库存/价格
+    getKu: function getKu() {var _this6 = this;var choose_attr = this.attr.map(function (el) {return el.values[el.check].text;});console.log(choose_attr);this.$http.post('/api/get_sku', { goods_id: this._id, sku: choose_attr }).then(function (res) {console.log(res);_this6.kuArr = res.data;_this6.stock = res.data.stock;});}, //减少购买数量
+    addNum: function addNum(e) {this.shopNum = e.value;}, //增加购买数量
+    redNum: function redNum(e) {this.shopNum = e.value;}, //添加购物车
+    addCard: function addCard() {// console.log(this.uid);
+      // console.log(this.Xiang.name);
+      // console.log(this.kuArr.price);
+      // console.log(this.Xiang.img);
+      // console.log(this._id);
+      // console.log(this.shopNum);
+      // console.log(this.attr);
+      this.$http.post('/api/add_cart', { uid: this.uid, name: this.Xiang.name,
+        price: this.kuArr.price,
+        img: this.Xiang.img,
+        goods_id: this._id,
+        num: this.shopNum,
+        attr: this.attr,
+        type: 'buy' }).
 
       then(function (res) {
         console.log(res);
-        _this4.Xiang = res.data[0];
-        console.log(_this4.Xiang);
-        _this4.Xiang.desc = _this4.Xiang.desc.replaceAll('<img', '<img style="width:100%;"');
       }).
       catch(function (err) {
         console.log(err);
