@@ -116,11 +116,7 @@
 								<view class="selects">
 									<view v-for="(item1,index1) in item.values" :key="index1"
 										@click="Tap(index,index1)">
-<<<<<<< HEAD
-										<text :class="item1.check == index1 ? 'xuanzhong' : ''">{{item1.text}}</text>
-=======
 										<text :class="item.check == index1 ? 'xuanzhong' : ''">{{item1.text}}</text>
->>>>>>> shop
 									</view>
 								</view>
 							</view>
@@ -186,11 +182,9 @@
 			};
 		},
 		onLoad(e) {
+			// console.log(e);
 			this._id = e._id
-<<<<<<< HEAD
 			// console.log(this._id);
-=======
->>>>>>> shop
 			uni.hideTabBar()
 			this.getUid() //获取uid
 			this.attr.forEach(el => {
@@ -207,10 +201,7 @@
 			//监控页面滚动,控制头部变色
 			onPageScroll(e) {
 				this.headerActive = e.scrollTop >= 40;
-<<<<<<< HEAD
 				// console.log(this.headerActive);
-=======
->>>>>>> shop
 			},
 			//返回上一页
 			returns() {
@@ -264,27 +255,18 @@
 			},
 			//获取详情
 			getXiang() {
-<<<<<<< HEAD
 				// console.log(this.uid);
-=======
->>>>>>> shop
 				this.$http.post('/api/get_goods_detail', {
 						goods_id: this._id,
 						uid: this.uid
 					})
 					.then((res) => {
 						console.log(res);
-<<<<<<< HEAD
 						// this.is_fav = res.data[0].competitive//收藏
 						this.attr = res.data[0].attr
 						console.log(this.attr);
 						this.Xiang = res.data[0]
 						// console.log(this.Xiang)
-=======
-						this.attr = res.data[0].attr
-						console.log(this.attr);
-						this.Xiang = res.data[0]
->>>>>>> shop
 						this.Xiang.desc = this.Xiang.desc.replaceAll('<img', '<img style="width:100%;"')
 						this.xun()
 					})
@@ -306,20 +288,14 @@
 				})
 			},
 			Tap(index, index1) {
-<<<<<<< HEAD
 				console.log(index);
 				console.log(index1);
-				this.attr[index].check = index1;z
+				this.attr[index].check = index1;
 				Vue.set(this.attr,index,this.attr[index])
 				// this.check = index1
 				console.log(this.attr[index].check);
 				this.getKu()
 				// console.log(this.attr);
-=======
-				this.attr[index].check = index1;
-				Vue.set(this.attr,index,this.attr[index])
-				this.getKu()
->>>>>>> shop
 				this.value = 1
 			},
 
