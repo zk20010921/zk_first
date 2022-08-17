@@ -1,0 +1,206 @@
+@charset "UTF-8";
+/* 水平间距 */
+/* 水平间距 */
+input::-webkit-input-placeholder {
+  color: #ccc;
+}
+input::-moz-input-placeholder {
+  color: #ccc;
+}
+input::-ms-input-placeholder {
+  color: #ccc;
+}
+.order_ipt {
+  width: 580rpx;
+  height: 30px;
+  border: 1px #eee solid;
+  border-radius: 20px;
+  font-size: 30rpx;
+  line-height: 30px;
+  color: #666;
+  padding: 0 10px;
+  margin: 7.5px 0;
+  text-align: center;
+}
+.order_box {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  padding: 100rpx 30rpx 20rpx;
+}
+.order_box .order_list {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  background: white;
+  border-radius: 16rpx;
+  margin-top: 30rpx;
+  padding: 20rpx;
+}
+.order_box .order_list .order_top {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.order_box .order_list .order_top image {
+  display: block;
+  width: 40rpx;
+  height: 38rpx;
+  float: left;
+  border-radius: 6rpx;
+}
+.order_box .order_list .order_top .order_pa {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 38rpx;
+  float: left;
+  margin-left: 16rpx;
+}
+.order_box .order_list .order_top .order_pb {
+  font-size: 24rpx;
+  line-height: 38rpx;
+  float: right;
+}
+.order_box .order_list .order_center {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  margin-top: 24rpx;
+}
+.order_box .order_list .order_center image {
+  display: block;
+  width: 200rpx;
+  height: 200rpx;
+  float: left;
+}
+.order_box .order_list .order_center .order_good {
+  width: calc(100% - 200rpx);
+  height: 200rpx;
+  padding-left: 20rpx;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.order_box .order_list .order_center .order_good .order_pc {
+  font-size: 24rpx;
+  color: #000000;
+  height: 76rpx;
+  width: 100%;
+  line-height: 36rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+.order_box .order_list .order_center .order_good .order_pd {
+  font-size: 24rpx;
+  color: #999999;
+  margin-top: 16rpx;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.order_box .order_list .order_center .order_good .order_pe {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.order_box .order_list .order_center .order_good .order_pe text {
+  color: #999999;
+  font-size: 24rpx;
+  font-weight: normal;
+}
+.order_box .order_list .order_fee {
+  width: 100%;
+  height: 50rpx;
+  overflow: hidden;
+  line-height: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 8px;
+}
+.order_box .order_list .order_fee .order_pf {
+  font-size: 24rpx;
+  display: block;
+  float: left;
+  line-height: 29rpx;
+  color: #999999;
+}
+.order_box .order_list .order_fee .order_pg {
+  font-size: 24rpx;
+  display: block;
+  float: right;
+  line-height: 29rpx;
+  color: #999999;
+}
+.order_box .order_list .order_bottom {
+  width: auto;
+  height: auto;
+  float: right;
+  margin-top: 16rpx;
+  overflow: hidden;
+}
+.order_box .order_list .order_bottom text {
+  display: inline-block;
+  min-width: 130rpx;
+  height: 48rpx;
+  background: white;
+  border: 1px solid #bfbfbf;
+  opacity: 1;
+  border-radius: 30rpx;
+  font-size: 24rpx;
+  text-align: center;
+  padding: 0 17rpx;
+  line-height: 48rpx;
+  margin-left: 24rpx;
+}
+.order_box .order_list .order_bottom .act {
+  color: white;
+}
+.icon-sousuo11 {
+  font-size: 40rpx;
+  color: #999999;
+}
+.icon-fanhui11 {
+  font-size: 32rpx;
+}
+.order_tit {
+  width: 100%;
+  height: 87rpx;
+  position: fixed;
+  left: 0;
+  z-index: 22;
+  background: white;
+}
+.order_tit .scroll {
+  height: 87rpx;
+}
+.order_tit .scroll text {
+  display: block;
+  width: 20%;
+  height: auto;
+  line-height: 87rpx;
+  float: left;
+  text-align: center;
+  font-size: 28rpx;
+  position: relative;
+  color: #999999;
+}
+.order_tit .scroll .act:before {
+  content: '';
+  width: 64rpx;
+  height: 8rpx;
+  border-radius: 80rpx;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+

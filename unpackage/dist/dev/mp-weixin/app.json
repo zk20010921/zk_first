@@ -12,7 +12,14 @@
         "goods_detail/goods_detail",
         "reg/reg",
         "login/login",
-        "xinxi/xinxi"
+        "xinxi/xinxi",
+        "ding/ding",
+        "set/set",
+        "about/about",
+        "fav/fav",
+        "address/address",
+        "product/product",
+        "list/list"
       ]
     }
   ],

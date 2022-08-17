@@ -18296,7 +18296,72 @@ platform = 'mp';var _default =
 platform;exports.default = _default;
 
 /***/ }),
-/* 136 */,
+/* 136 */
+/*!************************************!*\
+  !*** D:/uni-app/laichong/mixin.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
+function $date(timeStamp, format) {
+  if ('' + timeStamp.length <= 10) {
+    timeStamp = +timeStamp * 1000;
+  } else {
+    timeStamp = +timeStamp;
+  }
+  var _date = new Date(timeStamp),
+  Y = _date.getFullYear(),
+  m = _date.getMonth() + 1,
+  d = _date.getDate(),
+  H = _date.getHours(),
+  i = _date.getMinutes(),
+  s = _date.getSeconds();
+
+  m = m < 10 ? '0' + m : m;
+  d = d < 10 ? '0' + d : d;
+  H = H < 10 ? '0' + H : H;
+  i = i < 10 ? '0' + i : i;
+  s = s < 10 ? '0' + s : s;
+
+  return format.replace(/[YmdHis]/g, function (key) {
+    return { Y: Y, m: m, d: d, H: H, i: i, s: s }[key];
+  });
+}
+
+
+var mixin = {
+
+  data: function data() {
+    return {};
+
+
+  },
+  methods: {
+    navTo: function navTo(url) {
+      uni.navigateTo({
+        url: url });
+
+    },
+    back: function back(num) {
+      if (typeof num === 'object' || !num) {
+        num = 1;
+      }
+      uni.navigateBack({
+        delta: num });
+
+    } } };var _default =
+
+
+
+
+
+
+mixin;exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
+
+/***/ }),
 /* 137 */
 /*!**************************************!*\
   !*** D:/uni-app/laichong/request.js ***!

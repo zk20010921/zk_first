@@ -9,8 +9,8 @@
       "list": [
         {
           "name": "我的",
-          "pathName": "subpkg/login/login",
-          "query": "",
+          "pathName": "subpkg/goods_detail/goods_detail",
+          "query": "_id=5ffeb089d06eec000127034a",
           "launchMode": "default",
           "scene": null
         }

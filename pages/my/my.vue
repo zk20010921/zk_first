@@ -19,7 +19,7 @@
 			</view>
 		</view>
 
-		<view class="order-section" @click="navTo('/pages/order/order')">
+		<view class="order-section" @click="navTo('/subpkg/ding/ding')">
 			<view class="order-item">
 				<uni-icons type="calendar" color="#FDD51A" size="28"></uni-icons>
 				<text>全部订单</text>
@@ -42,21 +42,21 @@
 			</view>
 		</view>
 		<view class="my_list">
-			<view class="my_list_menu">
+			<view class="my_list_menu" @click="navTo('/subpkg/fav/fav')">
 				<uni-icons class="iconfont" size="24" color="#888888" type="star-filled"></uni-icons>
 				<view class="">
 					<text>我的收藏</text>
 					<text class="iconfont icon-youjiantou"></text>
 				</view>
 			</view>
-			<view class="my_list_menu">
+			<view class="my_list_menu" @click="navTo('/subpkg/address/address')">
 				<uni-icons class="iconfont" size="24" color="#888888" type="location-filled"></uni-icons>
 				<view class="">
 					<text>地址管理</text>
 					<text class="iconfont icon-youjiantou"></text>
 				</view>
 			</view>
-			<view class="my_list_menu">
+			<view class="my_list_menu" @click="navTo('/subpkg/about/about')">
 				<uni-icons class="iconfont" size="22" color="#888888" type="heart-filled"></uni-icons>
 				<view class="">
 					<text>关于我们</text>
@@ -70,7 +70,7 @@
 					<text class="iconfont icon-youjiantou"></text>
 				</view>
 			</view>
-			<view class="my_list_menu">
+			<view class="my_list_menu" @click="navTo('/subpkg/set/set')">
 				<uni-icons class="iconfont" size="22" color="#888888" type="gear-filled"></uni-icons>
 				<view class="">
 					<text>设置</text>

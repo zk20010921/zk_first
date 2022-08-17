@@ -334,9 +334,7 @@ var _default =
       });
     },
     setIndex: function setIndex(index) {
-      this.index = index;
-      console.log(this.index);
-      uni.setStorageSync('index', index);
+
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 

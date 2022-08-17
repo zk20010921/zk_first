@@ -8,6 +8,9 @@ import uView from "uview-ui";
 Vue.use(uView);
 
 
+import mixin from './mixin.js'
+Vue.mixin(mixin)
+
 import fly from './request.js'
 Vue.prototype.$http = fly
 
