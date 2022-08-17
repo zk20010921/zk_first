@@ -1,0 +1,26 @@
+@charset "UTF-8";
+/* 水平间距 */
+/* 水平间距 */
+.page {
+  background: white;
+  min-height: 100vh;
+}
+.yinsi_cont {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  padding: 0 30rpx;
+}
+.yinsi_cont .yinsi_tit {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333333;
+  display: block;
+}
+.yinsi_cont .yinsi_box {
+  padding: 20rpx 0;
+  font-size: 30rpx;
+  color: #333;
+  line-height: 56rpx;
+}
+

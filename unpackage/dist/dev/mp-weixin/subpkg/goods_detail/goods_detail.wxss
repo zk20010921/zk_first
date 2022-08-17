@@ -141,5 +141,144 @@
   padding: 20rpx 20rpx;
   font-weight: 600;
   font-size: 30rpx;
+  padding-bottom: 85rpx;
+}
+.navigation {
+  display: flex;
+  margin-top: 100rpx;
+  border: solid 2rpx #f2f2f2;
+  background-color: #ffffff;
+  padding: 16rpx 0;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.navigation .left {
+  display: flex;
+  font-size: 20rpx;
+}
+.navigation .left .item {
+  margin: 0 30rpx;
+}
+.navigation .left .item.car {
+  text-align: center;
+  position: relative;
+}
+.navigation .left .item.car .car-num {
+  position: absolute;
+  top: -10rpx;
+  right: -10rpx;
+}
+.navigation .right {
+  display: flex;
+  font-size: 28rpx;
+  align-items: center;
+}
+.navigation .right .btn {
+  line-height: 66rpx;
+  padding: 0 30rpx;
+  border-radius: 36rpx;
+  color: #ffffff;
+}
+.navigation .right .cart {
+  background-color: #ed3f14;
+  margin-right: 30rpx;
+}
+.navigation .right .buy {
+  background-color: #ff7900;
+}
+.big {
+  width: 100%;
+  height: 50vh;
+  background-color: #ffffff;
+}
+.big .top {
+  display: flex;
+}
+.big .imas {
+  margin-top: 15rpx;
+  margin-left: 15rpx;
+}
+.big .imas image {
+  width: 18vh;
+  height: 25vw;
+}
+.big .texts {
+  display: flex;
+  flex-direction: column;
+  margin-top: 85rpx;
+  margin-left: 15rpx;
+}
+.big .texts text:nth-child(1) {
+  font-size: 28rpx;
+}
+.big .texts text:nth-child(2) {
+  color: #ababab;
+  font-size: 28rpx;
+}
+.big .texts text:nth-child(3) {
+  color: #ababab;
+  font-size: 28rpx;
+}
+.big .zhong .zhong2:nth-child(1) {
+  margin-bottom: 60rpx;
+}
+.big .zhong .zhong2:nth-child(2) {
+  margin-bottom: 60rpx;
+}
+.big .zhong {
+  margin-top: 40rpx;
+  margin-left: 20rpx;
+}
+.big .zhong .selects {
+  display: flex;
+}
+.big .zhong .title {
+  color: #737373;
+  font-size: 26rpx;
+  padding-bottom: 20rpx;
+}
+.big .zhong .selects text {
+  background-color: #ececec;
+  padding: 8rpx 30rpx;
+  margin: 0 15rpx;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+}
+.big .bottom {
+  margin-top: 40rpx;
+  margin-left: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 20rpx;
+  padding-bottom: 150rpx;
+}
+.big .bottom .title {
+  color: #737373;
+  font-size: 26rpx;
+  padding-bottom: 20rpx;
+}
+.big .bottom .right text:nth-child(2) {
+  background-color: #ececec;
+  padding: 5rpx 20rpx;
+  margin: 0 8rpx;
+}
+.bottom2 {
+  width: 100%;
+  background-color: #fdd100;
+  height: 8vh;
+  position: fixed;
+  bottom: 0;
+  text-align: center;
+  line-height: 8vh;
+  font-size: 32rpx;
+  font-weight: 600;
+}
+.jinyong {
+  color: #ececec;
+}
+.xuanzhong {
+  background-color: #ffd7d7 !important;
+  color: #ed3f14 !important;
 }
 

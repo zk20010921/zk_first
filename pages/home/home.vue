@@ -25,10 +25,10 @@
 		<!-- 按钮--分类 -->
 		<view class="cate">
 			<view class="catelist" v-for="(item,index) in catalist" :key="index">
-				<navigator class="cateurl" @click="setIndex(index)" url="/pages/cate/cate" open-type="switchTab">
+				<view class="cateurl" @click="navTo('/subpkg/list/list?cate_id=' + 'item._id')"  open-type="switchTab">
 					<image :src="item.img"></image>
 					<text>{{item.name}}</text>
-				</navigator>
+				</view>
 			</view>
 		</view>
 		<!-- 精选物品 -->
@@ -177,9 +177,7 @@
 					})
 			},
 			setIndex(index) {
-				this.index = index
-				console.log(this.index);
-				uni.setStorageSync('index', index)
+				
 			}
 		},
 	}
