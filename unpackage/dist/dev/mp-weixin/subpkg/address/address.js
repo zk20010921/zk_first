@@ -23,11 +23,6 @@ wx.__webpack_require_UNI_MP_PLUGIN__ = __webpack_require__;createPage(_address.d
   !*** D:/uni-app/laichong/subpkg/address/address.vue ***!
   \******************************************************/
 /*! no static exports found */
-<<<<<<< HEAD
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js):\nError: ENOENT: no such file or directory, open 'D:\\uni-app\\laichong\\subpkg\\address\\address.vue'");
-=======
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -134,8 +129,10 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/uni-app/laichong/subpkg/address/address.vue?vue&type=script&lang=js& ***!
   \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -176,9 +173,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
+var _default =
+{
+  data: function data() {
+    return {
+      uid: 0,
+      token: 0,
+      isShow: false //是否显示——您还没有收货地址
+    };
+  },
+  onLoad: function onLoad() {
+    this.getUid_token();
+    this.getAddressList();
+  },
+  methods: {
+    //获取uid和token
+    getUid_token: function getUid_token() {
+      this.uid = uni.getStorageSync('uid');
+      this.token = uni.getStorageSync('token');
+    },
+    getAddressList: function getAddressList() {
+      this.$http.post('/order/getAddrList', {
+        uid: this.uid,
+        token: this.token }).
+
+      then(function (res) {
+        console.log(res);
+      }).
+      catch(function (err) {
+        console.log(err);
+      });
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
@@ -208,7 +234,6 @@ __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
     if(false) { var cssReload; }
   
->>>>>>> shop
 
 /***/ })
 

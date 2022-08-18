@@ -273,6 +273,7 @@
   line-height: 8vh;
   font-size: 32rpx;
   font-weight: 600;
+  z-index: 1000;
 }
 .jinyong {
   color: #ececec;
@@ -280,5 +281,18 @@
 .xuanzhong {
   background-color: #ffd7d7 !important;
   color: #ed3f14 !important;
+}
+wx-swiper .wx-swiper-dot {
+  width: 32rpx;
+  height: 6rpx;
+  border-radius: 2rp;
+  background-color: #ffffff;
+  opacity: 0.8;
+}
+wx-swiper .wx-swiper-dot-active {
+  background-color: #565656;
+  width: 32rpx;
+  height: 6rpx;
+  border-radius: 2rpx;
 }
 

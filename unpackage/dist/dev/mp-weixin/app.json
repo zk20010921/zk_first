@@ -19,7 +19,9 @@
         "fav/fav",
         "address/address",
         "product/product",
-        "list/list"
+        "list/list",
+        "creatOrder/creatOrder",
+        "addressManage/addressManage"
       ]
     }
   ],

@@ -160,4 +160,17 @@ image {
   font-size: 26rpx;
   color: #a6a6a6;
 }
+wx-swiper .wx-swiper-dot {
+  width: 32rpx;
+  height: 6rpx;
+  border-radius: 2rp;
+  background-color: #ffffff;
+  opacity: 0.8;
+}
+wx-swiper .wx-swiper-dot-active {
+  background-color: #565656;
+  width: 32rpx;
+  height: 6rpx;
+  border-radius: 2rpx;
+}
 

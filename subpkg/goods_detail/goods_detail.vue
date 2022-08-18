@@ -70,15 +70,15 @@
 		<view class="navigation">
 			<view class="left">
 				<view class="item">
-					<u-icon name="server-fill" :size="20" :color="$u.color['contentColor']"></u-icon>
+					<uni-icons type="contact" size="22"></uni-icons>
 					<view class="text u-line-1">客服</view>
 				</view>
 				<view class="item car" @click="fav">
-					<u-icon :name="favs ? 'star-fill' : 'star'" :size="20" :color="favs ? 'yellow' : ''"></u-icon>
+					<uni-icons :type="favs ? 'star-filled' : 'star'" :size="22" :color="favs ? '#FDD61E' : ''"></uni-icons>
 					<view class="text u-line-1">收藏</view>
 				</view>
 				<view class="item">
-					<u-icon name="home" :size="20" :color="$u.color['contentColor']"></u-icon>
+					<uni-icons type="home" size="22"></uni-icons>
 					<view class="text u-line-1">店铺</view>
 				</view>
 			</view>
@@ -97,12 +97,64 @@
 								<image src="../../static/images/shop/goods_banner1.jpg" mode=""></image>
 							</view>
 							<view class="texts">
-								<text style="color: red;">￥{{kuArr.price}}</text>
-								<text>库存:{{kuArr.stock}}</text>
+								<text style="color: red;">￥{{Xiang.default_sku_info.price}}</text>
+								<text>库存:{{Xiang.default_sku_info.stock}}</text>
 								<view style="color: #ababab;display: flex;">
 									<text>已选:</text>
 									<view>
-										<text v-for="(item,index) in kuArr.text" :key="index">{{item}}</text>
+										<text v-for="(item,index) in Xiang.default_sku_info.text"
+											:key="index">{{item}}</text>
+									</view>
+								</view>
+
+							</view>
+						</view>
+						<view class="zhong">
+							<view class="zhong2" v-for="(item,index) in Xiang.attr" :key="index">
+								<view class="title">
+									<text class="">{{item.text}}</text>
+								</view>
+								<view class="selects">
+									<view v-for="(item1,index1) in item.values" :key="index1"
+										@click="Tap(index,index1)">
+										<text :class="item.check == index1 ? 'xuanzhong' : ''">{{item1.text}}</text>
+									</view>
+								</view>
+							</view>
+						</view>
+						<view class="bottom">
+							<view class="title">
+								<text>数量</text>
+							</view>
+							<view class="right">
+								<u-number-box @plus="addNum" @minus="redNum" v-model="value" :max="Xiang.default_sku_info.stock" min="1"
+									size='26' :input-width="30" :input-height="15"></u-number-box>
+							</view>
+						</view>
+						<view class="bottom2" @click="addShop">
+							<text>确定</text>
+						</view>
+					</view>
+				</scroll-view>
+			</u-popup>
+		</view>
+		<!-- 加入购物车弹出层 -->
+		<view>
+			<u-popup v-model="show2" mode="bottom" closeable="true" close-icon-size="20">
+				<scroll-view scroll-y="true">
+					<view class="big">
+						<view class="top">
+							<view class="imas">
+								<image src="../../static/images/shop/goods_banner1.jpg" mode=""></image>
+							</view>
+							<view class="texts">
+								<text style="color: red;">￥{{Xiang.default_sku_info.price}}</text>
+								<text>库存:{{Xiang.default_sku_info.stock}}</text>
+								<view style="color: #ababab;display: flex;">
+									<text>已选:</text>
+									<view>
+										<text v-for="(item,index) in Xiang.default_sku_info.text"
+											:key="index">{{item}}</text>
 									</view>
 								</view>
 
@@ -140,7 +192,7 @@
 	</view>
 </template>
 <script>
-	import  Vue from 'vue'
+	import Vue from 'vue'
 	export default {
 		data() {
 			return {
@@ -187,10 +239,7 @@
 			// console.log(this._id);
 			uni.hideTabBar()
 			this.getUid() //获取uid
-			this.attr.forEach(el => {
-				el.check = 0
-			})
-			this.getKu()
+			this.getKu() //获取库存/价格
 		},
 		mounted() {
 			this.gaoDu()
@@ -262,7 +311,7 @@
 					})
 					.then((res) => {
 						console.log(res);
-						// this.is_fav = res.data[0].competitive//收藏
+						this.is_fav = res.is_fav//收藏
 						this.attr = res.data[0].attr
 						console.log(this.attr);
 						this.Xiang = res.data[0]
@@ -283,7 +332,7 @@
 			//循环购买列表数组
 			xun() {
 				this.Xiang.attr.forEach((item, index) => {
-					item.check = index
+					item.check = 0
 					console.log(this.Xiang.attr);
 				})
 			},
@@ -291,7 +340,7 @@
 				console.log(index);
 				console.log(index1);
 				this.attr[index].check = index1;
-				Vue.set(this.attr,index,this.attr[index])
+				Vue.set(this.attr, index, this.attr[index])
 				// this.check = index1
 				console.log(this.attr[index].check);
 				this.getKu()
@@ -305,18 +354,34 @@
 				this.getXiang()
 			},
 			//收藏
-			// fav(){
-			// 	this.$http.post('/api/toggle_fav',
-			// 	{goods_id:this._id,uid:this.uid,is_fav:this.is_fav,name:this.Xiang.name,price:this.Xiang.price,img:this.Xiang.img}
-			// 	)
-			// 	.then((res)=>{
-			// 		console.log(res);
-			// 		this.favs = !this.favs
-			// 	})
-			// 	.catch((err)=>{
-			// 		console.log(err);
-			// 	})
-			// },
+			fav(){
+				console.log(this.is_fav);
+				if(this.is_fav == 0){
+					this.$http.post('/api/toggle_fav',
+					{goods_id:this._id,uid:this.uid,is_fav:this.is_fav}
+					)
+					.then((res)=>{
+						console.log(res);
+						this.favs = !this.favs
+						this.is_fav = res.is_fav
+					})
+					.catch((err)=>{
+						console.log(err);
+					})
+				}else{
+					this.$http.post('/api/toggle_fav',
+					{goods_id:this._id,uid:this.uid,is_fav:this.is_fav}
+					)
+					.then((res)=>{
+						console.log(res);
+						this.favs = !this.favs
+						this.is_fav = res.is_fav
+					})
+					.catch((err)=>{
+						console.log(err);
+					})
+				}
+			},
 			//获取库存/价格
 			getKu() {
 				let choose_attr = this.attr.map(el => {
@@ -330,6 +395,9 @@
 					console.log(res)
 					this.kuArr = res.data
 					this.stock = res.data.stock
+					this.Xiang.default_sku_info.price = this.kuArr.price
+					this.Xiang.default_sku_info.stock = this.stock
+					this.Xiang.default_sku_info.text = this.kuArr.text
 				})
 			},
 			//减少购买数量
@@ -340,8 +408,8 @@
 			redNum(e) {
 				this.shopNum = e.value
 			},
-			//添加购物车
-			addCard() {
+			//直接购买
+			addShop() {
 				// console.log(this.uid);
 				// console.log(this.Xiang.name);
 				// console.log(this.kuArr.price);
@@ -349,18 +417,33 @@
 				// console.log(this._id);
 				// console.log(this.shopNum);
 				// console.log(this.attr);
+				let attrs = []
+				let attr = this.Xiang.default_sku_info.text.map((item,index)=>{
+					attrs.push(item)
+				})
+
 				this.$http.post('/api/add_cart', {
 						uid: this.uid,
 						name: this.Xiang.name,
-						price: this.kuArr.price,
+						price: this.Xiang.default_sku_info.price,
 						img: this.Xiang.img,
 						goods_id: this._id,
 						num: this.shopNum,
-						attr: this.attr,
+						attr: attrs,
 						type: 'buy'
 					})
 					.then((res) => {
 						console.log(res);
+						if(res.msg == "库存不足"){
+							uni.showToast({
+								title:"库存不足",
+								icon:'none'
+							})
+						}
+						let cart_id = res.data.id
+						uni.navigateTo({
+							url:`/subpkg/creatOrder/creatOrder?cart_id=${cart_id}`,
+						});
 					})
 					.catch((err) => {
 						console.log(err);
@@ -699,6 +782,7 @@
 		line-height: 8vh;
 		font-size: 32rpx;
 		font-weight: 600;
+		z-index: 1000;
 	}
 
 	.jinyong {
@@ -708,5 +792,18 @@
 	.xuanzhong {
 		background-color: #ffd7d7 !important;
 		color: #ed3f14 !important;
+	}
+	wx-swiper .wx-swiper-dot{
+		width: 32rpx;
+		height: 6rpx;
+		border-radius: 2rp;
+		background-color: #ffffff;
+		opacity: 0.8;
+	}
+	wx-swiper .wx-swiper-dot-active{
+		background-color: #565656;
+		width: 32rpx;
+		height: 6rpx;
+		border-radius: 2rpx;
 	}
 </style>

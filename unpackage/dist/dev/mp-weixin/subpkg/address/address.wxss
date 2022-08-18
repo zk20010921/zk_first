@@ -1,6 +1,13 @@
 @charset "UTF-8";
 /* 水平间距 */
 /* 水平间距 */
+.iconfont {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 10rpx;
+  color: #999999;
+  font-size: 150rpx;
+}
 page {
   background: #f6f6f6;
 }
@@ -84,16 +91,6 @@ uni-radio-group {
 }
 .address-list .addr-list .list-btm .moren {
   color: #333333;
-}
-.address-list .addr-list .list-btm .moren .iconfont {
-  width: 28rpx;
-  height: 28rpx;
-  margin-right: 10rpx;
-  color: #999999;
-  font-size: 30rpx;
-}
-.address-list .addr-list .list-btm .moren.act .iconfont:before {
-  content: '\e67a';
 }
 .address-list .addr-list .list-btm .caozuo {
   color: #333;

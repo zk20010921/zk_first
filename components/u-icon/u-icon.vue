@@ -174,26 +174,27 @@ export default {
 		}
 	},
 	computed: {
-		customClass() {
-			let classes = []
-			classes.push(this.customPrefix + '-' + this.name)
-			// uView的自定义图标类名为u-iconfont
-			if (this.customPrefix == 'uicon') {
-				classes.push('u-iconfont')
-			} else {
-				classes.push(this.customPrefix)
-			}
-			// 主题色，通过类配置
-			if (this.showDecimalIcon && this.inactiveColor && this.$u.config.type.includes(this.inactiveColor)) {
-				classes.push('u-icon__icon--' + this.inactiveColor)
-			} else if (this.color && this.$u.config.type.includes(this.color)) classes.push('u-icon__icon--' + this.color)
-			// 阿里，头条，百度小程序通过数组绑定类名时，无法直接使用[a, b, c]的形式，否则无法识别
-			// 故需将其拆成一个字符串的形式，通过空格隔开各个类名
-			//#ifdef MP-ALIPAY || MP-TOUTIAO || MP-BAIDU
-			classes = classes.join(' ')
-			//#endif
-			return classes
-		},
+		// customClass() {
+		// 	let classes = []
+		// 	classes.push(this.customPrefix + '-' + this.name)
+		// 	// uView的自定义图标类名为u-iconfont
+		// 	if (this.customPrefix == 'uicon') {
+		// 		classes.push('u-iconfont')
+		// 	} else {
+		// 		classes.push(this.customPrefix)
+		// 	}
+		// 	// 主题色，通过类配置
+		// 	if (this.showDecimalIcon && this.inactiveColor && this.$u.config.type.includes(this.inactiveColor)) {
+		// 		classes.push('u-icon__icon--' + this.inactiveColor)
+		// 	} else if (this.color && this.$u.config.type.includes(this.color)) classes.push('u-icon__icon--' + this.color)
+		// 	// 阿里，头条，百度小程序通过数组绑定类名时，无法直接使用[a, b, c]的形式，否则无法识别
+		// 	// 故需将其拆成一个字符串的形式，通过空格隔开各个类名
+		// 	//#ifdef MP-ALIPAY || MP-TOUTIAO || MP-BAIDU
+		// 	classes = classes.join(' ')
+		// 	//#endif
+		// 	return classes
+		// },
+		
 		iconStyle() {
 			let style = {}
 			style = {
