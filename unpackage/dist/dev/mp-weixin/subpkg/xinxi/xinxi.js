@@ -98,7 +98,7 @@ var components
 try {
   components = {
     uPicker: function() {
-      return Promise.all(/*! import() | components/u-picker/u-picker */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/u-picker/u-picker")]).then(__webpack_require__.bind(null, /*! @/components/u-picker/u-picker.vue */ 281))
+      return Promise.all(/*! import() | components/u-picker/u-picker */[__webpack_require__.e("common/vendor"), __webpack_require__.e("components/u-picker/u-picker")]).then(__webpack_require__.bind(null, /*! @/components/u-picker/u-picker.vue */ 304))
     }
   }
 } catch (e) {
