@@ -27,10 +27,10 @@
 				{{userInfo.birthday == '' ? '请选择生日' : birthday}}
 				</view>
 			</view>
-			<view class="info_cont">
+			<view class="info_cont" @click="show_addr_picker = true">
 				<view>所在地</view>
 				<text class="iconfont icon-fanhui1"></text>
-				<input class="color999" type="text" v-model="addr" placeholder="请输入地址" />
+				<input class="color999" type="text" v-model="addr" disabled placeholder="请输入地址" />
 			</view>
 			<view class="info_cont">
 				<view>手机号</view>
@@ -48,10 +48,22 @@
 		<view>
 			<u-picker @confirm="ok2" mode="time" v-model="show2" :params="params"></u-picker>
 		</view>
+		
+		<w-picker
+			:visible.sync="show_addr_picker"
+			mode="region"
+			:value="addr_code"
+			default-type="value"
+			:hide-area="false"
+			@confirm="onConfirm($event)"
+			@cancel="onCancel"
+			ref="region"
+		></w-picker>
 	</view>
 </template>
 
 <script>
+	import wPicker from '../../components/w-picker/w-picker.vue';
 	export default {
 		data() {
 			return {
@@ -66,7 +78,9 @@
 				show2: false,
 				selector: ['男', '女'],
 				sex: '', //选择性别
-
+				show_addr_picker:false,
+				addr_code:[],
+				
 				params: {
 					year: true,
 					month: true,
@@ -129,6 +143,10 @@
 			ok2(e) {
 				this.birthday = e.year + '年' + e.month + '月' + e.day + '日'
 			},
+			//选择所在地
+			onConfirm(e){
+			this.addr = e.result
+			},
 			//修改信息
 			queding() {
 				this.$http.post('/user/editUserInfo', {
@@ -142,6 +160,13 @@
 					})
 					.then((res) => {
 						console.log(res);
+						uni.switchTab({
+							url:'/pages/my/my',
+						})
+						uni.showToast({
+							title:'修改成功',
+							icon:'none',
+						})
 					})
 					.catch((err) => {
 						console.log(err);
