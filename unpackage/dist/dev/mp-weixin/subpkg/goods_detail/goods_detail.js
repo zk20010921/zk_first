@@ -98,13 +98,13 @@ var components
 try {
   components = {
     uniIcons: function() {
-      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 282))
+      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 290))
     },
     uPopup: function() {
-      return __webpack_require__.e(/*! import() | components/u-popup/u-popup */ "components/u-popup/u-popup").then(__webpack_require__.bind(null, /*! @/components/u-popup/u-popup.vue */ 290))
+      return __webpack_require__.e(/*! import() | components/u-popup/u-popup */ "components/u-popup/u-popup").then(__webpack_require__.bind(null, /*! @/components/u-popup/u-popup.vue */ 298))
     },
     uNumberBox: function() {
-      return __webpack_require__.e(/*! import() | components/u-number-box/u-number-box */ "components/u-number-box/u-number-box").then(__webpack_require__.bind(null, /*! @/components/u-number-box/u-number-box.vue */ 297))
+      return __webpack_require__.e(/*! import() | components/u-number-box/u-number-box */ "components/u-number-box/u-number-box").then(__webpack_require__.bind(null, /*! @/components/u-number-box/u-number-box.vue */ 305))
     }
   }
 } catch (e) {
