@@ -130,6 +130,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   if (!_vm._isMounted) {
     _vm.e0 = function($event) {
+      _vm.show2 = true
+    }
+
+    _vm.e1 = function($event) {
       _vm.show = true
     }
   }
@@ -559,6 +563,7 @@ var _default = { data: function data() {return { //头部导航栏show
       hightArr: [], indexs: 0, _id: 0, //详情id值
       Xiang: [], //详情数据
       show: false, //购买弹出层是否展示
+      show2: false, //加入购物车弹出层是否展示
       num: 1, //数量
       jy: true, //加减禁用状态
       attr: [], //购买物品详情
@@ -613,6 +618,47 @@ var _default = { data: function data() {return { //头部导航栏show
       // console.log(this.shopNum);
       // console.log(this.attr);
       var attrs = [];var attr = this.Xiang.default_sku_info.text.map(function (item, index) {attrs.push(item);});this.$http.post('/api/add_cart', { uid: this.uid, name: this.Xiang.name, price: this.Xiang.default_sku_info.price, img: this.Xiang.img, goods_id: this._id, num: this.shopNum, attr: attrs, type: 'buy' }).then(function (res) {console.log(res);if (res.msg == "库存不足") {uni.showToast({ title: "库存不足", icon: 'none' });}var cart_id = res.data.id;uni.navigateTo({ url: "/subpkg/creatOrder/creatOrder?cart_id=".concat(cart_id) });}).
+      catch(function (err) {
+        console.log(err);
+      });
+    },
+    //加入购物车
+    addCard: function addCard() {var _this8 = this;
+      var attrs = [];
+      var attr = this.Xiang.default_sku_info.text.map(function (item, index) {
+        attrs.push(item);
+      });
+
+      this.$http.post('/api/add_cart', {
+        uid: this.uid,
+        name: this.Xiang.name,
+        price: this.Xiang.default_sku_info.price,
+        img: this.Xiang.img,
+        goods_id: this._id,
+        num: this.shopNum,
+        attr: attrs,
+        type: '' }).
+
+      then(function (res) {
+        console.log(res);
+        if (res.msg == "库存不足") {
+          uni.showToast({
+            title: "库存不足",
+            icon: 'none' });
+
+          _this8.show2 = false;
+        } else if (res.msg == "成功加入购物车,商品库存以实际下单时为准") {
+          uni.showToast({
+            title: "加入成功",
+            icon: 'none' });
+
+          _this8.show2 = false;
+        }
+        // let cart_id = res.data.id
+        // uni.navigateTo({
+        // 	url:`/subpkg/creatOrder/creatOrder?cart_id=${cart_id}`,
+        // });
+      }).
       catch(function (err) {
         console.log(err);
       });
