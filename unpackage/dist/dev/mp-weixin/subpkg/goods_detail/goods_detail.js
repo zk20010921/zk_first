@@ -101,10 +101,10 @@ try {
       return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 290))
     },
     uPopup: function() {
-      return __webpack_require__.e(/*! import() | components/u-popup/u-popup */ "components/u-popup/u-popup").then(__webpack_require__.bind(null, /*! @/components/u-popup/u-popup.vue */ 298))
+      return __webpack_require__.e(/*! import() | components/u-popup/u-popup */ "components/u-popup/u-popup").then(__webpack_require__.bind(null, /*! @/components/u-popup/u-popup.vue */ 305))
     },
     uNumberBox: function() {
-      return __webpack_require__.e(/*! import() | components/u-number-box/u-number-box */ "components/u-number-box/u-number-box").then(__webpack_require__.bind(null, /*! @/components/u-number-box/u-number-box.vue */ 305))
+      return __webpack_require__.e(/*! import() | components/u-number-box/u-number-box */ "components/u-number-box/u-number-box").then(__webpack_require__.bind(null, /*! @/components/u-number-box/u-number-box.vue */ 298))
     }
   }
 } catch (e) {
@@ -572,8 +572,9 @@ var _default = { data: function data() {return { //头部导航栏show
       is_fav: 0, //是否收藏
       index1: 0, //规格索引
       check: 0, kuArr: null, //价格库存数组
-      value: 1, stock: 0, //库存
-      shopNum: 1 //购买数量
+      value: 1, value1: 1, stock: 0, //库存
+      shopNum: 1, //购买数量
+      shopNum1: 1 //添加购物车数量
     };}, onLoad: function onLoad(e) {// console.log(e);
     this._id = e._id; // console.log(this._id);
     uni.hideTabBar();this.getUid(); //获取uid
@@ -607,9 +608,11 @@ var _default = { data: function data() {return { //头部导航栏show
       this.value = 1;}, //获取uid
     getUid: function getUid() {this.uid = uni.getStorageSync('uid');this.getXiang();}, //收藏
     fav: function fav() {var _this6 = this;console.log(this.is_fav);if (this.is_fav == 0) {this.$http.post('/api/toggle_fav', { goods_id: this._id, uid: this.uid, is_fav: this.is_fav }).then(function (res) {console.log(res);_this6.favs = !_this6.favs;_this6.is_fav = res.is_fav;}).catch(function (err) {console.log(err);});} else {this.$http.post('/api/toggle_fav', { goods_id: this._id, uid: this.uid, is_fav: this.is_fav }).then(function (res) {console.log(res);_this6.favs = !_this6.favs;_this6.is_fav = res.is_fav;}).catch(function (err) {console.log(err);});}}, //获取库存/价格
-    getKu: function getKu() {var _this7 = this;var choose_attr = this.attr.map(function (el) {return el.values[el.check].text;});console.log(choose_attr);this.$http.post('/api/get_sku', { goods_id: this._id, sku: choose_attr }).then(function (res) {console.log(res);_this7.kuArr = res.data;_this7.stock = res.data.stock;_this7.Xiang.default_sku_info.price = _this7.kuArr.price;_this7.Xiang.default_sku_info.stock = _this7.stock;_this7.Xiang.default_sku_info.text = _this7.kuArr.text;});}, //减少购买数量
-    addNum: function addNum(e) {this.shopNum = e.value;}, //增加购买数量
-    redNum: function redNum(e) {this.shopNum = e.value;}, //直接购买
+    getKu: function getKu() {var _this7 = this;var choose_attr = this.attr.map(function (el) {return el.values[el.check].text;});console.log(choose_attr);this.$http.post('/api/get_sku', { goods_id: this._id, sku: choose_attr }).then(function (res) {console.log(res);_this7.kuArr = res.data;_this7.stock = res.data.stock;_this7.Xiang.default_sku_info.price = _this7.kuArr.price;_this7.Xiang.default_sku_info.stock = _this7.stock;_this7.Xiang.default_sku_info.text = _this7.kuArr.text;});}, //增加购买数量
+    addNum: function addNum(e) {this.shopNum = e.value;}, //减少购买数量
+    redNum: function redNum(e) {this.shopNum = e.value;}, //增加添加购物车数量
+    addNum1: function addNum1(e) {this.shopNum1 = e.value;}, //减少添加购物车数量
+    redNum1: function redNum1(e) {this.shopNum1 = e.value;}, //直接购买
     addShop: function addShop() {// console.log(this.uid);
       // console.log(this.Xiang.name);
       // console.log(this.kuArr.price);
@@ -617,7 +620,14 @@ var _default = { data: function data() {return { //头部导航栏show
       // console.log(this._id);
       // console.log(this.shopNum);
       // console.log(this.attr);
-      var attrs = [];var attr = this.Xiang.default_sku_info.text.map(function (item, index) {attrs.push(item);});this.$http.post('/api/add_cart', { uid: this.uid, name: this.Xiang.name, price: this.Xiang.default_sku_info.price, img: this.Xiang.img, goods_id: this._id, num: this.shopNum, attr: attrs, type: 'buy' }).then(function (res) {console.log(res);if (res.msg == "库存不足") {uni.showToast({ title: "库存不足", icon: 'none' });}var cart_id = res.data.id;uni.navigateTo({ url: "/subpkg/creatOrder/creatOrder?cart_id=".concat(cart_id) });}).
+      var attrs = [];var attr = this.Xiang.default_sku_info.text.map(function (item, index) {attrs.push(item);});this.$http.post('/api/add_cart', { uid: this.uid, name: this.Xiang.name, price: this.Xiang.default_sku_info.price, img: this.Xiang.img, goods_id: this._id, num: this.shopNum, attr: attrs, type: 'buy' }).then(function (res) {console.log(res);if (res.msg == "库存不足") {uni.showToast({ title: "库存不足", icon: 'none' });
+
+        }
+        var cart_id = res.data.id;
+        uni.navigateTo({
+          url: "/subpkg/creatOrder/creatOrder?cart_id=".concat(cart_id) });
+
+      }).
       catch(function (err) {
         console.log(err);
       });
@@ -635,7 +645,7 @@ var _default = { data: function data() {return { //头部导航栏show
         price: this.Xiang.default_sku_info.price,
         img: this.Xiang.img,
         goods_id: this._id,
-        num: this.shopNum,
+        num: this.shopNum1,
         attr: attrs,
         type: '' }).
 

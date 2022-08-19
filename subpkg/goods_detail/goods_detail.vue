@@ -178,7 +178,7 @@
 								<text>数量</text>
 							</view>
 							<view class="right">
-								<u-number-box @plus="addNum" @minus="redNum" v-model="value" :max="stock" min="1"
+								<u-number-box @plus="addNum1" @minus="redNum1" v-model="value1" :max="Xiang.default_sku_info.stock" min="1"
 									size='26' :input-width="30" :input-height="15"></u-number-box>
 							</view>
 						</view>
@@ -230,8 +230,10 @@
 				check: 0,
 				kuArr: null, //价格库存数组
 				value: 1,
+				value1:1,
 				stock: 0, //库存
 				shopNum: 1, //购买数量
+				shopNum1: 1, //添加购物车数量
 			};
 		},
 		onLoad(e) {
@@ -401,13 +403,21 @@
 					this.Xiang.default_sku_info.text = this.kuArr.text
 				})
 			},
-			//减少购买数量
+			//增加购买数量
 			addNum(e) {
 				this.shopNum = e.value
 			},
-			//增加购买数量
+			//减少购买数量
 			redNum(e) {
 				this.shopNum = e.value
+			},
+			//增加添加购物车数量
+			addNum1(e) {
+				this.shopNum1 = e.value
+			},
+			//减少添加购物车数量
+			redNum1(e) {
+				this.shopNum1 = e.value
 			},
 			//直接购买
 			addShop() {
@@ -463,7 +473,7 @@
 						price: this.Xiang.default_sku_info.price,
 						img: this.Xiang.img,
 						goods_id: this._id,
-						num: this.shopNum,
+						num: this.shopNum1,
 						attr: attrs,
 						type: ''
 					})

@@ -2,178 +2,23 @@
 	<scroll-view scroll-y class="container">
 		<view class="content-wrap">
 			<view class="content-item">
-				<view class="goods">
-					<label class="act"><text class="iconfont icon-danxuan-weixuan"></text></label>
+				<view class="goods" v-for="(item,index) in cardList" :key="index">
+					<label class="act"><uni-icons @click="isSelect(item.checked,item._id)" :type="item.checked ? 'checkbox-filled': 'circle'" size="25" :color="item.checked ? '#FDD61E':'#bbb'"></uni-icons></text></label>
 					<view class="good">
 						<view class="img-wrapper">
-							<image src="/static/images/home/goods1.jpg" mode=""></image>
+							<image :src="item.img" mode=""></image>
 						</view>
 						<view class="good-content">
-							<view class="good-title text-line">意大利孟爵Monge 单一肉食系列火鸡肉泥 成犬狗罐头150g 100%火鸡肉</view>
+							<view class="good-title text-line">{{item.name}}</view>
 							<view class="spec">
-								<view class="spec1"><text class="name ellipsis">大包</text></view>
+								<view class="spec1"><text class="name ellipsis">{{item.attr}}</text></view>
 							</view>
 							<view class="good-desc">
 								<view class="good-price">
 									<text>￥</text>
-									151
+									{{item.price}}
 								</view>
-								<number-box :min="1" :source="'cart'" :max="999" :step="1" @change="numberChange">
-								</number-box>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="goods">
-					<label class="act"><text class="iconfont icon-danxuan-weixuan"></text></label>
-					<view class="good">
-						<view class="img-wrapper">
-							<image src="/static/images/home/goods1.jpg" mode=""></image>
-						</view>
-						<view class="good-content">
-							<view class="good-title text-line">意大利孟爵Monge 单一肉食系列火鸡肉泥 成犬狗罐头150g 100%火鸡肉</view>
-							<view class="spec">
-								<view class="spec1"><text class="name ellipsis">大包</text></view>
-							</view>
-							<view class="good-desc">
-								<view class="good-price">
-									<text>￥</text>
-									151
-								</view>
-								<number-box :min="1" :source="'cart'" :max="999" :step="1" @change="numberChange">
-								</number-box>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="goods">
-					<label class="act"><text class="iconfont icon-danxuan-weixuan"></text></label>
-					<view class="good">
-						<view class="img-wrapper">
-							<image src="/static/images/home/goods1.jpg" mode=""></image>
-						</view>
-						<view class="good-content">
-							<view class="good-title text-line">意大利孟爵Monge 单一肉食系列火鸡肉泥 成犬狗罐头150g 100%火鸡肉</view>
-							<view class="spec">
-								<view class="spec1"><text class="name ellipsis">大包</text></view>
-							</view>
-							<view class="good-desc">
-								<view class="good-price">
-									<text>￥</text>
-									151
-								</view>
-								<number-box :min="1" :source="'cart'" :max="999" :step="1" @change="numberChange">
-								</number-box>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="goods">
-					<label class="act"><text class="iconfont icon-danxuan-weixuan"></text></label>
-					<view class="good">
-						<view class="img-wrapper">
-							<image src="/static/images/home/goods1.jpg" mode=""></image>
-						</view>
-						<view class="good-content">
-							<view class="good-title text-line">意大利孟爵Monge 单一肉食系列火鸡肉泥 成犬狗罐头150g 100%火鸡肉</view>
-							<view class="spec">
-								<view class="spec1"><text class="name ellipsis">大包</text></view>
-							</view>
-							<view class="good-desc">
-								<view class="good-price">
-									<text>￥</text>
-									151
-								</view>
-								<number-box :min="1" :source="'cart'" :max="999" :step="1" @change="numberChange">
-								</number-box>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="goods">
-					<label class="act"><text class="iconfont icon-danxuan-weixuan"></text></label>
-					<view class="good">
-						<view class="img-wrapper">
-							<image src="/static/images/home/goods1.jpg" mode=""></image>
-						</view>
-						<view class="good-content">
-							<view class="good-title text-line">意大利孟爵Monge 单一肉食系列火鸡肉泥 成犬狗罐头150g 100%火鸡肉</view>
-							<view class="spec">
-								<view class="spec1"><text class="name ellipsis">大包</text></view>
-							</view>
-							<view class="good-desc">
-								<view class="good-price">
-									<text>￥</text>
-									151
-								</view>
-								<number-box :min="1" :source="'cart'" :max="999" :step="1" @change="numberChange">
-								</number-box>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="goods">
-					<label class="act"><text class="iconfont icon-danxuan-weixuan"></text></label>
-					<view class="good">
-						<view class="img-wrapper">
-							<image src="/static/images/home/goods1.jpg" mode=""></image>
-						</view>
-						<view class="good-content">
-							<view class="good-title text-line">意大利孟爵Monge 单一肉食系列火鸡肉泥 成犬狗罐头150g 100%火鸡肉</view>
-							<view class="spec">
-								<view class="spec1"><text class="name ellipsis">大包</text></view>
-							</view>
-							<view class="good-desc">
-								<view class="good-price">
-									<text>￥</text>
-									151
-								</view>
-								<number-box :min="1" :source="'cart'" :max="999" :step="1" @change="numberChange">
-								</number-box>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="goods">
-					<label class="act"><text class="iconfont icon-danxuan-weixuan"></text></label>
-					<view class="good">
-						<view class="img-wrapper">
-							<image src="/static/images/home/goods1.jpg" mode=""></image>
-						</view>
-						<view class="good-content">
-							<view class="good-title text-line">意大利孟爵Monge 单一肉食系列火鸡肉泥 成犬狗罐头150g 100%火鸡肉</view>
-							<view class="spec">
-								<view class="spec1"><text class="name ellipsis">大包</text></view>
-							</view>
-							<view class="good-desc">
-								<view class="good-price">
-									<text>￥</text>
-									151
-								</view>
-								<number-box :min="1" :source="'cart'" :max="999" :step="1" @change="numberChange">
-								</number-box>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="goods">
-					<label class="act"><text class="iconfont icon-danxuan-weixuan"></text></label>
-					<view class="good">
-						<view class="img-wrapper">
-							<image src="/static/images/home/goods1.jpg" mode=""></image>
-						</view>
-						<view class="good-content">
-							<view class="good-title text-line">意大利孟爵Monge 单一肉食系列火鸡肉泥 成犬狗罐头150g 100%火鸡肉</view>
-							<view class="spec">
-								<view class="spec1"><text class="name ellipsis">大包</text></view>
-							</view>
-							<view class="good-desc">
-								<view class="good-price">
-									<text>￥</text>
-									151
-								</view>
-								<number-box :min="1" :source="'cart'" :max="999" :step="1" @change="numberChange">
-								</number-box>
+								<u-number-box @plus="addNum" @minus="delNum" :max="item.stock" min="1" v-model="item.num" @change="valChange"></u-number-box>
 							</view>
 						</view>
 					</view>
@@ -184,7 +29,7 @@
 		<view class="total-wrap">
 			<view class="total-left">
 				<label class="act">
-					<text class="iconfont icon-danxuan-weixuan"></text>
+					<uni-icons :type="item.checked ? 'checkbox-filled': 'circle'" size="25" :color="item.checked ? '#FDD61E':'#bbb'"></uni-icons>
 					全选
 				</label>
 
@@ -205,12 +50,75 @@
 <script>
 	export default {
 		data() {
-			return {};
+			return {
+				uid: 0, //uid
+				cardList:[],//购物车列表
+			};
 		},
-		onLoad() {},
-
+		onLoad() {
+			this.getUid()
+		},
+		onShow() {
+			this.getCartlist()
+		},
 		methods: {
-			numberChange() {}
+			numberChange() {
+
+			},
+			valChange(){
+				
+			},
+			//获取uid
+			getUid() {
+				this.uid = uni.getStorageSync('uid')
+			},
+			//获取购物车列表
+			getCartlist() {
+				this.$http.post('/api/get_cart_list', {
+						uid: this.uid
+					})
+					.then((res) => {
+						console.log(res);
+						this.cardList = res.data
+					})
+					.catch((err) => {
+						console.log(err);
+					})
+			},
+			//是否选中
+			isSelect(checked,_id){
+				this.$http.post('/api/toggle_check_cart',
+				{_id:_id,checked:checked}
+				)
+				.then((res)=>{
+					console.log(res);
+					this.cardList = res.data
+					this.getCartlist()
+				})
+				.catch((err)=>{
+					console.log(err);
+				})
+			},
+			addNum(e){
+				console.log(e);
+				// let num = e.value
+				// this.$http.post('/api/change_cart_num',
+				// {_id:this._id[index],num:num}
+				// )
+				// .then((res)=>{
+				// 	console.log(res);
+				// })
+				// .catch((err)=>{
+				// 	console.log(err);
+				// })
+			},
+			//映射出数组中是否全部选中
+			isSelectAll(){
+				let isSelectAll = this.cardList.map((item,index)=>{
+					return item.checked
+				})
+				console.log(isSelectAll);
+			}
 		}
 	};
 </script>

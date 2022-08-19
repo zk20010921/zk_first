@@ -95,6 +95,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    uniIcons: function() {
+      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 290))
+    },
+    uNumberBox: function() {
+      return __webpack_require__.e(/*! import() | components/u-number-box/u-number-box */ "components/u-number-box/u-number-box").then(__webpack_require__.bind(null, /*! @/components/u-number-box/u-number-box.vue */ 298))
+    }
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -132,162 +158,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -339,12 +210,76 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var _default =
 {
   data: function data() {
-    return {};
+    return {
+      uid: 0, //uid
+      cardList: [] //购物车列表
+    };
   },
-  onLoad: function onLoad() {},
-
+  onLoad: function onLoad() {
+    this.getUid();
+  },
+  onShow: function onShow() {
+    this.getCartlist();
+  },
   methods: {
-    numberChange: function numberChange() {} } };exports.default = _default;
+    numberChange: function numberChange() {
+
+    },
+    valChange: function valChange() {
+
+    },
+    //获取uid
+    getUid: function getUid() {
+      this.uid = uni.getStorageSync('uid');
+    },
+    //获取购物车列表
+    getCartlist: function getCartlist() {var _this = this;
+      this.$http.post('/api/get_cart_list', {
+        uid: this.uid }).
+
+      then(function (res) {
+        console.log(res);
+        _this.cardList = res.data;
+      }).
+      catch(function (err) {
+        console.log(err);
+      });
+    },
+    //是否选中
+    isSelect: function isSelect(checked, _id) {var _this2 = this;
+      this.$http.post('/api/toggle_check_cart',
+      { _id: _id, checked: checked }).
+
+      then(function (res) {
+        console.log(res);
+        _this2.cardList = res.data;
+        _this2.getCartlist();
+      }).
+      catch(function (err) {
+        console.log(err);
+      });
+    },
+    addNum: function addNum(e) {
+      console.log(e);
+      // let num = e.value
+      // this.$http.post('/api/change_cart_num',
+      // {_id:this._id[index],num:num}
+      // )
+      // .then((res)=>{
+      // 	console.log(res);
+      // })
+      // .catch((err)=>{
+      // 	console.log(err);
+      // })
+    },
+    //映射出数组中是否全部选中
+    isSelectAll: function isSelectAll() {
+      var isSelectAll = this.cardList.map(function (item, index) {
+        return item.checked;
+      });
+      console.log(isSelectAll);
+    } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
