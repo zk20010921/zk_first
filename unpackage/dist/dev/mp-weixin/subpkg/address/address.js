@@ -95,6 +95,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    uniIcons: function() {
+      return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 290))
+    }
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -173,13 +196,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
       uid: 0,
       token: 0,
-      isShow: false //是否显示——您还没有收货地址
+      isShow: false, //是否显示——您还没有收货地址
+      addressArr: [], //收获地址数组
+      _id: [] //地址详情id
     };
   },
   onLoad: function onLoad() {
@@ -192,13 +220,62 @@ var _default =
       this.uid = uni.getStorageSync('uid');
       this.token = uni.getStorageSync('token');
     },
-    getAddressList: function getAddressList() {
+    //获取地址列表
+    getAddressList: function getAddressList() {var _this = this;
       this.$http.post('/order/getAddrList', {
         uid: this.uid,
         token: this.token }).
 
       then(function (res) {
         console.log(res);
+        _this.addressArr = res.data;
+        _this._id = res.data.map(function (item) {
+          return item._id;
+        });
+        if (res.length != 0) {
+          _this.isShow = true;
+        }
+      }).
+      catch(function (err) {
+        console.log(err);
+      });
+    },
+    //进入编辑地址
+    toAddressX: function toAddressX(e) {
+      uni.navigateTo({
+        url: "/subpkg/addressManage/addressManage?_id=".concat(this._id[e]) });
+
+    },
+    //删除地址
+    delAddress: function delAddress(index) {var _this2 = this;
+      console.log(this.uid);
+      console.log(this._id);
+      this.$http.post('/order/del_addr',
+      { uid: this.uid, _id: this._id[index] }).
+
+      then(function (res) {
+        console.log(res);
+        _this2.getAddressList();
+        console.log(_this2.addressArr);
+        uni.showToast({
+          title: '删除成功',
+          icon: "none" });
+
+      }).
+      catch(function (err) {
+        console.log(err);
+      });
+    },
+    //选择默认地址
+    selectMo: function selectMo(index) {var _this3 = this;
+      this.$http.post('/order/set_default_addr',
+      { uid: this.uid, _id: this._id[index] }).
+
+      then(function (res) {
+        console.log(res);
+        if (res.msg == "设置成功") {
+          _this3.getAddressList();
+        }
       }).
       catch(function (err) {
         console.log(err);

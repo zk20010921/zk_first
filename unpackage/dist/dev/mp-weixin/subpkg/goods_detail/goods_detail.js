@@ -597,7 +597,7 @@ var _default = { data: function data() {return { //头部导航栏show
         _this4.attr = res.data[0].attr;console.log(_this4.attr);_this4.Xiang = res.data[0]; // console.log(this.Xiang)
         _this4.Xiang.desc = _this4.Xiang.desc.replaceAll('<img', '<img style="width:100%;"');_this4.xun();}).catch(function (err) {console.log(err);});}, //跳转购物车页面
     toCart: function toCart() {uni.switchTab({ url: '/pages/cart/cart' });}, //循环购买列表数组
-    xun: function xun() {var _this5 = this;this.Xiang.attr.forEach(function (item, index) {item.check = 0;console.log(_this5.Xiang.attr);});}, Tap: function Tap(index, index1) {console.log(index);console.log(index1);this.attr[index].check = index1;_vue.default.set(this.attr, index, this.attr[index]); // this.check = index1
+    xun: function xun() {var _this5 = this;this.Xiang.attr.forEach(function (item) {item.check = 0;console.log(_this5.Xiang.attr);});}, Tap: function Tap(index, index1) {console.log(index);console.log(index1);this.attr[index].check = index1;_vue.default.set(this.attr, index, this.attr[index]); // this.check = index1
       console.log(this.attr[index].check);this.getKu(); // console.log(this.attr);
       this.value = 1;}, //获取uid
     getUid: function getUid() {this.uid = uni.getStorageSync('uid');this.getXiang();}, //收藏

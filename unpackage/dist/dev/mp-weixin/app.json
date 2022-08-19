@@ -21,7 +21,8 @@
         "product/product",
         "list/list",
         "creatOrder/creatOrder",
-        "addressManage/addressManage"
+        "addressManage/addressManage",
+        "pay/pay"
       ]
     }
   ],
