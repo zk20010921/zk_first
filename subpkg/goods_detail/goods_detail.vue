@@ -83,7 +83,7 @@
 				</view>
 			</view>
 			<view class="right">
-				<view class="cart btn u-line-1">加入购物车</view>
+				<view class="cart btn u-line-1" @click="show2 = true">加入购物车</view>
 				<view class="buy btn u-line-1" @click="show = true">立即购买</view>
 			</view>
 		</view>
@@ -219,6 +219,7 @@
 				_id: 0, //详情id值
 				Xiang: [], //详情数据
 				show: false, //购买弹出层是否展示
+				show2: false, //加入购物车弹出层是否展示
 				num: 1, //数量
 				jy: true, //加减禁用状态
 				attr: [], //购买物品详情
@@ -444,6 +445,47 @@
 						uni.navigateTo({
 							url:`/subpkg/creatOrder/creatOrder?cart_id=${cart_id}`,
 						});
+					})
+					.catch((err) => {
+						console.log(err);
+					})
+			},
+			//加入购物车
+			addCard(){
+				let attrs = []
+				let attr = this.Xiang.default_sku_info.text.map((item,index)=>{
+					attrs.push(item)
+				})
+				
+				this.$http.post('/api/add_cart', {
+						uid: this.uid,
+						name: this.Xiang.name,
+						price: this.Xiang.default_sku_info.price,
+						img: this.Xiang.img,
+						goods_id: this._id,
+						num: this.shopNum,
+						attr: attrs,
+						type: ''
+					})
+					.then((res) => {
+						console.log(res);
+						if(res.msg == "库存不足"){
+							uni.showToast({
+								title:"库存不足",
+								icon:'none'
+							})
+							this.show2 = false
+						}else if(res.msg == "成功加入购物车,商品库存以实际下单时为准"){
+							uni.showToast({
+								title:"加入成功",
+								icon:'none'
+							})
+							this.show2 = false
+						}
+						// let cart_id = res.data.id
+						// uni.navigateTo({
+						// 	url:`/subpkg/creatOrder/creatOrder?cart_id=${cart_id}`,
+						// });
 					})
 					.catch((err) => {
 						console.log(err);
