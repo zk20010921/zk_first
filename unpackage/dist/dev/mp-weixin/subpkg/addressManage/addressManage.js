@@ -199,13 +199,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
 {
   data: function data() {
     return {
@@ -218,11 +211,14 @@ __webpack_require__.r(__webpack_exports__);
       addressX: '', //地址详情
       isMoRen: false, //是否为默认地址
       uid: '', //uid
-      token: '' //token
+      token: '', //token
+      _id: 0 //地址详情id
     };
   },
-  onLoad: function onLoad() {
+  onLoad: function onLoad(e) {
+    this._id = e._id;
     this.getUid_token();
+    this.getAddressX();
   },
   methods: {
     onConfirm: function onConfirm(e) {
@@ -239,22 +235,63 @@ __webpack_require__.r(__webpack_exports__);
     isMo: function isMo(e) {
       this.isMoRen = e.detail.value;
     },
+    //点击添加地址
     addAddress: function addAddress() {
-      this.$http.post('/order/saveAddress',
-      { name: this.name, tel: this.phone, addr_text: this.address, addr_code: this.addresscode, detail: this.addressX, is_default: this.isMoRen, uid: this.uid, token: this.token, addr_id: '' }).
+      this.$http.post('/order/saveAddress', {
+        name: this.name,
+        tel: this.phone,
+        addr_text: this.address,
+        addr_code: this.addresscode,
+        detail: this.addressX,
+        is_default: this.isMoRen,
+        uid: this.uid,
+        token: this.token,
+        addr_id: this._id }).
 
       then(function (res) {
         console.log(res);
         uni.navigateTo({
           url: '/subpkg/address/address' });
 
-        uni.showToast({
-          title: '添加成功' });
+        if (res.msg == "修改成功") {
+          uni.showToast({
+            title: '修改成功',
+            icon: 'none' });
+
+        } else {
+          uni.showToast({
+            title: '添加成功',
+            icon: 'none' });
+
+        }
 
       }).
       catch(function (err) {
         console.log(err);
       });
+    },
+    //
+    getAddressX: function getAddressX() {var _this = this;
+      this.$http.post('/order/get_addr_detail', {
+        uid: this.uid,
+        _id: this._id }).
+
+      then(function (res) {
+        console.log(res);
+        _this.name = res.data[0].name;
+        _this.phone = res.data[0].tel;
+        _this.address = res.data[0].addr_text;
+        _this.addressX = res.data[0].detail;
+        _this.isMoRen = res.data[0].is_default;
+
+      }).
+      catch(function (err) {
+        console.log(err);
+      });
+    },
+    //地址取消按钮
+    onCancel: function onCancel() {
+
     } },
 
   components: {

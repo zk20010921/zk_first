@@ -1,12 +1,12 @@
 @charset "UTF-8";
 /* 水平间距 */
 /* 水平间距 */
-.iconfont {
+.iconfonts {
   width: 28rpx;
   height: 28rpx;
   margin-right: 10rpx;
   color: #999999;
-  font-size: 150rpx;
+  font-size: 260rpx;
 }
 page {
   background: #f6f6f6;
@@ -73,7 +73,9 @@ uni-radio-group {
   height: 40rpx;
   margin-left: 40rpx;
   border-radius: 30rpx;
+  border: 1px solid #333333;
   font-size: 26rpx;
+  color: #333333;
 }
 .address-list .addr-list .list-con .address {
   padding: 0rpx 60rpx 0 0;
@@ -91,6 +93,19 @@ uni-radio-group {
 }
 .address-list .addr-list .list-btm .moren {
   color: #333333;
+}
+.address-list .addr-list .list-btm .moren .iconfont {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 10rpx;
+  color: #999999;
+  font-size: 30rpx;
+}
+.address-list .addr-list .list-btm .moren.act .iconfont {
+  color: #333333;
+}
+.address-list .addr-list .list-btm .moren.act .iconfont:before {
+  content: '\e67a';
 }
 .address-list .addr-list .list-btm .caozuo {
   color: #333;
@@ -112,12 +127,8 @@ uni-radio-group {
   content: '\EA08';
 }
 .address-list .add.act {
-  position: fixed;
-  width: 600rpx;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%);
+  width: 100%;
+  margin-top: 50px;
 }
 .address-list .add {
   display: flex;
@@ -127,6 +138,7 @@ uni-radio-group {
   margin-top: 40rpx;
   text-align: center;
   font-size: 28rpx;
+  color: #333333;
   background-color: #fff;
   border-radius: 16rpx;
 }

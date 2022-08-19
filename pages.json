@@ -176,6 +176,15 @@
                 }
                 
                 }
+                ,{
+                    "path" : "pay/pay",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
             ]
 		}
 	],

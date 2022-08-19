@@ -331,7 +331,7 @@
 			},
 			//循环购买列表数组
 			xun() {
-				this.Xiang.attr.forEach((item, index) => {
+				this.Xiang.attr.forEach(item => {
 					item.check = 0
 					console.log(this.Xiang.attr);
 				})

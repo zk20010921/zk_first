@@ -16,7 +16,8 @@
 					<text class="iconfont icon-fanhui1"></text>
 				</view>
 				<view class='input-item'>
-					<textarea class="xiangxi" v-model="addressX" placeholder="请输入详细地址" placeholder-style="color:#999;" />
+					<textarea class="xiangxi" v-model="addressX" placeholder="请输入详细地址"
+						placeholder-style="color:#999;" />
 				</view>
 				<view class="moren">
 					<view class="uni-list">
@@ -29,73 +30,109 @@
 			</view>
 			<button class="confirm-btn" @click="addAddress">确认</button>
 		</view>
-		<w-picker
-			:visible.sync="show_addr_picker"
-			mode="region"
-			:value="addr_code"
-			default-type="value"
-			:hide-area="false"
-			@confirm="onConfirm($event)"
-			@cancel="onCancel"
-			ref="region"
-		></w-picker>
-		
+		<w-picker :visible.sync="show_addr_picker" mode="region" :value="addr_code" default-type="value"
+			:hide-area="false" @confirm="onConfirm($event)" @cancel="onCancel" ref="region"></w-picker>
+
 	</view>
 </template>
 <script>
 	import wPicker from '../../components/w-picker/w-picker.vue';
-	export default{
-		data(){
-			return{
-				show_addr_picker:false,
-				addr_code:[],
-				name:'',//名字
-				phone:'',//手机号
-				address:'',//地区
-				addresscode:[],//地区编码
-				addressX:'',//地址详情
-				isMoRen:false,//是否为默认地址
-				uid:'',//uid
-				token:'',//token
+	export default {
+		data() {
+			return {
+				show_addr_picker: false,
+				addr_code: [],
+				name: '', //名字
+				phone: '', //手机号
+				address: '', //地区
+				addresscode: [], //地区编码
+				addressX: '', //地址详情
+				isMoRen: false, //是否为默认地址
+				uid: '', //uid
+				token: '', //token
+				_id: 0, //地址详情id
 			}
 		},
-		onLoad() {
+		onLoad(e) {
+			this._id = e._id
 			this.getUid_token()
+			this.getAddressX()
 		},
-		methods:{
-			onConfirm(e){
+		methods: {
+			onConfirm(e) {
 				console.log(e);
-			this.address = e.result
-			this.addresscode = e.value
+				this.address = e.result
+				this.addresscode = e.value
 			},
 			//获取uid和token
-			getUid_token(){
+			getUid_token() {
 				this.uid = uni.getStorageSync('uid')
 				this.token = uni.getStorageSync('token')
 			},
 			//是否设置默认地址
-			isMo(e){
+			isMo(e) {
 				this.isMoRen = e.detail.value
 			},
-			addAddress(){
-				this.$http.post('/order/saveAddress',
-				{name:this.name,tel:this.phone,addr_text:this.address,addr_code:this.addresscode,detail:this.addressX,is_default:this.isMoRen,uid:this.uid,token:this.token,addr_id:'',}
-				)
-				.then((res)=>{
-					console.log(res);
-					uni.navigateTo({
-						url:'/subpkg/address/address'
+			//点击添加地址
+			addAddress() {
+				this.$http.post('/order/saveAddress', {
+						name: this.name,
+						tel: this.phone,
+						addr_text: this.address,
+						addr_code: this.addresscode,
+						detail: this.addressX,
+						is_default: this.isMoRen,
+						uid: this.uid,
+						token: this.token,
+						addr_id: this._id,
 					})
-					uni.showToast({
-						title:'添加成功'
+					.then((res) => {
+						console.log(res);
+						uni.navigateTo({
+							url: '/subpkg/address/address'
+						})
+						if (res.msg == "修改成功") {
+							uni.showToast({
+								title: '修改成功',
+								icon: 'none'
+							})
+						} else {
+							uni.showToast({
+								title: '添加成功',
+								icon: 'none'
+							})
+						}
+
 					})
-				})
-				.catch((err)=>{
-					console.log(err);
-				})
-			}
+					.catch((err) => {
+						console.log(err);
+					})
+			},
+			//
+			getAddressX() {
+				this.$http.post('/order/get_addr_detail', {
+						uid: this.uid,
+						_id: this._id
+					})
+					.then((res) => {
+						console.log(res);
+						this.name = res.data[0].name
+						this.phone = res.data[0].tel
+						this.address = res.data[0].addr_text
+						this.addressX = res.data[0].detail
+						this.isMoRen = res.data[0].is_default
+
+					})
+					.catch((err) => {
+						console.log(err);
+					})
+			},
+			//地址取消按钮
+			onCancel() {
+
+			},
 		},
-		components:{
+		components: {
 			wPicker
 		},
 	}
