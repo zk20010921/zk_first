@@ -100,6 +100,9 @@ try {
     uniIcons: function() {
       return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 290))
     },
+    uIcon: function() {
+      return __webpack_require__.e(/*! import() | components/u-icon/u-icon */ "components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! @/components/u-icon/u-icon.vue */ 379))
+    },
     uPopup: function() {
       return __webpack_require__.e(/*! import() | components/u-popup/u-popup */ "components/u-popup/u-popup").then(__webpack_require__.bind(null, /*! @/components/u-popup/u-popup.vue */ 305))
     },
@@ -171,9 +174,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;
-
-
-
 
 
 
@@ -554,9 +554,6 @@ var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 4));function _i
 //
 //
 //
-//
-//
-//
 var _default = { data: function data() {return { //头部导航栏show
       headerActive: false, //字体选中样式show
       textShow: false, option3: [{ text: '商品', value: 0 }, { text: '评论', value: 1 }, { text: '详情', value: 2 }], tapSelect: false, //顶部导航栏是否选中
@@ -574,12 +571,14 @@ var _default = { data: function data() {return { //头部导航栏show
       check: 0, kuArr: null, //价格库存数组
       value: 1, value1: 1, stock: 0, //库存
       shopNum: 1, //购买数量
-      shopNum1: 1 //添加购物车数量
+      shopNum1: 1, //添加购物车数量
+      pingList: [], //评论列表
+      pingNum: 0 //评论数量
     };}, onLoad: function onLoad(e) {// console.log(e);
     this._id = e._id; // console.log(this._id);
     uni.hideTabBar();this.getUid(); //获取uid
     this.getKu(); //获取库存/价格
-  }, mounted: function mounted() {this.gaoDu();this.gaoDu2();this.gaoDu3();}, methods: { //监控页面滚动,控制头部变色
+    this.getPl();}, mounted: function mounted() {this.gaoDu();this.gaoDu2();this.gaoDu3();}, methods: { //监控页面滚动,控制头部变色
     onPageScroll: function onPageScroll(e) {this.headerActive = e.scrollTop >= 40; // console.log(this.headerActive);
     }, //返回上一页
     returns: function returns() {uni.navigateBack();}, //进入购物车页面
@@ -620,7 +619,11 @@ var _default = { data: function data() {return { //头部导航栏show
       // console.log(this._id);
       // console.log(this.shopNum);
       // console.log(this.attr);
-      var attrs = [];var attr = this.Xiang.default_sku_info.text.map(function (item, index) {attrs.push(item);});this.$http.post('/api/add_cart', { uid: this.uid, name: this.Xiang.name, price: this.Xiang.default_sku_info.price, img: this.Xiang.img, goods_id: this._id, num: this.shopNum, attr: attrs, type: 'buy' }).then(function (res) {console.log(res);if (res.msg == "库存不足") {uni.showToast({ title: "库存不足", icon: 'none' });
+      var attrs = [];var attr = this.Xiang.default_sku_info.text.map(function (item, index) {attrs.push(item);});this.$http.post('/api/add_cart', { uid: this.uid, name: this.Xiang.name, price: this.Xiang.default_sku_info.price, img: this.Xiang.img, goods_id: this._id, num: this.shopNum, attr: attrs, type: 'buy' }).then(function (res) {console.log(res);
+        if (res.msg == "库存不足") {
+          uni.showToast({
+            title: "库存不足",
+            icon: 'none' });
 
         }
         var cart_id = res.data.id;
@@ -649,6 +652,7 @@ var _default = { data: function data() {return { //头部导航栏show
         attr: attrs,
         type: '' }).
 
+
       then(function (res) {
         console.log(res);
         if (res.msg == "库存不足") {
@@ -668,6 +672,20 @@ var _default = { data: function data() {return { //头部导航栏show
         // uni.navigateTo({
         // 	url:`/subpkg/creatOrder/creatOrder?cart_id=${cart_id}`,
         // });
+      }).
+      catch(function (err) {
+        console.log(err);
+      });
+    },
+    //获取商品评论
+    getPl: function getPl() {var _this9 = this;
+      this.$http.post('/api/get_goods_comment',
+      { goods_id: this._id, skip: 0, limit: 10 }).
+
+      then(function (res) {
+        console.log(res);
+        _this9.pingList = res.data;
+        _this9.pingNum = res.data.length;
       }).
       catch(function (err) {
         console.log(err);

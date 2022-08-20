@@ -283,7 +283,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.address = res.data[0].addr_text;
         _this.addressX = res.data[0].detail;
         _this.isMoRen = res.data[0].is_default;
-
       }).
       catch(function (err) {
         console.log(err);

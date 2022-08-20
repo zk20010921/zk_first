@@ -40,21 +40,18 @@
 		<!-- 评价 -->
 		<view class="pingjia" id="aaa2">
 			<view class="pj_top">
-				<text>评价23</text>
+				<text>评价{{pingNum}}</text>
 				<text>查看更多</text>
 			</view>
-			<view class="users">
+			<view class="users" v-for="(item,index) in pingList" :key="index">
 				<image class="toux" src="../../static/images/my/001.png" mode=""></image>
-				<text>用户名称</text>
+				<text>{{item.userInfo.nickname}}</text>
 				<view class="pingjia2">
-					<text>太香了太香了太香了太香了太香了太香了太香了太香了太香了太香了太香了太香了太香了太香了</text>
+					<text>{{item.content}}</text>
 				</view>
 				<view class="pingjia_tupian">
 					<view class="pj_image">
-						<image src="../../static/images/home/goods1.jpg" mode=""></image>
-					</view>
-					<view class="pj_image">
-						<image src="../../static/images/home/goods1.jpg" mode=""></image>
+						<image :src="item.images" mode=""></image>
 					</view>
 				</view>
 			</view>
@@ -70,15 +67,15 @@
 		<view class="navigation">
 			<view class="left">
 				<view class="item">
-					<uni-icons type="contact" size="22"></uni-icons>
+					<u-icon name="server-fill" :size="20" :color="$u.color['contentColor']"></u-icon>
 					<view class="text u-line-1">客服</view>
 				</view>
 				<view class="item car" @click="fav">
-					<uni-icons :type="favs ? 'star-filled' : 'star'" :size="22" :color="favs ? '#FDD61E' : ''"></uni-icons>
+					<uni-icons :type="favs ? 'star-filled' : 'star'" :size="20" :color="favs ? '#FDD61E' : ''"></uni-icons>
 					<view class="text u-line-1">收藏</view>
 				</view>
 				<view class="item">
-					<uni-icons type="home" size="22"></uni-icons>
+					<u-icon name="home" :size="20" :color="$u.color['contentColor']"></u-icon>
 					<view class="text u-line-1">店铺</view>
 				</view>
 			</view>
@@ -234,6 +231,8 @@
 				stock: 0, //库存
 				shopNum: 1, //购买数量
 				shopNum1: 1, //添加购物车数量
+				pingList:[],//评论列表
+				pingNum:0,//评论数量
 			};
 		},
 		onLoad(e) {
@@ -243,6 +242,7 @@
 			uni.hideTabBar()
 			this.getUid() //获取uid
 			this.getKu() //获取库存/价格
+			this.getPl()
 		},
 		mounted() {
 			this.gaoDu()
@@ -476,6 +476,7 @@
 						num: this.shopNum1,
 						attr: attrs,
 						type: ''
+						
 					})
 					.then((res) => {
 						console.log(res);
@@ -500,6 +501,20 @@
 					.catch((err) => {
 						console.log(err);
 					})
+			},
+			//获取商品评论
+			getPl(){
+				this.$http.post('/api/get_goods_comment',
+				{goods_id:this._id,skip:0,limit:10}
+				)
+				.then((res)=>{
+					console.log(res);
+					this.pingList = res.data
+					this.pingNum = res.data.length
+				})
+				.catch((err)=>{
+					console.log(err);
+				})
 			}
 		}
 	};

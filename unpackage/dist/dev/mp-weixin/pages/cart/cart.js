@@ -212,7 +212,9 @@ var _default =
   data: function data() {
     return {
       uid: 0, //uid
-      cardList: [] //购物车列表
+      cardList: [], //购物车列表
+      _id: [], //购物车id
+      isAll: false //是否选择全部
     };
   },
   onLoad: function onLoad() {
@@ -222,11 +224,18 @@ var _default =
     this.getCartlist();
   },
   methods: {
-    numberChange: function numberChange() {
+    //商品数量改变
+    valChange: function valChange(e, index) {
+      var num = e.value;
+      this.$http.post('/api/change_cart_num',
+      { _id: this._id[index], num: num }).
 
-    },
-    valChange: function valChange() {
-
+      then(function (res) {
+        console.log(res);
+      }).
+      catch(function (err) {
+        console.log(err);
+      });
     },
     //获取uid
     getUid: function getUid() {
@@ -240,6 +249,10 @@ var _default =
       then(function (res) {
         console.log(res);
         _this.cardList = res.data;
+        _this.isSelectAll();
+        _this._id = res.data.map(function (item) {
+          return item._id;
+        });
       }).
       catch(function (err) {
         console.log(err);
@@ -259,25 +272,24 @@ var _default =
         console.log(err);
       });
     },
-    addNum: function addNum(e) {
-      console.log(e);
-      // let num = e.value
-      // this.$http.post('/api/change_cart_num',
-      // {_id:this._id[index],num:num}
-      // )
-      // .then((res)=>{
-      // 	console.log(res);
-      // })
-      // .catch((err)=>{
-      // 	console.log(err);
-      // })
-    },
     //映射出数组中是否全部选中
     isSelectAll: function isSelectAll() {
-      var isSelectAll = this.cardList.map(function (item, index) {
-        return item.checked;
+      // let isSelectAll = this.cardList.map((item,index)=>{
+      // 	return JSON.parse(item.checked)
+      // })
+      // console.log(isSelectAll);
+      // let isSelectAll2 = isSelectAll.indexOf(item=>{
+      // 	item == 'false'
+      // })
+      // console.log(isSelectAll2);
+      // if(isSelectAll2 == -1){
+      // 	this.isAll = 
+      // }
+
+      var a = this.cardList.every(function (item) {
+        return item.checked == false;
       });
-      console.log(isSelectAll);
+      console.log(a);
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
