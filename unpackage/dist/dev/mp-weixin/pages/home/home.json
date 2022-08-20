@@ -3,6 +3,7 @@
   "navigationBarTitleText": "首页",
   "enablePullDownRefresh": false,
   "usingComponents": {
-    "uni-icons": "/uni_modules/uni-icons/components/uni-icons/uni-icons"
+    "uni-icons": "/uni_modules/uni-icons/components/uni-icons/uni-icons",
+    "u-loading": "/components/u-loading/u-loading"
   }
 }

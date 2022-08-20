@@ -99,6 +99,9 @@ try {
   components = {
     uniIcons: function() {
       return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 290))
+    },
+    uLoading: function() {
+      return __webpack_require__.e(/*! import() | components/u-loading/u-loading */ "components/u-loading/u-loading").then(__webpack_require__.bind(null, /*! @/components/u-loading/u-loading.vue */ 427))
     }
   }
 } catch (e) {
@@ -235,6 +238,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 var _default =
 {
   data: function data() {
@@ -246,6 +251,7 @@ var _default =
       cailist: [], //猜你喜欢列表
       num: 0,
       show: false, //底部字体的显示
+      show2: false, //加载动画是否显示
       _id: 0, //详情id
       index: 0 };
 
@@ -264,10 +270,13 @@ var _default =
   onPageScroll: function onPageScroll(e) {
     this.headerActive = e.scrollTop >= 40;
   },
-  //下拉触底
-  onReachBottom: function onReachBottom() {
+  //上拉触底
+  onReachBottom: function onReachBottom() {var _this = this;
     this.num += 10;
-    this.getCai();
+    this.show2 = true;
+    setTimeout(function () {
+      _this.getCai();
+    }, 1000);
     // this.cailist = [...this.cailist,...res.data]
   },
   methods: {
@@ -279,54 +288,57 @@ var _default =
 
     },
     //轮播图
-    getSwiper: function getSwiper() {var _this = this;
+    getSwiper: function getSwiper() {var _this2 = this;
       this.$http.post('/api/get_banner').
       then(function (res) {
         console.log(res);
-        _this.swiperlist = res.data;
+        _this2.swiperlist = res.data;
       }).
       catch(function (err) {
         console.log(err);
       });
     },
     //分类
-    getCataList: function getCataList() {var _this2 = this;
+    getCataList: function getCataList() {var _this3 = this;
       this.$http.post('/api/get_cate', {
         position: 'index' }).
 
       then(function (res) {
         console.log(res);
-        _this2.catalist = res.data;
+        _this3.catalist = res.data;
       }).
       catch(function (err) {
         console.log(err);
       });
     },
     //获取精选
-    getBangDan: function getBangDan() {var _this3 = this;
+    getBangDan: function getBangDan() {var _this4 = this;
       this.$http.post('/api/get_competitive', {
         skip: 0,
         limit: 1000 }).
 
       then(function (res) {
         console.log(res);
-        _this3.bdlist = res.data;
+        _this4.bdlist = res.data;
       }).
       catch(function (err) {
         console.log(err);
       });
     },
     //猜你喜欢
-    getCai: function getCai() {var _this4 = this;
+    getCai: function getCai() {var _this5 = this;
+      this.show2 = false;
       this.$http.post('/api/get_like', {
         skip: this.num,
         limit: 10 }).
 
       then(function (res) {
         console.log(res);
-        _this4.cailist = [].concat(_toConsumableArray(_this4.cailist), _toConsumableArray(res.data));
+        _this5.cailist = [].concat(_toConsumableArray(_this5.cailist), _toConsumableArray(res.data));
         if (res.data.length == 0 || res.data.length < 10) {
-          _this4.show = true;
+          setTimeout(function () {
+            _this5.show = true;
+          }, 1850);
         }
       }).
       catch(function (err) {

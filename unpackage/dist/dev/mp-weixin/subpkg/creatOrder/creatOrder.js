@@ -98,7 +98,7 @@ var components
 try {
   components = {
     uIcon: function() {
-      return __webpack_require__.e(/*! import() | components/u-icon/u-icon */ "components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! @/components/u-icon/u-icon.vue */ 379))
+      return __webpack_require__.e(/*! import() | components/u-icon/u-icon */ "components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! @/components/u-icon/u-icon.vue */ 305))
     }
   }
 } catch (e) {

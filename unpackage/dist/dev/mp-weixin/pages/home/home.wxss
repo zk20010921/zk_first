@@ -160,6 +160,13 @@ image {
   font-size: 26rpx;
   color: #a6a6a6;
 }
+.bottom3 {
+  display: block;
+  text-align: center;
+  padding-bottom: 20rpx;
+  font-size: 26rpx;
+  color: #FDD61E;
+}
 wx-swiper .wx-swiper-dot {
   width: 32rpx;
   height: 6rpx;

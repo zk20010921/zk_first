@@ -101,10 +101,10 @@ try {
       return Promise.all(/*! import() | uni_modules/uni-icons/components/uni-icons/uni-icons */[__webpack_require__.e("common/vendor"), __webpack_require__.e("uni_modules/uni-icons/components/uni-icons/uni-icons")]).then(__webpack_require__.bind(null, /*! @/uni_modules/uni-icons/components/uni-icons/uni-icons.vue */ 290))
     },
     uIcon: function() {
-      return __webpack_require__.e(/*! import() | components/u-icon/u-icon */ "components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! @/components/u-icon/u-icon.vue */ 379))
+      return __webpack_require__.e(/*! import() | components/u-icon/u-icon */ "components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! @/components/u-icon/u-icon.vue */ 305))
     },
     uPopup: function() {
-      return __webpack_require__.e(/*! import() | components/u-popup/u-popup */ "components/u-popup/u-popup").then(__webpack_require__.bind(null, /*! @/components/u-popup/u-popup.vue */ 305))
+      return __webpack_require__.e(/*! import() | components/u-popup/u-popup */ "components/u-popup/u-popup").then(__webpack_require__.bind(null, /*! @/components/u-popup/u-popup.vue */ 312))
     },
     uNumberBox: function() {
       return __webpack_require__.e(/*! import() | components/u-number-box/u-number-box */ "components/u-number-box/u-number-box").then(__webpack_require__.bind(null, /*! @/components/u-number-box/u-number-box.vue */ 298))
@@ -557,7 +557,7 @@ var _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 4));function _i
 var _default = { data: function data() {return { //头部导航栏show
       headerActive: false, //字体选中样式show
       textShow: false, option3: [{ text: '商品', value: 0 }, { text: '评论', value: 1 }, { text: '详情', value: 2 }], tapSelect: false, //顶部导航栏是否选中
-      hightArr: [], indexs: 0, _id: 0, //详情id值
+      hightArr: [], indexs: 0, index: 0, _id: 0, //详情id值
       Xiang: [], //详情数据
       show: false, //购买弹出层是否展示
       show2: false, //加入购物车弹出层是否展示
@@ -578,12 +578,12 @@ var _default = { data: function data() {return { //头部导航栏show
     this._id = e._id; // console.log(this._id);
     uni.hideTabBar();this.getUid(); //获取uid
     this.getKu(); //获取库存/价格
-    this.getPl();}, mounted: function mounted() {this.gaoDu();this.gaoDu2();this.gaoDu3();}, methods: { //监控页面滚动,控制头部变色
+    this.getPl();}, onShow: function onShow() {uni.showToast({ title: '加载中', icon: 'loading', duration: 500 });}, mounted: function mounted() {this.gaoDu();this.gaoDu2();this.gaoDu3();}, methods: { //监控页面滚动,控制头部变色
     onPageScroll: function onPageScroll(e) {this.headerActive = e.scrollTop >= 40; // console.log(this.headerActive);
     }, //返回上一页
     returns: function returns() {uni.navigateBack();}, //进入购物车页面
     toShoping: function toShoping() {uni.switchTab({ url: '/pages/cart/cart' });}, //点击字体
-    textTap: function textTap(e) {console.log(e);this.indexs = e;this.tapSelect = true;uni.pageScrollTo({ scrollTop: this.hightArr[this.indexs] });}, //检测盒子的高度
+    textTap: function textTap(e) {console.log(e);this.indexs = e;this.tapSelect = true;uni.pageScrollTo({ scrollTop: this.hightArr[e] });}, //检测盒子的高度
     gaoDu: function gaoDu() {var _this = this; //第一个
       var query = uni.createSelectorQuery().in(this);query.select('#aaa').boundingClientRect(function (data) {// console.log("得到布局位置信息" + JSON.stringify(data));
         // console.log("节点离页面顶部的距离为" + data.top);
@@ -619,7 +619,15 @@ var _default = { data: function data() {return { //头部导航栏show
       // console.log(this._id);
       // console.log(this.shopNum);
       // console.log(this.attr);
-      var attrs = [];var attr = this.Xiang.default_sku_info.text.map(function (item, index) {attrs.push(item);});this.$http.post('/api/add_cart', { uid: this.uid, name: this.Xiang.name, price: this.Xiang.default_sku_info.price, img: this.Xiang.img, goods_id: this._id, num: this.shopNum, attr: attrs, type: 'buy' }).then(function (res) {console.log(res);
+      var attrs = [];var attr = this.Xiang.default_sku_info.text.map(function (item, index) {attrs.push(item);});this.$http.post('/api/add_cart', { uid: this.uid, name: this.Xiang.name, price: this.Xiang.default_sku_info.price,
+        img: this.Xiang.img,
+        goods_id: this._id,
+        num: this.shopNum,
+        attr: attrs,
+        type: 'buy' }).
+
+      then(function (res) {
+        console.log(res);
         if (res.msg == "库存不足") {
           uni.showToast({
             title: "库存不足",

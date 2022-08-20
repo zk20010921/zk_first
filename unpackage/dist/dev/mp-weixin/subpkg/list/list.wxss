@@ -167,4 +167,31 @@
   content: '￥';
   font-size: 26rpx;
 }
+.bottom {
+  display: none;
+}
+.bottom2 {
+  display: block;
+  text-align: center;
+  padding-bottom: 20rpx;
+  font-size: 26rpx;
+  color: #a6a6a6;
+}
+.bottom3 {
+  display: block;
+  text-align: center;
+  padding-bottom: 20rpx;
+  font-size: 26rpx;
+  color: #FDD61E;
+}
+.changeColor {
+  color: #FDD61E;
+  border-bottom: 7rpx solid #FDD61E;
+}
+.changeColor1 {
+  color: #FDD61E;
+}
+.changeColor2 {
+  border-bottom: 7rpx solid #FDD61E;
+}
 

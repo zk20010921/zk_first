@@ -213,6 +213,7 @@
 				tapSelect: false, //顶部导航栏是否选中
 				hightArr: [],
 				indexs: 0,
+				index:0,
 				_id: 0, //详情id值
 				Xiang: [], //详情数据
 				show: false, //购买弹出层是否展示
@@ -244,6 +245,13 @@
 			this.getKu() //获取库存/价格
 			this.getPl()
 		},
+		onShow(){
+			uni.showToast({
+				title:'加载中',
+				icon:'loading',
+				duration:500
+			})
+		},
 		mounted() {
 			this.gaoDu()
 			this.gaoDu2()
@@ -271,7 +279,7 @@
 				this.indexs = e
 				this.tapSelect = true
 				uni.pageScrollTo({
-					scrollTop: this.hightArr[this.indexs]
+					scrollTop: this.hightArr[e]
 				})
 			},
 			//检测盒子的高度

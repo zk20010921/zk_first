@@ -25,7 +25,7 @@
 		<!-- 按钮--分类 -->
 		<view class="cate">
 			<view class="catelist" v-for="(item,index) in catalist" :key="index">
-				<view class="cateurl" @click="navTo('/subpkg/list/list?cate_id=' + 'item._id')"  open-type="switchTab">
+				<view class="cateurl" @click="navTo(`/subpkg/list/list?cate_id=${item._id}`)" open-type="switchTab">
 					<image :src="item.img"></image>
 					<text>{{item.name}}</text>
 				</view>
@@ -71,7 +71,9 @@
 				</view>
 			</view>
 		</view>
-
+		<view style="text-align: center;margin-top:10rpx">
+			<u-loading :show="show2" :calss="show2 ? 'bottom3':''" mode="circle"></u-loading>
+		</view>
 		<view class="bottom" :class="show ? 'bottom2':''">
 			<text>已经到底了</text>
 		</view>
@@ -89,6 +91,7 @@
 				cailist: [], //猜你喜欢列表
 				num: 0,
 				show: false, //底部字体的显示
+				show2:false,//加载动画是否显示
 				_id: 0, //详情id
 				index: 0
 			}
@@ -107,10 +110,13 @@
 		onPageScroll(e) {
 			this.headerActive = e.scrollTop >= 40;
 		},
-		//下拉触底
+		//上拉触底
 		onReachBottom() {
 			this.num += 10
-			this.getCai()
+				this.show2 = true
+			setTimeout(() => {
+				this.getCai()
+			}, 1000)
 			// this.cailist = [...this.cailist,...res.data]
 		},
 		methods: {
@@ -161,6 +167,7 @@
 			},
 			//猜你喜欢
 			getCai() {
+				this.show2 = false
 				this.$http.post('/api/get_like', {
 						skip: this.num,
 						limit: 10,
@@ -169,7 +176,9 @@
 						console.log(res);
 						this.cailist = [...this.cailist, ...res.data]
 						if (res.data.length == 0 || res.data.length < 10) {
+							setTimeout(()=>{						
 							this.show = true
+							},1850)
 						}
 					})
 					.catch((err) => {
@@ -177,7 +186,7 @@
 					})
 			},
 			setIndex(index) {
-				
+
 			}
 		},
 	}
@@ -370,14 +379,24 @@
 		font-size: 26rpx;
 		color: #a6a6a6;
 	}
-	wx-swiper .wx-swiper-dot{
+
+	.bottom3 {
+		display: block;
+		text-align: center;
+		padding-bottom: 20rpx;
+		font-size: 26rpx;
+		color: #FDD61E;
+	}
+
+	wx-swiper .wx-swiper-dot {
 		width: 32rpx;
 		height: 6rpx;
 		border-radius: 2rp;
 		background-color: #ffffff;
 		opacity: 0.8;
 	}
-	wx-swiper .wx-swiper-dot-active{
+
+	wx-swiper .wx-swiper-dot-active {
 		background-color: #565656;
 		width: 32rpx;
 		height: 6rpx;
