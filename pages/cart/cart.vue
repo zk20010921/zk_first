@@ -18,7 +18,7 @@
 									<text>￥</text>
 									{{item.price}}
 								</view>
-								<u-number-box @plus="addNum" @minus="delNum" :max="item.stock" min="1" v-model="item.num" @change="valChange"></u-number-box>
+								<u-number-box  :max="item.stock" min="1" v-model="item.num" @change="valChange($event,index)"></u-number-box>
 							</view>
 						</view>
 					</view>
@@ -53,6 +53,8 @@
 			return {
 				uid: 0, //uid
 				cardList:[],//购物车列表
+				_id:[],//购物车id
+				isAll:false,//是否选择全部
 			};
 		},
 		onLoad() {
@@ -62,11 +64,18 @@
 			this.getCartlist()
 		},
 		methods: {
-			numberChange() {
-
-			},
-			valChange(){
-				
+			//商品数量改变
+			valChange(e,index){
+				let num = e.value
+				this.$http.post('/api/change_cart_num',
+				{_id:this._id[index],num:num}
+				)
+				.then((res)=>{
+					console.log(res);
+				})
+				.catch((err)=>{
+					console.log(err);
+				})
 			},
 			//获取uid
 			getUid() {
@@ -80,6 +89,10 @@
 					.then((res) => {
 						console.log(res);
 						this.cardList = res.data
+						this.isSelectAll()
+						this._id = res.data.map(item=>{
+							return item._id
+						})
 					})
 					.catch((err) => {
 						console.log(err);
@@ -99,26 +112,25 @@
 					console.log(err);
 				})
 			},
-			addNum(e){
-				console.log(e);
-				// let num = e.value
-				// this.$http.post('/api/change_cart_num',
-				// {_id:this._id[index],num:num}
-				// )
-				// .then((res)=>{
-				// 	console.log(res);
-				// })
-				// .catch((err)=>{
-				// 	console.log(err);
-				// })
-			},
 			//映射出数组中是否全部选中
 			isSelectAll(){
-				let isSelectAll = this.cardList.map((item,index)=>{
-					return item.checked
+				// let isSelectAll = this.cardList.map((item,index)=>{
+				// 	return JSON.parse(item.checked)
+				// })
+				// console.log(isSelectAll);
+				// let isSelectAll2 = isSelectAll.indexOf(item=>{
+				// 	item == 'false'
+				// })
+				// console.log(isSelectAll2);
+				// if(isSelectAll2 == -1){
+				// 	this.isAll = 
+				// }
+
+				let a = this.cardList.every(item=>{
+					return item.checked == false
 				})
-				console.log(isSelectAll);
-			}
+				console.log(a);
+			},
 		}
 	};
 </script>

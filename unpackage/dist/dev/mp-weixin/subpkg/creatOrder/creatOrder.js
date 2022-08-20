@@ -95,6 +95,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "recyclableRender", function() { return recyclableRender; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "components", function() { return components; });
 var components
+try {
+  components = {
+    uIcon: function() {
+      return __webpack_require__.e(/*! import() | components/u-icon/u-icon */ "components/u-icon/u-icon").then(__webpack_require__.bind(null, /*! @/components/u-icon/u-icon.vue */ 379))
+    }
+  }
+} catch (e) {
+  if (
+    e.message.indexOf("Cannot find module") !== -1 &&
+    e.message.indexOf(".vue") !== -1
+  ) {
+    console.error(e.message)
+    console.error("1. 排查组件名称拼写是否正确")
+    console.error(
+      "2. 排查组件是否符合 easycom 规范，文档：https://uniapp.dcloud.net.cn/collocation/pages?id=easycom"
+    )
+    console.error(
+      "3. 若组件不符合 easycom 规范，需手动引入，并在 components 中注册该组件"
+    )
+  } else {
+    throw e
+  }
+}
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
@@ -211,6 +234,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -219,13 +245,17 @@ var _default =
       uid: 0, //uid
       token: 0, //token
       orderArr: [], //确认订单数组
-      beizhu: '' //备注
+      beizhu: '', //备注
+      isShow: false,
+      address: [], //默认地址
+      addressAll: [] //收货地址
     };
   },
   onLoad: function onLoad(e) {
     this.cart_id = e.cart_id;
     this.getUid_token();
     this.checkOrder();
+    this.gerAddress();
   },
   methods: {
     //获取uid和token
@@ -233,13 +263,50 @@ var _default =
       this.uid = uni.getStorageSync('uid');
       this.token = uni.getStorageSync('token');
     },
+    //获取订单信息
     checkOrder: function checkOrder() {var _this = this;
-      this.$http.post('/order/checkOrder',
-      { uid: this.uid, cart_id: this.cart_id, token: this.token, type: 'buy' }).
+      this.$http.post('/order/checkOrder', {
+        uid: this.uid,
+        cart_id: this.cart_id,
+        token: this.token,
+        type: 'buy' }).
 
       then(function (res) {
         console.log(res);
         _this.orderArr = res.data.goods[0];
+      }).
+      catch(function (err) {
+        console.log(err);
+      });
+    },
+    //获取默认收货地址
+    gerAddress: function gerAddress() {var _this2 = this;
+      this.$http.post('/order/get_default_addr', {
+        uid: this.uid }).
+
+      then(function (res) {
+        console.log(res);
+        _this2.address = res.data[0];
+        _this2.addressAll = [_this2.address.addr_text + _this2.address.detail];
+        console.log(_this2.addressAll);
+        if (res.length != 0) {
+          _this2.isShow = true;
+        }
+      }).
+      catch(function (err) {
+        console.log(err);
+      });
+    },
+    //提交订单
+    submitOrder: function submitOrder() {
+      this.$http.post('/order/submitOrder',
+      { uid: this.uid, cart_id: this.cart_id, desc: this.beizhu, address: this.addressAll[0], token: this.token }).
+
+      then(function (res) {
+        console.log(res);
+        uni.navigateTo({
+          url: "/subpkg/pay/pay?orderId=".concat(res.data) });
+
       }).
       catch(function (err) {
         console.log(err);

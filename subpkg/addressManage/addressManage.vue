@@ -121,7 +121,6 @@
 						this.address = res.data[0].addr_text
 						this.addressX = res.data[0].detail
 						this.isMoRen = res.data[0].is_default
-
 					})
 					.catch((err) => {
 						console.log(err);

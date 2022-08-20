@@ -9,8 +9,8 @@
       "list": [
         {
           "name": "我的",
-          "pathName": "pages/cart/cart",
-          "query": "",
+          "pathName": "subpkg/list/list",
+          "query": "cate_id=item._id",
           "launchMode": "default",
           "scene": null
         }
